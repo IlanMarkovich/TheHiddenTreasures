@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="TheHiddenTreasures.MainPage"
+    x:Class="TheHiddenTreasures.Game"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:TheHiddenTreasures"
@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="Page_Loaded">
 
-    <Grid>
-
-    </Grid>
+    <Canvas Name="GameCanvas" Background="Black">
+        
+    </Canvas>
 </Page>

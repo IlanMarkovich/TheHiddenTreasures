@@ -27,7 +27,7 @@ namespace TheHiddenTreasures
 
     internal class MazeLevel
     {
-        private Tile[][] layout;
+        private Tile[,] layout;
         private Point startPoint;
         private Point endPoint;
         private int width, height;
@@ -37,28 +37,44 @@ namespace TheHiddenTreasures
             this.width = width;
             this.height = height;
 
-            // Set tile matrix
-            for(int i = 0; i < height; i++)
-            {
-                int arrLen = i % 2 == 0 ? width - 1 : width;
-                layout[i] = new Tile[arrLen];
+            layout = new Tile[width, 2 * height - 1];
 
-                for(int j = 0; j < arrLen; j++)
-                {
-                    layout[i][j] = Tile.Wall;
-                }
-            }
+            // Set tile matrix
+            for(int i = 0; i < layout.GetLength(0); i++)
+                for(int j = 0; j < layout.GetLength(1); j++)
+                    layout[i, j] = Tile.Wall;
 
             // Set random a start point
             Random rand = new Random();
             startPoint.X = rand.Next(rand.Next(0, width - 1));
             startPoint.Y = rand.Next(rand.Next(0, height - 1));
+
+            GenerateMaze();
         }
 
-        public void GenerateMaze()
+        public Tile[,] GetLayout()
+        {
+            return layout;
+        }
+
+        public Point GetStartPoint()
+        {
+            return startPoint;
+        }
+
+        public Point GetEndPoint()
+        {
+            return endPoint;
+        }
+
+        private void GenerateMaze()
         {
             GridCell[,] grid = new GridCell[width, height];
             Stack<Point> posStack = new Stack<Point>();
+
+            for (int i = 0; i < width; i++)
+                for (int j = 0; j < height; j++)
+                    grid[i, j] = new GridCell();
 
             BuildMazeGrid(startPoint, ref grid, ref posStack);
             CreateMazeLayout(startPoint, ref grid);
@@ -75,12 +91,14 @@ namespace TheHiddenTreasures
             // Remove unavaliable directions
             if (x == 0 || grid[x - 1, y].IsVisited)
                 directions.Remove('l');
-            else if (x == width - 1 || grid[x + 1, y].IsVisited)
+
+            if (x == width - 1 || grid[x + 1, y].IsVisited)
                 directions.Remove('r');
 
             if (y == 0 || grid[x, y - 1].IsVisited)
                 directions.Remove('u');
-            else if (y == height - 1 || grid[x, y + 1].IsVisited)
+
+            if (y == height - 1 || grid[x, y + 1].IsVisited)
                 directions.Remove('d');
 
             // If there are no cells to go to next
@@ -149,9 +167,9 @@ namespace TheHiddenTreasures
 
             // Change the wall to a path in the connection between the grid cells
             if (currPoint.X == nextPoint.X)
-                layout[currPoint.X][2 * Math.Max(currPoint.Y, nextPoint.Y) - 1] = Tile.Path;
+                layout[currPoint.X, 2 * Math.Max(currPoint.Y, nextPoint.Y) - 1] = Tile.Path;
             else
-                layout[Math.Min(currPoint.X, nextPoint.X)][2 * currPoint.Y] = Tile.Path;
+                layout[Math.Min(currPoint.X, nextPoint.X), 2 * currPoint.Y] = Tile.Path;
 
             // Continue in the "path" of the next point
             CreateMazeLayout(nextPoint, ref grid);
