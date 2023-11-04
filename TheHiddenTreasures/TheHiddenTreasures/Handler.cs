@@ -54,7 +54,7 @@ namespace TheHiddenTreasures
 
             Tile[,] layout = currLevel.GetLayout();
 
-            for(int x = 0; x < layout.GetLength(0) - 1; x++)
+            for(int x = 0; x < layout.GetLength(0); x++)
             {
                 for(int y = 0; y < layout.GetLength(1); y++)
                 {
@@ -85,7 +85,7 @@ namespace TheHiddenTreasures
                         {
                             Width = CELL_WIDTH,
                             Height = GAP_SIZE,
-                            Fill = new SolidColorBrush(layout[x, y] == Tile.Path ? Colors.Blue : Colors.Red)
+                            Fill = new SolidColorBrush(Colors.Blue)
                         };
 
                         Canvas.SetLeft(rect, x * (CELL_WIDTH + GAP_SIZE));

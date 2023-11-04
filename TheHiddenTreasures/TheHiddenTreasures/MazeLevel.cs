@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Gaming.XboxLive.Storage;
 
 namespace TheHiddenTreasures
 {
@@ -32,6 +33,8 @@ namespace TheHiddenTreasures
         private Point endPoint;
         private int width, height;
 
+        private bool didSetEndPoint;
+
         public MazeLevel(int width, int height)
         {
             this.width = width;
@@ -49,6 +52,7 @@ namespace TheHiddenTreasures
             startPoint.X = rand.Next(rand.Next(0, width - 1));
             startPoint.Y = rand.Next(rand.Next(0, height - 1));
 
+            didSetEndPoint = false;
             GenerateMaze();
         }
 
@@ -107,9 +111,13 @@ namespace TheHiddenTreasures
                 // If not all the cells been visited yet, go back and visit them
                 if (!AreAllVisited(grid))
                     BuildMazeGrid(posStack.Pop(), ref grid, ref posStack);
-                // If all cells have been visited, call this point the end point and stop this fuction
-                else
+                
+                // If didn't already set an end point, and the current point is far enough from the start point, set this point as the end point
+                if(!didSetEndPoint && (Distance(currPoint, startPoint) >= (grid.GetLength(0) + grid.GetLength(1)) / 2))
+                {
+                    didSetEndPoint = true;
                     endPoint = currPoint;
+                }
 
                 return;
             }
@@ -156,6 +164,11 @@ namespace TheHiddenTreasures
             }
 
             return true;
+        }
+
+        private double Distance(Point p1, Point p2)
+        {
+            return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
         }
 
         private void CreateMazeLayout(Point currPoint, ref GridCell[,] grid)
