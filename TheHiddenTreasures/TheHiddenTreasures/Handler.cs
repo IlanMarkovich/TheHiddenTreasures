@@ -21,9 +21,9 @@ namespace TheHiddenTreasures
         public Handler(Canvas gameCanvas)
         {
             this.gameCanvas = gameCanvas;
-            currLevel = new MazeLevel(10, 10);
+            currLevel = new MazeLevel(30, 30);
 
-            RenderMaze(10, 10);
+            RenderMaze(30, 30);
         }
 
         public void RenderMaze(int width, int height)
@@ -31,6 +31,30 @@ namespace TheHiddenTreasures
             // Render start point and end point
             RenderPoint(currLevel.GetStartPoint(), Colors.White);
             RenderPoint(currLevel.GetEndPoint(), Colors.Yellow);
+
+            // Add the top wall
+            var topWall = new Windows.UI.Xaml.Shapes.Rectangle
+            {
+                Width = width * CELL_WIDTH + (width + 1) * GAP_SIZE,
+                Height = GAP_SIZE,
+                Fill = new SolidColorBrush(Colors.Blue)
+            };
+
+            Canvas.SetTop(topWall, 0);
+            Canvas.SetLeft(topWall, 0);
+            gameCanvas.Children.Add(topWall);
+
+            // Add the left wall
+            var leftWall = new Windows.UI.Xaml.Shapes.Rectangle
+            {
+                Width = GAP_SIZE,
+                Height = height * CELL_HEIGHT + (height + 1) * GAP_SIZE,
+                Fill = new SolidColorBrush(Colors.Blue)
+            };
+
+            Canvas.SetTop(leftWall, 0);
+            Canvas.SetLeft(leftWall, 0);
+            gameCanvas.Children.Add(leftWall);
 
             // Add gaps to the walls
             for (int x = 1; x <= width; x++)
@@ -44,8 +68,8 @@ namespace TheHiddenTreasures
                         Fill = new SolidColorBrush(Colors.Blue)
                     };
 
-                    Canvas.SetLeft(rect, x * CELL_WIDTH + (x - 1) * GAP_SIZE);
-                    Canvas.SetTop(rect, y * CELL_HEIGHT + (y - 1) * GAP_SIZE);
+                    Canvas.SetLeft(rect, GAP_SIZE + x * CELL_WIDTH + (x - 1) * GAP_SIZE);
+                    Canvas.SetTop(rect, GAP_SIZE + y * CELL_HEIGHT + (y - 1) * GAP_SIZE);
 
                     gameCanvas.Children.Add(rect);
                 }
@@ -72,8 +96,8 @@ namespace TheHiddenTreasures
                             Fill = new SolidColorBrush(Colors.Blue)
                         };
 
-                        Canvas.SetLeft(rect, x * GAP_SIZE + (x + 1) * CELL_WIDTH);
-                        Canvas.SetTop(rect, (y / 2) * CELL_HEIGHT + (y / 2) * GAP_SIZE);
+                        Canvas.SetLeft(rect, GAP_SIZE + x * GAP_SIZE + (x + 1) * CELL_WIDTH);
+                        Canvas.SetTop(rect, GAP_SIZE + (y / 2) * CELL_HEIGHT + (y / 2) * GAP_SIZE);
 
                         gameCanvas.Children.Add(rect);
                     }
@@ -87,8 +111,8 @@ namespace TheHiddenTreasures
                             Fill = new SolidColorBrush(Colors.Blue)
                         };
 
-                        Canvas.SetLeft(rect, x * (CELL_WIDTH + GAP_SIZE));
-                        Canvas.SetTop(rect, (y / 2) * GAP_SIZE + (y / 2 + 1) * CELL_HEIGHT);
+                        Canvas.SetLeft(rect, GAP_SIZE + x * (CELL_WIDTH + GAP_SIZE));
+                        Canvas.SetTop(rect, GAP_SIZE + (y / 2) * GAP_SIZE + (y / 2 + 1) * CELL_HEIGHT);
 
                         gameCanvas.Children.Add(rect);
                     }
@@ -98,8 +122,8 @@ namespace TheHiddenTreasures
 
         private void RenderPoint(Point p, Windows.UI.Color c)
         {
-            int x = p.X * (CELL_WIDTH + GAP_SIZE),
-                y = p.Y * (CELL_WIDTH + GAP_SIZE);
+            int x = GAP_SIZE + p.X * (CELL_WIDTH + GAP_SIZE),
+                y = GAP_SIZE + p.Y * (CELL_WIDTH + GAP_SIZE);
 
             var rect = new Windows.UI.Xaml.Shapes.Rectangle
             {
