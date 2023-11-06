@@ -21,32 +21,31 @@ namespace TheHiddenTreasures
         public Handler(Canvas gameCanvas)
         {
             this.gameCanvas = gameCanvas;
-            currLevel = new MazeLevel(30, 30);
+            currLevel = new MazeLevel(10, 10);
 
-            RenderMaze(30, 30);
+            RenderMaze(10, 10);
         }
 
         public void RenderMaze(int width, int height)
         {
-            width = width * CELL_WIDTH + (width - 1) * GAP_SIZE;
-            height = height * CELL_HEIGHT + (height - 1) * GAP_SIZE;
+            // Render start point and end point
+            RenderPoint(currLevel.GetStartPoint(), Colors.White);
+            RenderPoint(currLevel.GetEndPoint(), Colors.Yellow);
 
-            // Draw grid cells
-            for(int x = 0; x < width; x += CELL_WIDTH + GAP_SIZE)
+            // Add gaps to the walls
+            for (int x = 1; x <= width; x++)
             {
-                for(int y = 0; y < height; y += CELL_HEIGHT + GAP_SIZE)
+                for (int y = 1; y <= height; y++)
                 {
-                    Point currPoint = new Point(x / (CELL_WIDTH + GAP_SIZE), y / (CELL_HEIGHT + GAP_SIZE));
-
                     var rect = new Windows.UI.Xaml.Shapes.Rectangle
                     {
-                        Width = CELL_WIDTH,
-                        Height = CELL_HEIGHT,
-                        Fill = new SolidColorBrush(currPoint == currLevel.GetStartPoint() ? Colors.White : currPoint == currLevel.GetEndPoint() ? Colors.Yellow : Colors.Blue)
+                        Width = GAP_SIZE,
+                        Height = GAP_SIZE,
+                        Fill = new SolidColorBrush(Colors.Blue)
                     };
 
-                    Canvas.SetLeft(rect, x);
-                    Canvas.SetTop(rect, y);
+                    Canvas.SetLeft(rect, x * CELL_WIDTH + (x - 1) * GAP_SIZE);
+                    Canvas.SetTop(rect, y * CELL_HEIGHT + (y - 1) * GAP_SIZE);
 
                     gameCanvas.Children.Add(rect);
                 }
@@ -58,12 +57,12 @@ namespace TheHiddenTreasures
             {
                 for(int y = 0; y < layout.GetLength(1); y++)
                 {
-                    if (layout[x, y] == Tile.Wall)
+                    if (layout[x, y] == Tile.Path)
                     {
                         continue;
                     }
 
-                    // Add vertical paths
+                    // Add vertical walls
                     if (y % 2 == 0)
                     {
                         var rect = new Windows.UI.Xaml.Shapes.Rectangle
@@ -78,7 +77,7 @@ namespace TheHiddenTreasures
 
                         gameCanvas.Children.Add(rect);
                     }
-                    // Add horizontal paths
+                    // Add horizontal walls
                     else
                     {
                         var rect = new Windows.UI.Xaml.Shapes.Rectangle
@@ -95,6 +94,23 @@ namespace TheHiddenTreasures
                     }
                 }
             }
+        }
+
+        private void RenderPoint(Point p, Windows.UI.Color c)
+        {
+            int x = p.X * (CELL_WIDTH + GAP_SIZE),
+                y = p.Y * (CELL_WIDTH + GAP_SIZE);
+
+            var rect = new Windows.UI.Xaml.Shapes.Rectangle
+            {
+                Width = CELL_WIDTH,
+                Height = CELL_HEIGHT,
+                Fill = new SolidColorBrush(c)
+            };
+
+            Canvas.SetLeft(rect, x);
+            Canvas.SetTop(rect, y);
+            gameCanvas.Children.Add(rect);
         }
     }
 }

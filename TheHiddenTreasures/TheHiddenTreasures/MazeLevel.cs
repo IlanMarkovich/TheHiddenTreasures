@@ -40,7 +40,7 @@ namespace TheHiddenTreasures
             this.width = width;
             this.height = height;
 
-            layout = new Tile[width, 2 * height - 1];
+            layout = new Tile[width, 2 * height];
 
             // Set tile matrix
             for(int i = 0; i < layout.GetLength(0); i++)
