@@ -13,15 +13,19 @@ namespace TheHiddenTreasures
 {
     internal class Handler
     {
+        private const int CELL_WIDTH = 35, CELL_HEIGHT = 35, GAP_SIZE = 7;
+
         private Canvas gameCanvas;
         private MazeLevel currLevel;
 
-        private const int CELL_WIDTH = 35, CELL_HEIGHT = 35, GAP_SIZE = 7;
+        private List<Windows.UI.Xaml.Shapes.Rectangle> gameRectLst;
 
         public Handler(Canvas gameCanvas)
         {
             this.gameCanvas = gameCanvas;
             currLevel = new MazeLevel(30, 30);
+
+            gameRectLst = new List<Windows.UI.Xaml.Shapes.Rectangle>();
 
             RenderMaze(30, 30);
         }
@@ -40,9 +44,7 @@ namespace TheHiddenTreasures
                 Fill = new SolidColorBrush(Colors.Blue)
             };
 
-            Canvas.SetTop(topWall, 0);
-            Canvas.SetLeft(topWall, 0);
-            gameCanvas.Children.Add(topWall);
+            AddRectanlge(topWall, -GAP_SIZE, -GAP_SIZE);
 
             // Add the left wall
             var leftWall = new Windows.UI.Xaml.Shapes.Rectangle
@@ -52,9 +54,7 @@ namespace TheHiddenTreasures
                 Fill = new SolidColorBrush(Colors.Blue)
             };
 
-            Canvas.SetTop(leftWall, 0);
-            Canvas.SetLeft(leftWall, 0);
-            gameCanvas.Children.Add(leftWall);
+            AddRectanlge(leftWall, -GAP_SIZE, -GAP_SIZE);
 
             // Add gaps to the walls
             for (int x = 1; x <= width; x++)
@@ -68,10 +68,7 @@ namespace TheHiddenTreasures
                         Fill = new SolidColorBrush(Colors.Blue)
                     };
 
-                    Canvas.SetLeft(rect, GAP_SIZE + x * CELL_WIDTH + (x - 1) * GAP_SIZE);
-                    Canvas.SetTop(rect, GAP_SIZE + y * CELL_HEIGHT + (y - 1) * GAP_SIZE);
-
-                    gameCanvas.Children.Add(rect);
+                    AddRectanlge(rect, x * CELL_WIDTH + (x - 1) * GAP_SIZE, y * CELL_HEIGHT + (y - 1) * GAP_SIZE);
                 }
             }
 
@@ -96,10 +93,7 @@ namespace TheHiddenTreasures
                             Fill = new SolidColorBrush(Colors.Blue)
                         };
 
-                        Canvas.SetLeft(rect, GAP_SIZE + x * GAP_SIZE + (x + 1) * CELL_WIDTH);
-                        Canvas.SetTop(rect, GAP_SIZE + (y / 2) * CELL_HEIGHT + (y / 2) * GAP_SIZE);
-
-                        gameCanvas.Children.Add(rect);
+                        AddRectanlge(rect, x * GAP_SIZE + (x + 1) * CELL_WIDTH, (y / 2) * CELL_HEIGHT + (y / 2) * GAP_SIZE);
                     }
                     // Add horizontal walls
                     else
@@ -111,19 +105,25 @@ namespace TheHiddenTreasures
                             Fill = new SolidColorBrush(Colors.Blue)
                         };
 
-                        Canvas.SetLeft(rect, GAP_SIZE + x * (CELL_WIDTH + GAP_SIZE));
-                        Canvas.SetTop(rect, GAP_SIZE + (y / 2) * GAP_SIZE + (y / 2 + 1) * CELL_HEIGHT);
-
-                        gameCanvas.Children.Add(rect);
+                        AddRectanlge(rect, x * (CELL_WIDTH + GAP_SIZE), (y / 2) * GAP_SIZE + (y / 2 + 1) * CELL_HEIGHT);
                     }
                 }
             }
         }
 
+        private void AddRectanlge(Windows.UI.Xaml.Shapes.Rectangle rect, int x, int y)
+        {
+            Canvas.SetLeft(rect, GAP_SIZE + x);
+            Canvas.SetTop(rect, GAP_SIZE + y);
+
+            gameCanvas.Children.Add(rect);
+            gameRectLst.Add(rect);
+        }
+
         private void RenderPoint(Point p, Windows.UI.Color c)
         {
-            int x = GAP_SIZE + p.X * (CELL_WIDTH + GAP_SIZE),
-                y = GAP_SIZE + p.Y * (CELL_WIDTH + GAP_SIZE);
+            int x = p.X * (CELL_WIDTH + GAP_SIZE),
+                y = p.Y * (CELL_WIDTH + GAP_SIZE);
 
             var rect = new Windows.UI.Xaml.Shapes.Rectangle
             {
@@ -132,9 +132,7 @@ namespace TheHiddenTreasures
                 Fill = new SolidColorBrush(c)
             };
 
-            Canvas.SetLeft(rect, x);
-            Canvas.SetTop(rect, y);
-            gameCanvas.Children.Add(rect);
+            AddRectanlge(rect, x, y);
         }
     }
 }
