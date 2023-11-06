@@ -24,7 +24,6 @@ namespace TheHiddenTreasures
         {
             this.gameCanvas = gameCanvas;
             currLevel = new MazeLevel(30, 30);
-
             gameRectLst = new List<Windows.UI.Xaml.Shapes.Rectangle>();
 
             RenderMaze(30, 30);
