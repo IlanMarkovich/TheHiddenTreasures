@@ -18,23 +18,19 @@ namespace TheHiddenTreasures
         private Canvas gameCanvas;
         private MazeLevel currLevel;
 
-        private List<Windows.UI.Xaml.Shapes.Rectangle> wallsLst;
-        private List<Windows.UI.Xaml.Shapes.Rectangle> gameRects;
+        public static List<GameObject> gameObjectLst;
         private Player player;
 
         public Handler(Canvas gameCanvas)
         {
             this.gameCanvas = gameCanvas;
             currLevel = new MazeLevel(30, 30);
-            wallsLst = new List<Windows.UI.Xaml.Shapes.Rectangle>();
+            gameObjectLst = new List<GameObject>();
 
             RenderMaze(30, 30);
 
-            player = new Player(currLevel.GetStartPoint(), 15, 15, ref gameCanvas);
-
-            gameRects = new List<Windows.UI.Xaml.Shapes.Rectangle>();
-            gameRects.AddRange(wallsLst);
-            gameRects.Add(player.Rect);
+            player = new Player(currLevel.GetStartPoint(), 10, 10, ref gameCanvas);
+            gameObjectLst.Add(player);
         }
 
         public Player GetPlayer()
@@ -49,38 +45,17 @@ namespace TheHiddenTreasures
             RenderCell(currLevel.GetEndPoint(), Colors.Yellow);
 
             // Add the top wall
-            var topWall = new Windows.UI.Xaml.Shapes.Rectangle
-            {
-                Width = width * cellWidth + (width + 1) * gapSize,
-                Height = gapSize,
-                Fill = new SolidColorBrush(Colors.Blue)
-            };
-
-            AddWall(topWall, -gapSize, -gapSize);
+            AddWall(-gapSize, -gapSize, width * cellWidth + (width + 1) * gapSize, gapSize);
 
             // Add the left wall
-            var leftWall = new Windows.UI.Xaml.Shapes.Rectangle
-            {
-                Width = gapSize,
-                Height = height * cellHeight + (height + 1) * gapSize,
-                Fill = new SolidColorBrush(Colors.Blue)
-            };
-
-            AddWall(leftWall, -gapSize, -gapSize);
+            AddWall(-gapSize, -gapSize, gapSize, height * cellHeight + (height + 1) * gapSize);
 
             // Add gaps to the walls
             for (int x = 1; x <= width; x++)
             {
                 for (int y = 1; y <= height; y++)
                 {
-                    var rect = new Windows.UI.Xaml.Shapes.Rectangle
-                    {
-                        Width = gapSize,
-                        Height = gapSize,
-                        Fill = new SolidColorBrush(Colors.Blue)
-                    };
-
-                    AddWall(rect, x * cellWidth + (x - 1) * gapSize, y * cellHeight + (y - 1) * gapSize);
+                    AddWall(x * cellWidth + (x - 1) * gapSize, y * cellHeight + (y - 1) * gapSize, gapSize, gapSize);
                 }
             }
 
@@ -98,38 +73,21 @@ namespace TheHiddenTreasures
                     // Add vertical walls
                     if (y % 2 == 0)
                     {
-                        var rect = new Windows.UI.Xaml.Shapes.Rectangle
-                        {
-                            Width = gapSize,
-                            Height = cellHeight,
-                            Fill = new SolidColorBrush(Colors.Blue)
-                        };
-
-                        AddWall(rect, x * gapSize + (x + 1) * cellWidth, (y / 2) * cellHeight + (y / 2) * gapSize);
+                        AddWall(x * gapSize + (x + 1) * cellWidth, (y / 2) * cellHeight + (y / 2) * gapSize, gapSize, cellHeight);
                     }
                     // Add horizontal walls
                     else
                     {
-                        var rect = new Windows.UI.Xaml.Shapes.Rectangle
-                        {
-                            Width = cellWidth,
-                            Height = gapSize,
-                            Fill = new SolidColorBrush(Colors.Blue)
-                        };
-
-                        AddWall(rect, x * (cellWidth + gapSize), (y / 2) * gapSize + (y / 2 + 1) * cellHeight);
+                        AddWall(x * (cellWidth + gapSize), (y / 2) * gapSize + (y / 2 + 1) * cellHeight, cellWidth, gapSize);
                     }
                 }
             }
         }
 
-        private void AddWall(Windows.UI.Xaml.Shapes.Rectangle rect, int x, int y)
+        private void AddWall(int x, int y, int width, int height)
         {
-            Canvas.SetLeft(rect, gapSize + x);
-            Canvas.SetTop(rect, gapSize + y);
-
-            gameCanvas.Children.Add(rect);
-            wallsLst.Add(rect);
+            Wall newWall = new Wall(gapSize + x, gapSize + y, width, height, ref gameCanvas);
+            gameObjectLst.Add(newWall);
         }
 
         private void RenderCell(Point p, Windows.UI.Color c)
@@ -144,7 +102,10 @@ namespace TheHiddenTreasures
                 Fill = new SolidColorBrush(c)
             };
 
-            AddWall(rect, x, y);
+            Canvas.SetLeft(rect, gapSize + x);
+            Canvas.SetTop(rect, gapSize + y);
+
+            gameCanvas.Children.Add(rect);
         }
     }
 }

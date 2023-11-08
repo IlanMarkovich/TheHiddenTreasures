@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,24 +12,24 @@ namespace TheHiddenTreasures
 {
     public abstract class GameObject
     {
-        protected int X { get; set; }
-        protected int Y { get; set; }
-        protected int Width { get; set; }
-        protected int Height { get; set; }
-        public Rectangle Rect { get; set; }
-
-        protected int canvasX, canvasY;
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public Windows.UI.Xaml.Shapes.Rectangle Rect { get; set; }
+        public int CanvasX { get; set; }
+        public int CanvasY { get; set; }
 
         protected Canvas gameCanvas;
 
-        public GameObject(int x, int y, int width, int height, Brush content, ref Canvas gameCanvas)
+        public GameObject(Point point, int width, int height, Brush content, ref Canvas gameCanvas)
         {
-            X = x;
-            Y = y;
+            X = point.X;
+            Y = point.Y;
             Width = width;
             Height = height;
 
-            Rect = new Rectangle
+            Rect = new Windows.UI.Xaml.Shapes.Rectangle
             {
                 Width = width,
                 Height = height,
@@ -36,6 +37,13 @@ namespace TheHiddenTreasures
             };
 
             this.gameCanvas = gameCanvas;
+        }
+
+        public GameObject(int canvasX, int canvasY, int width, int height, Brush content, ref Canvas gameCanvas)
+            : this(new Point(0, 0), width, height, content, ref gameCanvas)
+        {
+            this.CanvasX = canvasX;
+            this.CanvasY = canvasY;
         }
     }
 }

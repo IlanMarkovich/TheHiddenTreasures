@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
@@ -14,44 +15,63 @@ namespace TheHiddenTreasures
 {
     internal class Player : GameObject
     {
-        private const int MOVEMENT_SPEED = 5;
+        private const int MOVEMENT_SPEED = 3;
 
-        public Player(Point startPoint, int width, int height, ref Canvas gameCanvas) 
-            : base(startPoint.X, startPoint.Y, width, height, new SolidColorBrush(Colors.Red), ref gameCanvas)
+        public Player(System.Drawing.Point startPoint, int width, int height, ref Canvas gameCanvas) 
+            : base(startPoint, width, height, new SolidColorBrush(Colors.Red), ref gameCanvas)
         {
-            canvasX = Handler.gapSize + startPoint.X * (Handler.cellWidth + Handler.gapSize) +
+            CanvasX = Handler.gapSize + X * (Handler.cellWidth + Handler.gapSize) +
                 ((Handler.cellWidth - width) / 2);
 
-            canvasY = Handler.gapSize + startPoint.Y * (Handler.cellHeight + Handler.gapSize) +
+            CanvasY = Handler.gapSize + Y * (Handler.cellHeight + Handler.gapSize) +
                 ((Handler.cellHeight - height) / 2);
 
-            Canvas.SetLeft(Rect, canvasX);
-            Canvas.SetTop(Rect, canvasY);
+            Canvas.SetLeft(Rect, CanvasX);
+            Canvas.SetTop(Rect, CanvasY);
 
             gameCanvas.Children.Add(Rect);
         }
 
         public void Move(VirtualKey key)
         {
+            int newCanvasX = CanvasX, newCanvasY = CanvasY;
+
             switch(key)
             {
                 case VirtualKey.W:
-                    canvasY -= MOVEMENT_SPEED;
-                    Canvas.SetTop(Rect, canvasY);
+                    newCanvasY -= MOVEMENT_SPEED;
                     break;
                 case VirtualKey.A:
-                    canvasX -= MOVEMENT_SPEED;
-                    Canvas.SetLeft(Rect, canvasX);
+                    newCanvasX -= MOVEMENT_SPEED;
                     break;
                 case VirtualKey.S:
-                    canvasY += MOVEMENT_SPEED;
-                    Canvas.SetTop(Rect, canvasY);
+                    newCanvasY += MOVEMENT_SPEED;
                     break;
                 case VirtualKey.D:
-                    canvasX += MOVEMENT_SPEED;
-                    Canvas.SetLeft(Rect, canvasX);
+                    newCanvasX += MOVEMENT_SPEED;
                     break;
             }
+
+            foreach(var obj in Handler.gameObjectLst)
+            {
+                if (!(obj is Wall))
+                    continue;
+
+                var wallRect = new Rect(obj.CanvasX, obj.CanvasY, obj.Width, obj.Height);
+                wallRect.Intersect(new Rect(newCanvasX, newCanvasY, Width, Height));
+
+                if(!wallRect.IsEmpty)
+                {
+                    newCanvasX = CanvasX;
+                    newCanvasY = CanvasY;
+                }
+            }
+
+            CanvasX = newCanvasX;
+            CanvasY = newCanvasY;
+
+            Canvas.SetLeft(Rect, CanvasX);
+            Canvas.SetTop(Rect, CanvasY);
         }
     }
 }
