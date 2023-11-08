@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
@@ -14,22 +15,27 @@ namespace TheHiddenTreasures
         protected int Y { get; set; }
         protected int Width { get; set; }
         protected int Height { get; set; }
+        public Rectangle Rect { get; set; }
 
-        protected Rectangle rect;
+        protected int canvasX, canvasY;
 
-        public GameObject(int x, int y, int width, int height, Brush content)
+        protected Canvas gameCanvas;
+
+        public GameObject(int x, int y, int width, int height, Brush content, ref Canvas gameCanvas)
         {
             X = x;
             Y = y;
             Width = width;
             Height = height;
 
-            rect = new Rectangle
+            Rect = new Rectangle
             {
                 Width = width,
                 Height = height,
                 Fill = content
             };
+
+            this.gameCanvas = gameCanvas;
         }
     }
 }

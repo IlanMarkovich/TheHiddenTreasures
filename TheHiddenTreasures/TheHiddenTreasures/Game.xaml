@@ -9,7 +9,5 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="Page_Loaded">
 
-    <Canvas Name="GameCanvas" Background="Black">
-        
-    </Canvas>
+    <Canvas Name="GameCanvas" Background="Black"/>
 </Page>

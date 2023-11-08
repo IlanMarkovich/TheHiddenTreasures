@@ -27,11 +27,17 @@ namespace TheHiddenTreasures
         public Game()
         {
             this.InitializeComponent();
+            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             handler = new Handler(GameCanvas);
+        }
+
+        private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
+        {
+            handler.GetPlayer().Move(args.VirtualKey);
         }
     }
 }
