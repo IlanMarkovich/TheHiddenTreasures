@@ -16,7 +16,7 @@ namespace TheHiddenTreasures
 {
     public class Player : GameObject
     {
-        private const int MOVEMENT_SPEED = 5;
+        private const int MOVEMENT_SPEED = 7;
 
         public Player(System.Drawing.Point startPoint, int width, int height, ref Canvas gameCanvas, Handler handler) 
             : base(startPoint.X, startPoint.Y, width, height, new SolidColorBrush(Colors.Red), ref gameCanvas, handler)
@@ -30,43 +30,37 @@ namespace TheHiddenTreasures
             gameCanvas.Children.Add(Rect);
         }
 
-        public void MoveUp()
+        public void Move(VirtualKey pressedKey)
         {
-            if (WillCollide((int)Canvas.GetLeft(Rect), (int)Canvas.GetTop(Rect) - MOVEMENT_SPEED))
+            double x = Canvas.GetLeft(Rect),
+                y = Canvas.GetTop(Rect);
+
+            switch (pressedKey)
+            {
+                case VirtualKey.W:
+                    y -= MOVEMENT_SPEED;
+                    break;
+                case VirtualKey.A:
+                    x -= MOVEMENT_SPEED;
+                    break;
+                case VirtualKey.S:
+                    y += MOVEMENT_SPEED;
+                    break;
+                case VirtualKey.D:
+                    x += MOVEMENT_SPEED;
+                    break;
+            }
+
+            if (WillCollide(x, y))
                 return;
 
-            Canvas.SetTop(Rect, Canvas.GetTop(Rect) - MOVEMENT_SPEED);
+            Canvas.SetLeft(Rect, x);
+            Canvas.SetTop(Rect, y);
+
             handler.FocusOnPlayer();
         }
 
-        public void MoveLeft()
-        {
-            if (WillCollide((int)Canvas.GetLeft(Rect) - MOVEMENT_SPEED, (int)Canvas.GetTop(Rect)))
-                return;
-
-            Canvas.SetLeft(Rect, Canvas.GetLeft(Rect) - MOVEMENT_SPEED);
-            handler.FocusOnPlayer();
-        }
-
-        public void MoveDown()
-        {
-            if (WillCollide((int)Canvas.GetLeft(Rect), (int)Canvas.GetTop(Rect) + MOVEMENT_SPEED))
-                return;
-
-            Canvas.SetTop(Rect, Canvas.GetTop(Rect) + MOVEMENT_SPEED);
-            handler.FocusOnPlayer();
-        }
-
-        public void MoveRight()
-        {
-            if (WillCollide((int)Canvas.GetLeft(Rect) + MOVEMENT_SPEED, (int)Canvas.GetTop(Rect)))
-                return;
-
-            Canvas.SetLeft(Rect, Canvas.GetLeft(Rect) + MOVEMENT_SPEED);
-            handler.FocusOnPlayer();
-        }
-
-        private bool WillCollide(int x, int y)
+        private bool WillCollide(double x, double y)
         {
             foreach(var obj in handler.RenderObjectLst)
             {

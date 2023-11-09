@@ -14,6 +14,7 @@ namespace TheHiddenTreasures
     public class Handler
     {
         public const int CELL_WIDTH = 100, CELL_HEIGHT = 100, GAP_SIZE = 20;
+        public const int ZOOM_LEVEL = 250;
 
         public List<RenderObject> RenderObjectLst { get; set; }
 
@@ -89,6 +90,9 @@ namespace TheHiddenTreasures
 
         public void FocusOnPlayer()
         {
+            if (!Game.isCameraOn)
+                return;
+
             double canvasCenterX = gameCanvas.ActualWidth / 2;
             double canvasCenterY = gameCanvas.ActualHeight / 2;
 
@@ -97,7 +101,7 @@ namespace TheHiddenTreasures
 
             gameCamera.GlobalOffsetX = canvasCenterX - playerCenterX;
             gameCamera.GlobalOffsetY = canvasCenterY - playerCenterY;
-            gameCamera.GlobalOffsetZ = 200;
+            gameCamera.GlobalOffsetZ = ZOOM_LEVEL;
         }
 
         private void AddWall(int x, int y, int width, int height)
