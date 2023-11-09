@@ -81,14 +81,15 @@ namespace TheHiddenTreasures
             if (MOVEMENT_KEYS.Count(x => x == args.VirtualKey) != 0)
                 return;
 
-            if(args.VirtualKey == Windows.System.VirtualKey.F8)
+            // Toggle camera
+            if(args.VirtualKey == Windows.System.VirtualKey.C)
             {
                 isCameraOn = !isCameraOn;
 
                 if (isCameraOn)
                     handler.FocusOnPlayer();
                 else
-                    GameCamera.GlobalOffsetZ = -20 * Handler.ZOOM_LEVEL;
+                    GameCamera.GlobalOffsetZ = -25 * Handler.ZOOM_LEVEL;
             }
         }
     }
