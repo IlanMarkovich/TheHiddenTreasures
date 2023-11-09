@@ -19,7 +19,7 @@ namespace TheHiddenTreasures
         private const int MOVEMENT_SPEED = 2;
 
         public Player(System.Drawing.Point startPoint, int width, int height, ref Canvas gameCanvas) 
-            : base(startPoint, width, height, new SolidColorBrush(Colors.Red), ref gameCanvas)
+            : base(startPoint.X, startPoint.Y, width, height, new SolidColorBrush(Colors.Red), ref gameCanvas)
         {
             Canvas.SetLeft(Rect, Handler.gapSize + X * (Handler.cellWidth + Handler.gapSize) +
                 ((Handler.cellWidth - width) / 2));
@@ -64,7 +64,7 @@ namespace TheHiddenTreasures
 
         private bool WillCollide(int x, int y)
         {
-            foreach(var obj in Handler.gameObjectLst)
+            foreach(var obj in Handler.renderObjectLst)
             {
                 if (!(obj is Wall))
                     continue;

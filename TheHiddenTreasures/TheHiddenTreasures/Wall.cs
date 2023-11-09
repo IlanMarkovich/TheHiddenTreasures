@@ -9,10 +9,10 @@ using Windows.UI.Xaml.Media;
 
 namespace TheHiddenTreasures
 {
-    internal class Wall : GameObject
+    internal class Wall : RenderObject
     {
-        public Wall(int canvasX, int canvasY, int width, int height, ref Canvas gameCanvas) :
-            base(canvasX, canvasY, width, height, new SolidColorBrush(Colors.Blue), ref gameCanvas)
+        public Wall(int x, int y, int width, int height, ref Canvas gameCanvas) :
+            base(x, y, width, height, new SolidColorBrush(Colors.Blue), ref gameCanvas)
         {
         }
     }

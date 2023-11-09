@@ -18,19 +18,19 @@ namespace TheHiddenTreasures
         private Canvas gameCanvas;
         private MazeLevel currLevel;
 
-        public static List<GameObject> gameObjectLst;
+        public static List<RenderObject> renderObjectLst;
         private Player player;
 
         public Handler(Canvas gameCanvas)
         {
             this.gameCanvas = gameCanvas;
             currLevel = new MazeLevel(30, 30);
-            gameObjectLst = new List<GameObject>();
+            renderObjectLst = new List<RenderObject>();
 
             RenderMaze(30, 30);
 
             player = new Player(currLevel.GetStartPoint(), 10, 10, ref gameCanvas);
-            gameObjectLst.Add(player);
+            renderObjectLst.Add(player);
         }
 
         public Player GetPlayer()
@@ -87,7 +87,7 @@ namespace TheHiddenTreasures
         private void AddWall(int x, int y, int width, int height)
         {
             Wall newWall = new Wall(gapSize + x, gapSize + y, width, height, ref gameCanvas);
-            gameObjectLst.Add(newWall);
+            renderObjectLst.Add(newWall);
         }
 
         private void RenderCell(Point p, Windows.UI.Color c)
