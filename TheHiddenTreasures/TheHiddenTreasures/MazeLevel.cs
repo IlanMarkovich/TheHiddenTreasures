@@ -53,7 +53,6 @@ namespace TheHiddenTreasures
             startPoint.Y = rand.Next(rand.Next(0, height - 1));
 
             didSetEndPoint = false;
-            GenerateMaze();
         }
 
         public Tile[,] GetLayout()
@@ -71,7 +70,7 @@ namespace TheHiddenTreasures
             return endPoint;
         }
 
-        private void GenerateMaze()
+        public void GenerateMaze()
         {
             GridCell[,] grid = new GridCell[width, height];
             Stack<Point> posStack = new Stack<Point>();

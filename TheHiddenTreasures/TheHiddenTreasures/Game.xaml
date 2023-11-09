@@ -9,5 +9,9 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="Page_Loaded">
 
+    <Page.Projection>
+        <PlaneProjection x:Name="GameCamera"/>
+    </Page.Projection>
+    
     <Canvas Name="GameCanvas" Background="Black"/>
 </Page>

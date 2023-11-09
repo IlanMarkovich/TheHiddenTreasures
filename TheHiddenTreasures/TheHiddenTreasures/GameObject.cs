@@ -17,11 +17,15 @@ namespace TheHiddenTreasures
         public int X { get; set; }
         public int Y { get; set; }
 
-        public GameObject(int x, int y, int width, int height, Brush content, ref Canvas gameCanvas)
+        protected Handler handler;
+
+        public GameObject(int x, int y, int width, int height, Brush content, ref Canvas gameCanvas, Handler handler)
             : base(width, height, content, ref gameCanvas)
         {
             X = x;
             Y = y;
+
+            this.handler = handler;
         }
     }
 }

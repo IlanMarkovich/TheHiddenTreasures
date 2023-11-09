@@ -14,18 +14,18 @@ using Windows.UI.Xaml.Media;
 
 namespace TheHiddenTreasures
 {
-    internal class Player : GameObject
+    public class Player : GameObject
     {
-        private const int MOVEMENT_SPEED = 2;
+        private const int MOVEMENT_SPEED = 5;
 
-        public Player(System.Drawing.Point startPoint, int width, int height, ref Canvas gameCanvas) 
-            : base(startPoint.X, startPoint.Y, width, height, new SolidColorBrush(Colors.Red), ref gameCanvas)
+        public Player(System.Drawing.Point startPoint, int width, int height, ref Canvas gameCanvas, Handler handler) 
+            : base(startPoint.X, startPoint.Y, width, height, new SolidColorBrush(Colors.Red), ref gameCanvas, handler)
         {
-            Canvas.SetLeft(Rect, Handler.gapSize + X * (Handler.cellWidth + Handler.gapSize) +
-                ((Handler.cellWidth - width) / 2));
+            Canvas.SetLeft(Rect, Handler.GAP_SIZE + X * (Handler.CELL_WIDTH + Handler.GAP_SIZE) +
+                ((Handler.CELL_WIDTH - width) / 2));
 
-            Canvas.SetTop(Rect, Handler.gapSize + Y * (Handler.cellHeight + Handler.gapSize) +
-                ((Handler.cellHeight - height) / 2));
+            Canvas.SetTop(Rect, Handler.GAP_SIZE + Y * (Handler.CELL_HEIGHT + Handler.GAP_SIZE) +
+                ((Handler.CELL_HEIGHT - height) / 2));
 
             gameCanvas.Children.Add(Rect);
         }
@@ -36,6 +36,7 @@ namespace TheHiddenTreasures
                 return;
 
             Canvas.SetTop(Rect, Canvas.GetTop(Rect) - MOVEMENT_SPEED);
+            handler.FocusOnPlayer();
         }
 
         public void MoveLeft()
@@ -44,6 +45,7 @@ namespace TheHiddenTreasures
                 return;
 
             Canvas.SetLeft(Rect, Canvas.GetLeft(Rect) - MOVEMENT_SPEED);
+            handler.FocusOnPlayer();
         }
 
         public void MoveDown()
@@ -52,6 +54,7 @@ namespace TheHiddenTreasures
                 return;
 
             Canvas.SetTop(Rect, Canvas.GetTop(Rect) + MOVEMENT_SPEED);
+            handler.FocusOnPlayer();
         }
 
         public void MoveRight()
@@ -60,11 +63,12 @@ namespace TheHiddenTreasures
                 return;
 
             Canvas.SetLeft(Rect, Canvas.GetLeft(Rect) + MOVEMENT_SPEED);
+            handler.FocusOnPlayer();
         }
 
         private bool WillCollide(int x, int y)
         {
-            foreach(var obj in Handler.renderObjectLst)
+            foreach(var obj in handler.RenderObjectLst)
             {
                 if (!(obj is Wall))
                     continue;

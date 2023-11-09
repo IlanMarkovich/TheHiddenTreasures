@@ -40,7 +40,7 @@ namespace TheHiddenTreasures
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            handler = new Handler(GameCanvas);
+            handler = new Handler(ref GameCanvas, ref GameCamera);
         }
 
         private void GameLoop(object sender, object e)

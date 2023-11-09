@@ -11,26 +11,32 @@ using Windows.UI.Xaml.Shapes;
 
 namespace TheHiddenTreasures
 {
-    internal class Handler
+    public class Handler
     {
-        public static int cellWidth = 20, cellHeight = 20, gapSize = 4;
+        public const int CELL_WIDTH = 100, CELL_HEIGHT = 100, GAP_SIZE = 20;
+
+        public List<RenderObject> RenderObjectLst { get; set; }
 
         private Canvas gameCanvas;
-        private MazeLevel currLevel;
+        private PlaneProjection gameCamera;
 
-        public static List<RenderObject> renderObjectLst;
+        private MazeLevel currLevel;
         private Player player;
 
-        public Handler(Canvas gameCanvas)
+        public Handler(ref Canvas gameCanvas, ref PlaneProjection gameCamera)
         {
             this.gameCanvas = gameCanvas;
+            this.gameCamera = gameCamera;
+
             currLevel = new MazeLevel(30, 30);
-            renderObjectLst = new List<RenderObject>();
+            RenderObjectLst = new List<RenderObject>();
+            player = new Player(currLevel.GetStartPoint(), 25, 25, ref gameCanvas, this);
+            RenderObjectLst.Add(player);
 
+            FocusOnPlayer();
+
+            currLevel.GenerateMaze();
             RenderMaze(30, 30);
-
-            player = new Player(currLevel.GetStartPoint(), 10, 10, ref gameCanvas);
-            renderObjectLst.Add(player);
         }
 
         public Player GetPlayer()
@@ -40,22 +46,19 @@ namespace TheHiddenTreasures
 
         public void RenderMaze(int width, int height)
         {
-            // Render start point and end point
-            RenderCell(currLevel.GetStartPoint(), Colors.White);
+            // Render end point
             RenderCell(currLevel.GetEndPoint(), Colors.Yellow);
 
-            // Add the top wall
-            AddWall(-gapSize, -gapSize, width * cellWidth + (width + 1) * gapSize, gapSize);
-
-            // Add the left wall
-            AddWall(-gapSize, -gapSize, gapSize, height * cellHeight + (height + 1) * gapSize);
+            // Add the top and left walls
+            AddWall(-GAP_SIZE, -GAP_SIZE, width * CELL_WIDTH + (width + 1) * GAP_SIZE, GAP_SIZE);
+            AddWall(-GAP_SIZE, -GAP_SIZE, GAP_SIZE, height * CELL_HEIGHT + (height + 1) * GAP_SIZE);
 
             // Add gaps to the walls
             for (int x = 1; x <= width; x++)
             {
                 for (int y = 1; y <= height; y++)
                 {
-                    AddWall(x * cellWidth + (x - 1) * gapSize, y * cellHeight + (y - 1) * gapSize, gapSize, gapSize);
+                    AddWall(x * CELL_WIDTH + (x - 1) * GAP_SIZE, y * CELL_HEIGHT + (y - 1) * GAP_SIZE, GAP_SIZE, GAP_SIZE);
                 }
             }
 
@@ -73,37 +76,50 @@ namespace TheHiddenTreasures
                     // Add vertical walls
                     if (y % 2 == 0)
                     {
-                        AddWall(x * gapSize + (x + 1) * cellWidth, (y / 2) * cellHeight + (y / 2) * gapSize, gapSize, cellHeight);
+                        AddWall(x * GAP_SIZE + (x + 1) * CELL_WIDTH, (y / 2) * CELL_HEIGHT + (y / 2) * GAP_SIZE, GAP_SIZE, CELL_HEIGHT);
                     }
                     // Add horizontal walls
                     else
                     {
-                        AddWall(x * (cellWidth + gapSize), (y / 2) * gapSize + (y / 2 + 1) * cellHeight, cellWidth, gapSize);
+                        AddWall(x * (CELL_WIDTH + GAP_SIZE), (y / 2) * GAP_SIZE + (y / 2 + 1) * CELL_HEIGHT, CELL_WIDTH, GAP_SIZE);
                     }
                 }
             }
         }
 
-        private void AddWall(int x, int y, int width, int height)
+        public void FocusOnPlayer()
         {
-            Wall newWall = new Wall(gapSize + x, gapSize + y, width, height, ref gameCanvas);
-            renderObjectLst.Add(newWall);
+            double canvasCenterX = gameCanvas.ActualWidth / 2;
+            double canvasCenterY = gameCanvas.ActualHeight / 2;
+
+            double playerCenterX = Canvas.GetLeft(player.Rect) + player.Rect.Width / 2;
+            double playerCenterY = Canvas.GetTop(player.Rect) + player.Rect.Height / 2;
+
+            gameCamera.GlobalOffsetX = canvasCenterX - playerCenterX;
+            gameCamera.GlobalOffsetY = canvasCenterY - playerCenterY;
+            gameCamera.GlobalOffsetZ = 200;
         }
 
+        private void AddWall(int x, int y, int width, int height)
+        {
+            RenderObjectLst.Add(new Wall(GAP_SIZE + x, GAP_SIZE + y, width, height, ref gameCanvas));
+        }
+
+        // TODO remove temp method
         private void RenderCell(Point p, Windows.UI.Color c)
         {
-            int x = p.X * (cellWidth + gapSize),
-                y = p.Y * (cellWidth + gapSize);
+            int x = p.X * (CELL_WIDTH + GAP_SIZE),
+                y = p.Y * (CELL_WIDTH + GAP_SIZE);
 
             var rect = new Windows.UI.Xaml.Shapes.Rectangle
             {
-                Width = cellWidth,
-                Height = cellHeight,
+                Width = CELL_WIDTH,
+                Height = CELL_HEIGHT,
                 Fill = new SolidColorBrush(c)
             };
 
-            Canvas.SetLeft(rect, gapSize + x);
-            Canvas.SetTop(rect, gapSize + y);
+            Canvas.SetLeft(rect, GAP_SIZE + x);
+            Canvas.SetTop(rect, GAP_SIZE + y);
 
             gameCanvas.Children.Add(rect);
         }
