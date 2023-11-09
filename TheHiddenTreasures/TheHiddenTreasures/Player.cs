@@ -30,7 +30,7 @@ namespace TheHiddenTreasures
             gameCanvas.Children.Add(Rect);
         }
 
-        public void Move(VirtualKey pressedKey)
+        public void Move(VirtualKey pressedKey, int movementSpeed = MOVEMENT_SPEED)
         {
             double x = Canvas.GetLeft(Rect),
                 y = Canvas.GetTop(Rect);
@@ -38,21 +38,27 @@ namespace TheHiddenTreasures
             switch (pressedKey)
             {
                 case VirtualKey.W:
-                    y -= MOVEMENT_SPEED;
+                    y -= movementSpeed;
                     break;
                 case VirtualKey.A:
-                    x -= MOVEMENT_SPEED;
+                    x -= movementSpeed;
                     break;
                 case VirtualKey.S:
-                    y += MOVEMENT_SPEED;
+                    y += movementSpeed;
                     break;
                 case VirtualKey.D:
-                    x += MOVEMENT_SPEED;
+                    x += movementSpeed;
                     break;
             }
 
             if (WillCollide(x, y))
+            {
+                // Decrease the movement speed to allow smaller movement to occur
+                if(movementSpeed - 1 > 0)
+                    Move(pressedKey, movementSpeed - 1);
+
                 return;
+            }
 
             Canvas.SetLeft(Rect, x);
             Canvas.SetTop(Rect, y);
