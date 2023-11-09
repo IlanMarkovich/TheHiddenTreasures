@@ -14,10 +14,6 @@ namespace TheHiddenTreasures
         public Wall(int canvasX, int canvasY, int width, int height, ref Canvas gameCanvas) :
             base(canvasX, canvasY, width, height, new SolidColorBrush(Colors.Blue), ref gameCanvas)
         {
-            Canvas.SetLeft(Rect, canvasX);
-            Canvas.SetTop(Rect, canvasY);
-
-            gameCanvas.Children.Add(Rect);
         }
     }
 }

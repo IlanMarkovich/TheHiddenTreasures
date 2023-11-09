@@ -14,20 +14,16 @@ namespace TheHiddenTreasures
     {
         public int X { get; set; }
         public int Y { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
         public Windows.UI.Xaml.Shapes.Rectangle Rect { get; set; }
-        public double CanvasX { get; set; }
-        public double CanvasY { get; set; }
 
         protected Canvas gameCanvas;
 
+        // C'tor for when game coordinates are known
+        // but the canvas coordinates aren't known and need to be calculated in the children
         public GameObject(Point point, int width, int height, Brush content, ref Canvas gameCanvas)
         {
             X = point.X;
             Y = point.Y;
-            Width = width;
-            Height = height;
 
             Rect = new Windows.UI.Xaml.Shapes.Rectangle
             {
@@ -39,11 +35,15 @@ namespace TheHiddenTreasures
             this.gameCanvas = gameCanvas;
         }
 
+        // C'tor for game object who don't need game coordinates (puts zero in 'X' and 'Y')
+        // and does know its canvas coordinates
         public GameObject(int canvasX, int canvasY, int width, int height, Brush content, ref Canvas gameCanvas)
             : this(new Point(0, 0), width, height, content, ref gameCanvas)
         {
-            this.CanvasX = canvasX;
-            this.CanvasY = canvasY;
+            Canvas.SetLeft(Rect, canvasX);
+            Canvas.SetTop(Rect, canvasY);
+
+            gameCanvas.Children.Add(Rect);
         }
     }
 }

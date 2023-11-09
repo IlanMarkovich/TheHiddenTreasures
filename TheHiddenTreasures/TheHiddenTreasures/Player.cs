@@ -21,52 +21,45 @@ namespace TheHiddenTreasures
         public Player(System.Drawing.Point startPoint, int width, int height, ref Canvas gameCanvas) 
             : base(startPoint, width, height, new SolidColorBrush(Colors.Red), ref gameCanvas)
         {
-            CanvasX = Handler.gapSize + X * (Handler.cellWidth + Handler.gapSize) +
-                ((Handler.cellWidth - width) / 2);
+            Canvas.SetLeft(Rect, Handler.gapSize + X * (Handler.cellWidth + Handler.gapSize) +
+                ((Handler.cellWidth - width) / 2));
 
-            CanvasY = Handler.gapSize + Y * (Handler.cellHeight + Handler.gapSize) +
-                ((Handler.cellHeight - height) / 2);
-
-            Canvas.SetLeft(Rect, CanvasX);
-            Canvas.SetTop(Rect, CanvasY);
+            Canvas.SetTop(Rect, Handler.gapSize + Y * (Handler.cellHeight + Handler.gapSize) +
+                ((Handler.cellHeight - height) / 2));
 
             gameCanvas.Children.Add(Rect);
         }
 
         public void MoveUp()
         {
-            if (WillCollide((int)CanvasX, (int)CanvasY - MOVEMENT_SPEED))
+            if (WillCollide((int)Canvas.GetLeft(Rect), (int)Canvas.GetTop(Rect) - MOVEMENT_SPEED))
                 return;
 
-            CanvasY -= MOVEMENT_SPEED;
-            Canvas.SetTop(Rect, CanvasY);
+            Canvas.SetTop(Rect, Canvas.GetTop(Rect) - MOVEMENT_SPEED);
         }
 
         public void MoveLeft()
         {
-            if (WillCollide((int)CanvasX - MOVEMENT_SPEED, (int)CanvasY))
+            if (WillCollide((int)Canvas.GetLeft(Rect) - MOVEMENT_SPEED, (int)Canvas.GetTop(Rect)))
                 return;
 
-            CanvasX -= MOVEMENT_SPEED;
-            Canvas.SetLeft(Rect, CanvasX);
+            Canvas.SetLeft(Rect, Canvas.GetLeft(Rect) - MOVEMENT_SPEED);
         }
 
         public void MoveDown()
         {
-            if (WillCollide((int)CanvasX, (int)CanvasY + MOVEMENT_SPEED))
+            if (WillCollide((int)Canvas.GetLeft(Rect), (int)Canvas.GetTop(Rect) + MOVEMENT_SPEED))
                 return;
 
-            CanvasY += MOVEMENT_SPEED;
-            Canvas.SetTop(Rect, CanvasY);
+            Canvas.SetTop(Rect, Canvas.GetTop(Rect) + MOVEMENT_SPEED);
         }
 
         public void MoveRight()
         {
-            if (WillCollide((int)CanvasX + MOVEMENT_SPEED, (int)CanvasY))
+            if (WillCollide((int)Canvas.GetLeft(Rect) + MOVEMENT_SPEED, (int)Canvas.GetTop(Rect)))
                 return;
 
-            CanvasX += MOVEMENT_SPEED;
-            Canvas.SetLeft(Rect, CanvasX);
+            Canvas.SetLeft(Rect, Canvas.GetLeft(Rect) + MOVEMENT_SPEED);
         }
 
         private bool WillCollide(int x, int y)
@@ -76,8 +69,8 @@ namespace TheHiddenTreasures
                 if (!(obj is Wall))
                     continue;
 
-                var wallRect = new Rect(obj.CanvasX, obj.CanvasY, obj.Width, obj.Height);
-                var playerRect = new Rect(x, y, Width, Height);
+                var wallRect = new Rect(Canvas.GetLeft(obj.Rect), Canvas.GetTop(obj.Rect), obj.Rect.Width, obj.Rect.Height);
+                var playerRect = new Rect(x, y, Rect.Width, Rect.Height);
 
                 playerRect.Intersect(wallRect);
 
