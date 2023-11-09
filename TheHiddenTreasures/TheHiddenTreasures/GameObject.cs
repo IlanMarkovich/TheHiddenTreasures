@@ -17,8 +17,8 @@ namespace TheHiddenTreasures
         public int Width { get; set; }
         public int Height { get; set; }
         public Windows.UI.Xaml.Shapes.Rectangle Rect { get; set; }
-        public int CanvasX { get; set; }
-        public int CanvasY { get; set; }
+        public double CanvasX { get; set; }
+        public double CanvasY { get; set; }
 
         protected Canvas gameCanvas;
 

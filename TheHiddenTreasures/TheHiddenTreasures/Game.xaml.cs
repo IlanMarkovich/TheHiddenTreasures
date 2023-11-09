@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -23,11 +26,16 @@ namespace TheHiddenTreasures
     public sealed partial class Game : Page
     {
         private Handler handler;
+        private DispatcherTimer timer;
 
         public Game()
         {
             this.InitializeComponent();
-            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(16.666);
+            timer.Tick += GameLoop;
+            timer.Start();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -35,9 +43,30 @@ namespace TheHiddenTreasures
             handler = new Handler(GameCanvas);
         }
 
-        private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
+        private void GameLoop(object sender, object e)
         {
-            handler.GetPlayer().Move(args.VirtualKey);
+            HandleInput();
+        }
+
+        private void HandleInput()
+        {
+            if (KeyIsPressed(Windows.System.VirtualKey.W))
+                handler.GetPlayer().MoveUp();
+
+            if (KeyIsPressed(Windows.System.VirtualKey.A))
+                handler.GetPlayer().MoveLeft();
+
+            if (KeyIsPressed(Windows.System.VirtualKey.S))
+                handler.GetPlayer().MoveDown();
+
+            if (KeyIsPressed(Windows.System.VirtualKey.D))
+                handler.GetPlayer().MoveRight();
+        }
+
+        private bool KeyIsPressed(Windows.System.VirtualKey key)
+        {
+            CoreVirtualKeyStates state = CoreWindow.GetForCurrentThread().GetKeyState(key);
+            return (state & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
         }
     }
 }
