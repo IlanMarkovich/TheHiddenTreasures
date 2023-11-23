@@ -27,9 +27,14 @@ namespace TheHiddenTreasures
             this.InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private void PlayBtn_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Game));
+        }
+
+        private void ExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
         }
     }
 }
