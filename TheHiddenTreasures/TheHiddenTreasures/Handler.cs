@@ -20,14 +20,17 @@ namespace TheHiddenTreasures
 
         private Canvas gameCanvas;
         private PlaneProjection gameCamera;
+        private TextBlock X_tb, Y_tb;
 
         private MazeLevel currLevel;
         private Player player;
 
-        public Handler(ref Canvas gameCanvas, ref PlaneProjection gameCamera)
+        public Handler(ref Canvas gameCanvas, ref PlaneProjection gameCamera, ref TextBlock X_tb, ref TextBlock Y_tb)
         {
             this.gameCanvas = gameCanvas;
             this.gameCamera = gameCamera;
+            this.X_tb = X_tb;
+            this.Y_tb = Y_tb;
 
             currLevel = new MazeLevel(30, 30);
             RenderObjectLst = new List<RenderObject>();
@@ -90,6 +93,8 @@ namespace TheHiddenTreasures
 
         public void FocusOnPlayer()
         {
+            UpdateCoordinates();
+
             if (!Game.isCameraOn)
                 return;
 
@@ -102,6 +107,12 @@ namespace TheHiddenTreasures
             gameCamera.GlobalOffsetX = canvasCenterX - playerCenterX;
             gameCamera.GlobalOffsetY = canvasCenterY - playerCenterY;
             gameCamera.GlobalOffsetZ = ZOOM_LEVEL;
+        }
+
+        private void UpdateCoordinates()
+        {
+            X_tb.Text = $"X: {player.X}";
+            Y_tb.Text = $"Y: {player.Y}";
         }
 
         private void AddWall(int x, int y, int width, int height)
