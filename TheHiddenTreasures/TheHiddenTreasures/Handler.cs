@@ -35,12 +35,13 @@ namespace TheHiddenTreasures
             currLevel = new MazeLevel(30, 30);
             RenderObjectLst = new List<RenderObject>();
             player = new Player(currLevel.GetStartPoint(), 25, 25, ref gameCanvas, this);
-            RenderObjectLst.Add(player);
-
-            FocusOnPlayer();
 
             currLevel.GenerateMaze();
             RenderMaze(30, 30);
+
+            FocusOnPlayer();
+            UpdateCoordinates();
+            UpdateVisibility();
         }
 
         public Player GetPlayer()
@@ -93,8 +94,6 @@ namespace TheHiddenTreasures
 
         public void FocusOnPlayer()
         {
-            UpdateCoordinates();
-
             if (!Game.isCameraOn)
                 return;
 
@@ -109,10 +108,20 @@ namespace TheHiddenTreasures
             gameCamera.GlobalOffsetZ = ZOOM_LEVEL;
         }
 
-        private void UpdateCoordinates()
+        public void UpdateCoordinates()
         {
             X_tb.Text = $"X: {player.X}";
             Y_tb.Text = $"Y: {player.Y}";
+        }
+
+        public void UpdateVisibility()
+        {
+            foreach(var obj in RenderObjectLst)
+            {
+                double distance = Math.Sqrt(Math.Pow(Canvas.GetLeft(player.Rect) - Canvas.GetLeft(obj.Rect), 2) + Math.Pow(Canvas.GetTop(player.Rect) - Canvas.GetTop(obj.Rect), 2));
+
+                obj.Rect.Opacity = distance < 300 ? 25 / distance : 0;
+            }
         }
 
         private void AddWall(int x, int y, int width, int height)
