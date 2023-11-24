@@ -39,9 +39,7 @@ namespace TheHiddenTreasures
             currLevel.GenerateMaze();
             RenderMaze(30, 30);
 
-            FocusOnPlayer();
-            UpdateCoordinates();
-            UpdateVisibility();
+            UpdateOnPlayerMove();
         }
 
         public Player GetPlayer()
@@ -54,14 +52,18 @@ namespace TheHiddenTreasures
             // Render end point
             RenderCell(currLevel.GetEndPoint(), Colors.Yellow);
 
+
             // Add the top and left walls
-            AddWall(-GAP_SIZE, -GAP_SIZE, width * CELL_WIDTH + (width + 1) * GAP_SIZE, GAP_SIZE);
-            AddWall(-GAP_SIZE, -GAP_SIZE, GAP_SIZE, height * CELL_HEIGHT + (height + 1) * GAP_SIZE);
+            for (int i = 0; i < width; i++)
+            {
+                AddWall(i * CELL_WIDTH + i * GAP_SIZE, -GAP_SIZE, CELL_WIDTH, GAP_SIZE);
+                AddWall(-GAP_SIZE, i * CELL_HEIGHT + i * GAP_SIZE, GAP_SIZE, CELL_HEIGHT);
+            }
 
             // Add gaps to the walls
-            for (int x = 1; x <= width; x++)
+            for (int x = 0; x <= width; x++)
             {
-                for (int y = 1; y <= height; y++)
+                for (int y = 0; y <= height; y++)
                 {
                     AddWall(x * CELL_WIDTH + (x - 1) * GAP_SIZE, y * CELL_HEIGHT + (y - 1) * GAP_SIZE, GAP_SIZE, GAP_SIZE);
                 }
@@ -92,7 +94,14 @@ namespace TheHiddenTreasures
             }
         }
 
-        public void FocusOnPlayer()
+        public void UpdateOnPlayerMove()
+        {
+            FocusOnPlayer();
+            UpdateCoordinates();
+            UpdateVisibility();
+        }
+
+        private void FocusOnPlayer()
         {
             if (!Game.isCameraOn)
                 return;
@@ -108,19 +117,20 @@ namespace TheHiddenTreasures
             gameCamera.GlobalOffsetZ = ZOOM_LEVEL;
         }
 
-        public void UpdateCoordinates()
+        private void UpdateCoordinates()
         {
             X_tb.Text = $"X: {player.X}";
             Y_tb.Text = $"Y: {player.Y}";
         }
 
-        public void UpdateVisibility()
+        private void UpdateVisibility()
         {
             foreach(var obj in RenderObjectLst)
             {
                 double distance = Math.Sqrt(Math.Pow(Canvas.GetLeft(player.Rect) - Canvas.GetLeft(obj.Rect), 2) + Math.Pow(Canvas.GetTop(player.Rect) - Canvas.GetTop(obj.Rect), 2));
 
-                obj.Rect.Opacity = distance < 300 ? 25 / distance : 0;
+                double visibility = 20 / distance;
+                obj.Rect.Opacity = distance > 500 ? 0 : visibility > 0.75 ? 0.75 : visibility;
             }
         }
 

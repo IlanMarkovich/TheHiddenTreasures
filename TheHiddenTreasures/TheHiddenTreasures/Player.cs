@@ -66,9 +66,7 @@ namespace TheHiddenTreasures
             X = (int) Math.Round((x - Handler.GAP_SIZE - ((Handler.CELL_WIDTH - Rect.Width) / 2)) / (Handler.CELL_WIDTH + Handler.GAP_SIZE));
             Y = (int) Math.Round((y - Handler.GAP_SIZE - ((Handler.CELL_HEIGHT - Rect.Height) / 2)) / (Handler.CELL_HEIGHT + Handler.GAP_SIZE));
 
-            handler.FocusOnPlayer();
-            handler.UpdateCoordinates();
-            handler.UpdateVisibility();
+            handler.UpdateOnPlayerMove();
         }
 
         private bool WillCollide(double x, double y)

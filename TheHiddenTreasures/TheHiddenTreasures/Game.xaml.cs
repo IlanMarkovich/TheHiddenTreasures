@@ -87,7 +87,7 @@ namespace TheHiddenTreasures
                 isCameraOn = !isCameraOn;
 
                 if (isCameraOn)
-                    handler.FocusOnPlayer();
+                    handler.UpdateOnPlayerMove();
                 else
                     GameCamera.GlobalOffsetZ = -25 * Handler.ZOOM_LEVEL;
             }
