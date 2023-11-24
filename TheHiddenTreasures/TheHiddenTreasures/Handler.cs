@@ -15,6 +15,7 @@ namespace TheHiddenTreasures
     {
         public const int CELL_WIDTH = 100, CELL_HEIGHT = 100, GAP_SIZE = 20;
         public const int ZOOM_LEVEL = 250;
+        public const double DEFAULT_VISIBILITY = 500, MAX_OPACITY = 0.75;
 
         public List<RenderObject> RenderObjectLst { get; set; }
 
@@ -25,12 +26,16 @@ namespace TheHiddenTreasures
         private MazeLevel currLevel;
         private Player player;
 
+        private int visibilityRadius;
+
         public Handler(ref Canvas gameCanvas, ref PlaneProjection gameCamera, ref TextBlock X_tb, ref TextBlock Y_tb)
         {
             this.gameCanvas = gameCanvas;
             this.gameCamera = gameCamera;
             this.X_tb = X_tb;
             this.Y_tb = Y_tb;
+
+            visibilityRadius = (int)DEFAULT_VISIBILITY;
 
             currLevel = new MazeLevel(30, 30);
             RenderObjectLst = new List<RenderObject>();
@@ -125,12 +130,20 @@ namespace TheHiddenTreasures
 
         private void UpdateVisibility()
         {
+            if (!Game.isVisibilityOn)
+                return;
+
             foreach(var obj in RenderObjectLst)
             {
+                // Distance between the object and the player
                 double distance = Math.Sqrt(Math.Pow(Canvas.GetLeft(player.Rect) - Canvas.GetLeft(obj.Rect), 2) + Math.Pow(Canvas.GetTop(player.Rect) - Canvas.GetTop(obj.Rect), 2));
 
-                double visibility = 20 / distance;
-                obj.Rect.Opacity = distance > 500 ? 0 : visibility > 0.75 ? 0.75 : visibility;
+                // Formula for calculating the visibility (opacity) based on the distance
+                double visibility = (visibilityRadius / 25) / distance;
+
+                // If the distance is greater than the visibility radius, the opacity will be zero
+                // and if the visibility exceeds the maximum opacity, set it to the maximum opacity 
+                obj.Rect.Opacity = distance > visibilityRadius ? 0 : visibility > MAX_OPACITY ? MAX_OPACITY : visibility;
             }
         }
 

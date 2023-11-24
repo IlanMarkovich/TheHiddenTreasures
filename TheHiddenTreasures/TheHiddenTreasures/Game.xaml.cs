@@ -25,7 +25,7 @@ namespace TheHiddenTreasures
     /// </summary>
     public sealed partial class Game : Page
     {
-        public static bool isCameraOn;
+        public static bool isCameraOn, isVisibilityOn;
 
         private Handler handler;
         private DispatcherTimer timer;
@@ -47,6 +47,7 @@ namespace TheHiddenTreasures
             { Windows.System.VirtualKey.W , Windows.System.VirtualKey.A, Windows.System.VirtualKey.S, Windows.System.VirtualKey.D};
 
             isCameraOn = true;
+            isVisibilityOn = true;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -90,6 +91,18 @@ namespace TheHiddenTreasures
                     handler.UpdateOnPlayerMove();
                 else
                     GameCamera.GlobalOffsetZ = -25 * Handler.ZOOM_LEVEL;
+            }
+            else if(args.VirtualKey == Windows.System.VirtualKey.X)
+            {
+                isVisibilityOn = !isVisibilityOn;
+
+                if (isVisibilityOn)
+                    handler.UpdateOnPlayerMove();
+                else
+                {
+                    foreach (var obj in handler.RenderObjectLst)
+                        obj.Rect.Opacity = 1;
+                }
             }
         }
     }
