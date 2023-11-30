@@ -17,6 +17,7 @@ namespace TheHiddenTreasures
         public const int PLAYER_SIZE = 25;
         public const int ZOOM_LEVEL = 250;
         public const double DEFAULT_VISIBILITY = 500, MAX_OPACITY = 0.85;
+        public const int LEVEL_SIZE = 5;
 
         public List<RenderObject> RenderObjectLst { get; set; }
 
@@ -28,6 +29,7 @@ namespace TheHiddenTreasures
         private Player player;
 
         private int visibilityRadius;
+        private int levelNumber, currLevelSize;
 
         public Handler(ref Canvas gameCanvas, ref PlaneProjection gameCamera, ref TextBlock X_tb, ref TextBlock Y_tb)
         {
@@ -35,22 +37,30 @@ namespace TheHiddenTreasures
             this.gameCamera = gameCamera;
             this.X_tb = X_tb;
             this.Y_tb = Y_tb;
+            levelNumber = 0;
 
             visibilityRadius = (int)DEFAULT_VISIBILITY;
-
-            currLevel = new MazeLevel(15, 15);
-            RenderObjectLst = new List<RenderObject>();
-            player = new Player(currLevel.GetStartPoint(), PLAYER_SIZE, PLAYER_SIZE, ref gameCanvas, this);
-
-            currLevel.GenerateMaze();
-            RenderMaze(15, 15);
-
-            UpdateOnPlayerMove();
+            StartLevel();
         }
 
         public Player GetPlayer()
         {
             return player;
+        }
+
+        public void StartLevel()
+        {
+            levelNumber++;
+            currLevelSize = (LEVEL_SIZE * 3) + (levelNumber - 1) * LEVEL_SIZE;
+
+            currLevel = new MazeLevel(currLevelSize, currLevelSize);
+            RenderObjectLst = new List<RenderObject>();
+            player = new Player(currLevel.GetStartPoint(), PLAYER_SIZE, PLAYER_SIZE, ref gameCanvas, this);
+
+            currLevel.GenerateMaze();
+            RenderMaze(currLevelSize, currLevelSize);
+
+            UpdateOnPlayerMove();
         }
 
         public void RenderMaze(int width, int height)
@@ -100,11 +110,29 @@ namespace TheHiddenTreasures
             }
         }
 
+        public void NextLevel()
+        {
+            gameCanvas.Children.Remove(player.Rect);
+
+            foreach(var obj in RenderObjectLst)
+            {
+                gameCanvas.Children.Remove(obj.Rect);
+            }
+
+            RenderCell(currLevel.GetEndPoint(), Colors.Black);
+            StartLevel();
+        }
+        
         public void UpdateOnPlayerMove()
         {
             FocusOnPlayer();
             UpdateCoordinates();
             UpdateVisibility();
+
+            if(new Point(player.X, player.Y).Equals(currLevel.GetEndPoint()))
+            {
+                NextLevel();
+            }
         }
 
         private void FocusOnPlayer()
