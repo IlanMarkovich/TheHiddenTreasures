@@ -14,8 +14,9 @@ namespace TheHiddenTreasures
     public class Handler
     {
         public const int CELL_WIDTH = 100, CELL_HEIGHT = 100, GAP_SIZE = 20;
+        public const int PLAYER_SIZE = 25;
         public const int ZOOM_LEVEL = 250;
-        public const double DEFAULT_VISIBILITY = 500, MAX_OPACITY = 0.75;
+        public const double DEFAULT_VISIBILITY = 500, MAX_OPACITY = 0.85;
 
         public List<RenderObject> RenderObjectLst { get; set; }
 
@@ -37,12 +38,12 @@ namespace TheHiddenTreasures
 
             visibilityRadius = (int)DEFAULT_VISIBILITY;
 
-            currLevel = new MazeLevel(30, 30);
+            currLevel = new MazeLevel(15, 15);
             RenderObjectLst = new List<RenderObject>();
-            player = new Player(currLevel.GetStartPoint(), 25, 25, ref gameCanvas, this);
+            player = new Player(currLevel.GetStartPoint(), PLAYER_SIZE, PLAYER_SIZE, ref gameCanvas, this);
 
             currLevel.GenerateMaze();
-            RenderMaze(30, 30);
+            RenderMaze(15, 15);
 
             UpdateOnPlayerMove();
         }
@@ -124,8 +125,8 @@ namespace TheHiddenTreasures
 
         private void UpdateCoordinates()
         {
-            X_tb.Text = $"X: {player.X}";
-            Y_tb.Text = $"Y: {player.Y}";
+            X_tb.Text = $"X: {player.X + 1}";
+            Y_tb.Text = $"Y: {player.Y + 1}";
         }
 
         private void UpdateVisibility()
@@ -139,7 +140,7 @@ namespace TheHiddenTreasures
                 double distance = Math.Sqrt(Math.Pow(Canvas.GetLeft(player.Rect) - Canvas.GetLeft(obj.Rect), 2) + Math.Pow(Canvas.GetTop(player.Rect) - Canvas.GetTop(obj.Rect), 2));
 
                 // Formula for calculating the visibility (opacity) based on the distance
-                double visibility = (visibilityRadius / 25) / distance;
+                double visibility = (visibilityRadius / 15) / distance;
 
                 // If the distance is greater than the visibility radius, the opacity will be zero
                 // and if the visibility exceeds the maximum opacity, set it to the maximum opacity 
