@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -52,7 +53,7 @@ namespace TheHiddenTreasures
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            handler = new Handler(ref GameCanvas, ref GameCamera, ref X_tb, ref Y_tb);
+            handler = new Handler(ref GameCanvas, ref GameCamera, ref X_tb, ref Y_tb, ref Level_tb, FinishGame);
         }
 
         private void GameLoop(object sender, object e)
@@ -104,6 +105,15 @@ namespace TheHiddenTreasures
                         obj.Rect.Opacity = 1;
                 }
             }
+        }
+
+        private void FinishGame()
+        {
+            // Free this method from the handler of the KeyDown event
+            Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
+
+            handler = new Handler(ref GameCanvas, ref GameCamera, ref X_tb, ref Y_tb, ref Level_tb, FinishGame);
+            Frame.Navigate(typeof(MainPage));
         }
     }
 }
