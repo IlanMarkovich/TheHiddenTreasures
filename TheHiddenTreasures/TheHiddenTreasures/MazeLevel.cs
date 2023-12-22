@@ -34,6 +34,7 @@ namespace TheHiddenTreasures
         private int width, height;
 
         private bool didSetEndPoint;
+        private List<Point> startEndPath;
 
         public MazeLevel(int width, int height)
         {
@@ -53,6 +54,7 @@ namespace TheHiddenTreasures
             startPoint.Y = rand.Next(rand.Next(0, height - 1));
 
             didSetEndPoint = false;
+            startEndPath = new List<Point>();
         }
 
         public Tile[,] GetLayout()
@@ -70,6 +72,11 @@ namespace TheHiddenTreasures
             return endPoint;
         }
 
+        public List<Point> GetStartEndPath()
+        {
+            return startEndPath;
+        }
+
         public void GenerateMaze()
         {
             GridCell[,] grid = new GridCell[width, height];
@@ -83,7 +90,7 @@ namespace TheHiddenTreasures
             CreateMazeLayout(startPoint, ref grid);
         }
 
-        private void BuildMazeGrid(Point currPoint, ref GridCell[,] grid, ref Stack<Point> posStack)
+        private void BuildMazeGrid(Point currPoint, ref GridCell[,] grid, ref Stack<Point> posStack, int count = 0)
         {
             int x = currPoint.X, y = currPoint.Y;
             grid[x, y].IsVisited = true;
@@ -109,10 +116,15 @@ namespace TheHiddenTreasures
             {
                 // If not all the cells been visited yet, go back and visit them
                 if (!AreAllVisited(grid))
-                    BuildMazeGrid(posStack.Pop(), ref grid, ref posStack);
+                {
+                    if (!didSetEndPoint)
+                        startEndPath.RemoveAt(startEndPath.Count - 1);
+
+                    BuildMazeGrid(posStack.Pop(), ref grid, ref posStack, count);
+                }
                 
                 // If didn't already set an end point, and the current point is far enough from the start point, set this point as the end point
-                if(!didSetEndPoint && (Distance(currPoint, startPoint) >= (grid.GetLength(0) + grid.GetLength(1)) / 2))
+                if(!didSetEndPoint && count >= (grid.GetLength(0) * grid.GetLength(1)) * 0.75)
                 {
                     didSetEndPoint = true;
                     endPoint = currPoint;
@@ -142,13 +154,16 @@ namespace TheHiddenTreasures
                     break;
             }
 
+            if(!didSetEndPoint)
+                startEndPath.Add(newPoint);
+
             // Set this point as a next point (for the layout algorithem to know where to put paths)
             grid[x, y].NextPoints.Enqueue(newPoint);
 
             // Save this point in the "history stack"
             posStack.Push(currPoint);
 
-            BuildMazeGrid(newPoint, ref grid, ref posStack);
+            BuildMazeGrid(newPoint, ref grid, ref posStack, count + 1);
         }
 
         private bool AreAllVisited(GridCell[,] grid)

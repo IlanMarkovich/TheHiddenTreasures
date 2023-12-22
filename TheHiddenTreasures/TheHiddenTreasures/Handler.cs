@@ -65,9 +65,14 @@ namespace TheHiddenTreasures
 
         public void RenderMaze(int width, int height)
         {
+            // Render path from the start to the end
+            foreach (Point point in currLevel.GetStartEndPath())
+            {
+                RenderCell(point, Colors.White);
+            }
+
             // Render end point
             RenderCell(currLevel.GetEndPoint(), Colors.Yellow);
-
 
             // Add the top and left walls
             for (int i = 0; i < width; i++)
