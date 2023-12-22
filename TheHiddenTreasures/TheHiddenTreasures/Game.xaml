@@ -19,6 +19,7 @@
         <StackPanel Orientation="Vertical">
             <TextBlock Text="X: 0" Name="X_tb" Foreground="White" FontSize="50" FontWeight="SemiBold"/>
             <TextBlock Text="Y: 0" Name="Y_tb" Foreground="White" FontSize="50" FontWeight="SemiBold"/>
+            <TextBlock Text="Level: 1" Name="Level_tb" Foreground="White" FontSize="50" FontWeight="SemiBold"/>
         </StackPanel>
     </Grid>
 </Page>

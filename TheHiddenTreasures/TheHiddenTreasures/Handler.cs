@@ -16,14 +16,17 @@ namespace TheHiddenTreasures
         public const int CELL_WIDTH = 100, CELL_HEIGHT = 100, GAP_SIZE = 20;
         public const int PLAYER_SIZE = 25;
         public const int ZOOM_LEVEL = 250;
-        public const double DEFAULT_VISIBILITY = 500, MAX_OPACITY = 0.85;
-        public const int LEVEL_SIZE = 5;
+        public const double DEFAULT_VISIBILITY = 350, MAX_OPACITY = 0.85;
+        public const int LEVEL_SIZE = 5, FINAL_LEVEL = 3;
+
+        public delegate void FinishGame();
+        private FinishGame finishGame;
 
         public List<RenderObject> RenderObjectLst { get; set; }
 
         private Canvas gameCanvas;
         private PlaneProjection gameCamera;
-        private TextBlock X_tb, Y_tb;
+        private TextBlock X_tb, Y_tb, Level_tb;
 
         private MazeLevel currLevel;
         private Player player;
@@ -31,15 +34,18 @@ namespace TheHiddenTreasures
         private int visibilityRadius;
         private int levelNumber, currLevelSize;
 
-        public Handler(ref Canvas gameCanvas, ref PlaneProjection gameCamera, ref TextBlock X_tb, ref TextBlock Y_tb)
+        public Handler(ref Canvas gameCanvas, ref PlaneProjection gameCamera, ref TextBlock X_tb, ref TextBlock Y_tb, ref TextBlock Level_tb, FinishGame finishGame)
         {
             this.gameCanvas = gameCanvas;
             this.gameCamera = gameCamera;
             this.X_tb = X_tb;
             this.Y_tb = Y_tb;
-            levelNumber = 0;
+            this.Level_tb = Level_tb;
+            this.finishGame = finishGame;
 
+            levelNumber = 1;
             visibilityRadius = (int)DEFAULT_VISIBILITY;
+
             StartLevel();
         }
 
@@ -50,16 +56,15 @@ namespace TheHiddenTreasures
 
         public void StartLevel()
         {
-            levelNumber++;
-            currLevelSize = (LEVEL_SIZE * 3) + (levelNumber - 1) * LEVEL_SIZE;
+            currLevelSize = (LEVEL_SIZE * 2) + (levelNumber - 1) * LEVEL_SIZE;
 
             currLevel = new MazeLevel(currLevelSize, currLevelSize);
+            currLevel.GenerateMaze();
+
             RenderObjectLst = new List<RenderObject>();
             player = new Player(currLevel.GetStartPoint(), PLAYER_SIZE, PLAYER_SIZE, ref gameCanvas, this);
 
-            currLevel.GenerateMaze();
             RenderMaze(currLevelSize, currLevelSize);
-
             UpdateOnPlayerMove();
         }
 
@@ -117,6 +122,12 @@ namespace TheHiddenTreasures
 
         public void NextLevel()
         {
+            if(levelNumber == FINAL_LEVEL)
+            {
+                finishGame();
+                return;
+            }
+
             gameCanvas.Children.Remove(player.Rect);
 
             foreach(var obj in RenderObjectLst)
@@ -125,6 +136,9 @@ namespace TheHiddenTreasures
             }
 
             RenderCell(currLevel.GetEndPoint(), Colors.Black);
+
+            levelNumber++;
+            Level_tb.Text = $"Level: { levelNumber }";
             StartLevel();
         }
         
@@ -134,7 +148,7 @@ namespace TheHiddenTreasures
             UpdateCoordinates();
             UpdateVisibility();
 
-            if(new Point(player.X, player.Y).Equals(currLevel.GetEndPoint()))
+            if((new Point(player.X, player.Y)).Equals(currLevel.GetEndPoint()))
             {
                 NextLevel();
             }
@@ -173,7 +187,7 @@ namespace TheHiddenTreasures
                 double distance = Math.Sqrt(Math.Pow(Canvas.GetLeft(player.Rect) - Canvas.GetLeft(obj.Rect), 2) + Math.Pow(Canvas.GetTop(player.Rect) - Canvas.GetTop(obj.Rect), 2));
 
                 // Formula for calculating the visibility (opacity) based on the distance
-                double visibility = (visibilityRadius / 15) / distance;
+                double visibility = (visibilityRadius / 25) / distance;
 
                 // If the distance is greater than the visibility radius, the opacity will be zero
                 // and if the visibility exceeds the maximum opacity, set it to the maximum opacity 
