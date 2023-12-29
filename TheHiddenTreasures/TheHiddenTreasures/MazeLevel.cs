@@ -124,7 +124,7 @@ namespace TheHiddenTreasures
                 }
                 
                 // If didn't already set an end point, and the current point is far enough from the start point, set this point as the end point
-                if(!didSetEndPoint && count >= (grid.GetLength(0) * grid.GetLength(1)) * 0.75)
+                if(!didSetEndPoint)
                 {
                     didSetEndPoint = true;
                     endPoint = currPoint;

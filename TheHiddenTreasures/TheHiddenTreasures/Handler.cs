@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.VoiceCommands;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -15,6 +16,7 @@ namespace TheHiddenTreasures
     {
         public const int CELL_WIDTH = 100, CELL_HEIGHT = 100, GAP_SIZE = 20;
         public const int PLAYER_SIZE = 25;
+        public const int TRAP_SIZE = 75;
         public const int ZOOM_LEVEL = 250;
         public const double DEFAULT_VISIBILITY = 350, MAX_OPACITY = 0.85;
         public const int LEVEL_SIZE = 5, FINAL_LEVEL = 3;
@@ -64,18 +66,13 @@ namespace TheHiddenTreasures
             RenderObjectLst = new List<RenderObject>();
             player = new Player(currLevel.GetStartPoint(), PLAYER_SIZE, PLAYER_SIZE, ref gameCanvas, this);
 
+            PlaceTraps();
             RenderMaze(currLevelSize, currLevelSize);
             UpdateOnPlayerMove();
         }
 
         public void RenderMaze(int width, int height)
         {
-            // Render path from the start to the end
-            foreach (Point point in currLevel.GetStartEndPath())
-            {
-                RenderCell(point, Colors.White);
-            }
-
             // Render end point
             RenderCell(currLevel.GetEndPoint(), Colors.Yellow);
 
@@ -187,11 +184,30 @@ namespace TheHiddenTreasures
                 double distance = Math.Sqrt(Math.Pow(Canvas.GetLeft(player.Rect) - Canvas.GetLeft(obj.Rect), 2) + Math.Pow(Canvas.GetTop(player.Rect) - Canvas.GetTop(obj.Rect), 2));
 
                 // Formula for calculating the visibility (opacity) based on the distance
-                double visibility = (visibilityRadius / 25) / distance;
+                double visibility = obj is Trap ? (visibilityRadius / 100) / distance : (visibilityRadius / 25) / distance;
 
                 // If the distance is greater than the visibility radius, the opacity will be zero
-                // and if the visibility exceeds the maximum opacity, set it to the maximum opacity 
+                // and if the visibility exceeds the maximum opacity, set it to the maximum opacity
                 obj.Rect.Opacity = distance > visibilityRadius ? 0 : visibility > MAX_OPACITY ? MAX_OPACITY : visibility;
+            }
+        }
+
+        public void PlaceTraps()
+        {
+            Random rand = new Random();
+
+            for(int i = 0; i < levelNumber * 10; i++)
+            {
+                int x = -1, y = -1;
+
+                while(x == -1 || y == -1 || currLevel.GetStartEndPath().Count(p => p == new Point(x, y)) != 0)
+                {
+                    x = rand.Next(0, currLevelSize);
+                    y = rand.Next(0, currLevelSize);
+                }
+
+                Trap t = new Trap(new Point(x, y), TRAP_SIZE, TRAP_SIZE, ref gameCanvas, this);
+                RenderObjectLst.Add(t);
             }
         }
 
