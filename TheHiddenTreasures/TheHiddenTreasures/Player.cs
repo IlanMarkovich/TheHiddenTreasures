@@ -73,7 +73,7 @@ namespace TheHiddenTreasures
         {
             foreach(var obj in handler.RenderObjectLst)
             {
-                if (!(obj is Wall))
+                if (!(obj is Wall) && !(obj is Trap))
                     continue;
 
                 var wallRect = new Rect(Canvas.GetLeft(obj.Rect), Canvas.GetTop(obj.Rect), obj.Rect.Width, obj.Rect.Height);
@@ -82,7 +82,12 @@ namespace TheHiddenTreasures
                 playerRect.Intersect(wallRect);
 
                 if (!playerRect.IsEmpty)
+                {
+                    if (obj is Trap)
+                        handler.GameOver();
+
                     return true;
+                }
             }
 
             return false;

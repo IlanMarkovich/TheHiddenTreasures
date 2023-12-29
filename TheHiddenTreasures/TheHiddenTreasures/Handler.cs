@@ -56,6 +56,11 @@ namespace TheHiddenTreasures
             return player;
         }
 
+        public void GameOver()
+        {
+            finishGame();
+        }
+
         public void StartLevel()
         {
             currLevelSize = (LEVEL_SIZE * 2) + (levelNumber - 1) * LEVEL_SIZE;
@@ -200,14 +205,13 @@ namespace TheHiddenTreasures
             {
                 int x = -1, y = -1;
 
-                while(x == -1 || y == -1 || currLevel.GetStartEndPath().Count(p => p == new Point(x, y)) != 0)
+                while(x == -1 || y == -1 || currLevel.GetStartPoint() == new Point(x, y) || currLevel.GetStartEndPath().Count(p => p == new Point(x, y)) != 0)
                 {
                     x = rand.Next(0, currLevelSize);
                     y = rand.Next(0, currLevelSize);
                 }
 
-                Trap t = new Trap(new Point(x, y), TRAP_SIZE, TRAP_SIZE, ref gameCanvas, this);
-                RenderObjectLst.Add(t);
+                RenderObjectLst.Add(new Trap(new Point(x, y), TRAP_SIZE, TRAP_SIZE, ref gameCanvas, this));
             }
         }
 
