@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 using Windows.Gaming.XboxLive.Storage;
 
 namespace TheHiddenTreasures
@@ -124,7 +126,7 @@ namespace TheHiddenTreasures
                 }
                 
                 // If didn't already set an end point, and the current point is far enough from the start point, set this point as the end point
-                if(!didSetEndPoint)
+                if(!didSetEndPoint && count >= grid.GetLength(0) * 3)
                 {
                     didSetEndPoint = true;
                     endPoint = currPoint;

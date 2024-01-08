@@ -189,7 +189,7 @@ namespace TheHiddenTreasures
                 double distance = Math.Sqrt(Math.Pow(Canvas.GetLeft(player.Rect) - Canvas.GetLeft(obj.Rect), 2) + Math.Pow(Canvas.GetTop(player.Rect) - Canvas.GetTop(obj.Rect), 2));
 
                 // Formula for calculating the visibility (opacity) based on the distance
-                double visibility = obj is Trap ? (visibilityRadius / 100) / distance : (visibilityRadius / 25) / distance;
+                double visibility = obj is Trap ? (visibilityRadius / 150) / distance : (visibilityRadius / 25) / distance;
 
                 // If the distance is greater than the visibility radius, the opacity will be zero
                 // and if the visibility exceeds the maximum opacity, set it to the maximum opacity
