@@ -13,5 +13,11 @@ namespace TheHiddenTreasuresWCF
     {
         [OperationContract]
         bool ValidateUser(User user);
+
+        [OperationContract]
+        bool RegisterUser(User user);
+
+        [OperationContract]
+        bool HasUsername(string username);
     }
 }

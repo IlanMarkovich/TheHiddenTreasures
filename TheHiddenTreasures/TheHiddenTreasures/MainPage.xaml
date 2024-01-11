@@ -12,13 +12,27 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="The Hidden Treasures" FontSize="100" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="50">
-            <Button Name="PlayBtn" Content="Play" FontSize="75" Width="500" Click="PlayBtn_Click"/>
-            <Button Name="ExitBtn" Content="Exit" FontSize="75" Width="500" Click="ExitBtn_Click"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="25">
+                <TextBlock FontSize="75" Text="Username: "/>
+                <TextBox Name="UsernameTB" FontSize="75" Width="500"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="25">
+                <TextBlock FontSize="75" Text="Password: "/>
+                <PasswordBox Name="PasswordPB" FontSize="75" Width="500"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="50">
+            <Button Name="LoginBtn" Content="Login" FontSize="75" Width="400" Click="LoginBtn_Click"/>
+            <Button Name="RegisterBtn" Content="Register" FontSize="75" Width="400" Click="RegisterBtn_Click"/>
+            <Button Name="ExitBtn" Content="Exit" FontSize="75" Width="400" Click="ExitBtn_Click"/>
         </StackPanel>
     </Grid>
 </Page>

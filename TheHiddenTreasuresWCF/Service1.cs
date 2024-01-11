@@ -21,6 +21,56 @@ namespace TheHiddenTreasuresWCF
             string query = $"select * from Users where username='{user.username}' and password='{user.password}'";
             SqlConnection connection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand(query, connection);
+            
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                return reader.Read();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e}");
+                return false;
+            }
+            finally
+            {
+                if (connection.State == System.Data.ConnectionState.Open)
+                    connection.Close();
+            }
+        }
+
+        public bool RegisterUser(User user)
+        {
+            if (HasUsername(user.username))
+                return false;
+
+            string query = $"insert into Users (username, password) values('{user.username}', '{user.password}')";
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+                return cmd.ExecuteNonQuery() != 0;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e}");
+                return false;
+            }
+            finally
+            {
+                if (connection.State == System.Data.ConnectionState.Open)
+                    connection.Close();
+            }
+        }
+
+        public bool HasUsername(string username)
+        {
+            string query = $"select * from Users where username='{username}'";
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(query, connection);
 
             try
             {
