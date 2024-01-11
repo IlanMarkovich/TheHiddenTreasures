@@ -6,9 +6,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="Page_Loaded">
 
-    <Grid>
+    <Grid Name="MainPageGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="2*"/>
@@ -17,7 +18,7 @@
 
         <TextBlock Text="The Hidden Treasures" FontSize="100" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="50">
+        <StackPanel Tag="NOT_LOGGED_IN_TAG" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="50">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="25">
                 <TextBlock FontSize="75" Text="Username: "/>
                 <TextBox Name="UsernameTB" FontSize="75" Width="500"/>
@@ -29,10 +30,17 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="50">
+        <StackPanel Tag="NOT_LOGGED_IN_TAG" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="50">
             <Button Name="LoginBtn" Content="Login" FontSize="75" Width="400" Click="LoginBtn_Click"/>
             <Button Name="RegisterBtn" Content="Register" FontSize="75" Width="400" Click="RegisterBtn_Click"/>
             <Button Name="ExitBtn" Content="Exit" FontSize="75" Width="400" Click="ExitBtn_Click"/>
+        </StackPanel>
+
+        <StackPanel Visibility="Collapsed" Tag="LOGGED_IN_TAG" Grid.Row="1" Grid.RowSpan="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="40">
+            <Button Name="PlayBtn" Content="Play" FontSize="75" Width="400" Click="PlayBtn_Click"/>
+            <Button Name="ShopBtn" Content="Shop" FontSize="75" Width="400" Click="ShopBtn_Click"/>
+            <Button Name="StatisticsBtn" Content="Statistics" FontSize="75" Width="400" Click="StatisticsBtn_Click"/>
+            <Button Name="LogOutBtn" Content="Log Out" FontSize="75" Width="400" Click="LogOutBtn_Click"/>
         </StackPanel>
     </Grid>
 </Page>

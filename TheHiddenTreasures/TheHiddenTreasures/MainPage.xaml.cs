@@ -23,9 +23,46 @@ namespace TheHiddenTreasures
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public enum State
+        {
+            NOT_LOGGED_IN, LOGGED_IN
+        }
+
+        public static State state = State.NOT_LOGGED_IN;
+
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (state != State.NOT_LOGGED_IN)
+                state = State.NOT_LOGGED_IN;
+                ChangeUserState();
+        }
+
+        private void ChangeUserState()
+        {
+            UsernameTB.Text = String.Empty;
+            PasswordPB.Password = String.Empty;
+
+            // Change visibility of stack panels based of the switch of the state
+            foreach(UIElement item in MainPageGrid.Children)
+            {
+                if (!(item is StackPanel))
+                    continue;
+
+                StackPanel sp = item as StackPanel;
+
+                if ((string)sp.Tag == "NOT_LOGGED_IN_TAG")
+                    item.Visibility = state == State.NOT_LOGGED_IN ? Visibility.Collapsed : Visibility.Visible;
+                else if ((string)(sp.Tag) == "LOGGED_IN_TAG")
+                    item.Visibility = state == State.LOGGED_IN ? Visibility.Collapsed : Visibility.Visible;
+            }
+
+            // Change the state to the opposite one
+            state = state == State.NOT_LOGGED_IN ? State.LOGGED_IN : State.NOT_LOGGED_IN;
         }
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
@@ -45,11 +82,11 @@ namespace TheHiddenTreasures
 
             if(await proxy.ValidateUserAsync(user))
             {
-                Frame.Navigate(typeof(Game));
+                ChangeUserState();
                 return;
             }
 
-            var dialog = new MessageDialog("Unable to Login!");
+            var dialog = new MessageDialog("Error while trying to Login!");
             await dialog.ShowAsync();
         }
 
@@ -65,12 +102,32 @@ namespace TheHiddenTreasures
 
             if (await proxy.RegisterUserAsync(user))
             {
-                Frame.Navigate(typeof(Game));
+                ChangeUserState();
                 return;
             }
 
-            var dialog = new MessageDialog("Unable to Register!");
+            var dialog = new MessageDialog("Error while trying to Register!");
             await dialog.ShowAsync();
+        }
+
+        private void PlayBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Game));
+        }
+
+        private void ShopBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void StatisticsBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LogOutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeUserState();
         }
     }
 }
