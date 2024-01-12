@@ -10,6 +10,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -122,8 +123,10 @@ namespace TheHiddenTreasures
             }
         }
 
-        private void FinishGame()
+        private void FinishGame(int levels)
         {
+            StoreStatistics(levels);
+
             // Free this method from the handler of the KeyDown event
             Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
 
@@ -131,9 +134,15 @@ namespace TheHiddenTreasures
             Frame.Navigate(typeof(MainPage));
         }
 
-        private void StoreStatistics()
+        private async void StoreStatistics(int levels)
         {
-            
+            var proxy = new ServiceReference1.Service1Client();
+
+            if(!await proxy.UpdateStatisticsAsync(MainPage.username, levels, time))
+            {
+                var dialog = new MessageDialog("Error while trying to store statistics");
+                await dialog.ShowAsync();
+            }
         }
     }
 }

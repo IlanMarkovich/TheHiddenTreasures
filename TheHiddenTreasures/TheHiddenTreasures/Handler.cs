@@ -21,7 +21,7 @@ namespace TheHiddenTreasures
         public const double DEFAULT_VISIBILITY = 350, MAX_OPACITY = 0.85;
         public const int LEVEL_SIZE = 5, FINAL_LEVEL = 3;
 
-        public delegate void FinishGame();
+        public delegate void FinishGame(int levels);
         private FinishGame finishGame;
 
         public List<RenderObject> RenderObjectLst { get; set; }
@@ -58,7 +58,7 @@ namespace TheHiddenTreasures
 
         public void GameOver()
         {
-            finishGame();
+            finishGame(levelNumber);
         }
 
         public void StartLevel()
@@ -126,7 +126,7 @@ namespace TheHiddenTreasures
         {
             if(levelNumber == FINAL_LEVEL)
             {
-                finishGame();
+                finishGame(levelNumber);
                 return;
             }
 

@@ -72,6 +72,9 @@ namespace TheHiddenTreasures.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/HasUsername", ReplyAction="http://tempuri.org/IService1/HasUsernameResponse")]
         System.Threading.Tasks.Task<bool> HasUsernameAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UpdateStatistics", ReplyAction="http://tempuri.org/IService1/UpdateStatisticsResponse")]
+        System.Threading.Tasks.Task<bool> UpdateStatisticsAsync(string username, int levels, int time);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -127,6 +130,10 @@ namespace TheHiddenTreasures.ServiceReference1 {
         
         public System.Threading.Tasks.Task<bool> HasUsernameAsync(string username) {
             return base.Channel.HasUsernameAsync(username);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UpdateStatisticsAsync(string username, int levels, int time) {
+            return base.Channel.UpdateStatisticsAsync(username, levels, time);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync() {

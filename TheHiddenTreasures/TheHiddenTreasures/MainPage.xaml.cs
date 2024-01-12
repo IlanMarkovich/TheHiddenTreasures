@@ -29,6 +29,7 @@ namespace TheHiddenTreasures
         }
 
         public static State state = State.NOT_LOGGED_IN;
+        public static string username;
 
         public MainPage()
         {
@@ -85,6 +86,7 @@ namespace TheHiddenTreasures
             if(await proxy.ValidateUserAsync(user))
             {
                 ChangeUserState();
+                username = user.username;
                 return;
             }
 
@@ -105,6 +107,7 @@ namespace TheHiddenTreasures
             if (await proxy.RegisterUserAsync(user))
             {
                 ChangeUserState();
+                username = user.username;
                 return;
             }
 
