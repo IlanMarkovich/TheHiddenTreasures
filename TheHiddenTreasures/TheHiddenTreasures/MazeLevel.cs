@@ -113,8 +113,15 @@ namespace TheHiddenTreasures
             if (y == height - 1 || grid[x, y + 1].IsVisited)
                 directions.Remove('d');
 
+            // If didn't already set an end point, and the current point is far enough from the start point, set this point as the end point
+            if (!didSetEndPoint && (Distance(currPoint, startPoint) >= (grid.GetLength(0) + grid.GetLength(1)) / 2))
+            {
+                didSetEndPoint = true;
+                endPoint = currPoint;
+            }
+
             // If there are no cells to go to next
-            if(directions.Count == 0)
+            if (directions.Count == 0)
             {
                 // If not all the cells been visited yet, go back and visit them
                 if (!AreAllVisited(grid))
@@ -123,13 +130,6 @@ namespace TheHiddenTreasures
                         startEndPath.RemoveAt(startEndPath.Count - 1);
 
                     BuildMazeGrid(posStack.Pop(), ref grid, ref posStack, count);
-                }
-                
-                // If didn't already set an end point, and the current point is far enough from the start point, set this point as the end point
-                if(!didSetEndPoint && count >= grid.GetLength(0) * 3)
-                {
-                    didSetEndPoint = true;
-                    endPoint = currPoint;
                 }
 
                 return;
