@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -31,6 +32,9 @@ namespace TheHiddenTreasures
         private Handler handler;
         private DispatcherTimer timer;
 
+        private int time;
+        private DispatcherTimer timeCounterTimer;
+
         private readonly List<Windows.System.VirtualKey> MOVEMENT_KEYS;
 
         public Game()
@@ -44,6 +48,12 @@ namespace TheHiddenTreasures
             timer.Tick += GameLoop;
             timer.Start();
 
+            time = 0;
+            timeCounterTimer = new DispatcherTimer();
+            timeCounterTimer.Interval = TimeSpan.FromSeconds(1);
+            timeCounterTimer.Tick += TimeCounterTimer_Tick;
+            timeCounterTimer.Start();
+
             MOVEMENT_KEYS = new List<Windows.System.VirtualKey>()
             { Windows.System.VirtualKey.W , Windows.System.VirtualKey.A, Windows.System.VirtualKey.S, Windows.System.VirtualKey.D};
 
@@ -54,6 +64,11 @@ namespace TheHiddenTreasures
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             handler = new Handler(ref GameCanvas, ref GameCamera, ref X_tb, ref Y_tb, ref Level_tb, FinishGame);
+        }
+
+        private void TimeCounterTimer_Tick(object sender, object e)
+        {
+            time++;
         }
 
         private void GameLoop(object sender, object e)
@@ -114,6 +129,11 @@ namespace TheHiddenTreasures
 
             handler = new Handler(ref GameCanvas, ref GameCamera, ref X_tb, ref Y_tb, ref Level_tb, FinishGame);
             Frame.Navigate(typeof(MainPage));
+        }
+
+        private void StoreStatistics()
+        {
+            
         }
     }
 }

@@ -38,8 +38,10 @@ namespace TheHiddenTreasures
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             if (state != State.NOT_LOGGED_IN)
+            {
                 state = State.NOT_LOGGED_IN;
                 ChangeUserState();
+            }
         }
 
         private void ChangeUserState()

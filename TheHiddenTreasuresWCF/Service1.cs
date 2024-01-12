@@ -89,5 +89,52 @@ namespace TheHiddenTreasuresWCF
                     connection.Close();
             }
         }
+
+        public bool UpdateStatistics(string username, int levels, int time)
+        {
+            string query = $"select count(username) as 'hasStatistics' from StatisticsTbl where username='{username}';";
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                reader.Read();
+                bool hasStatistics = (int)reader["hasStatistics"] != 0;
+                reader.Close();
+
+                if(hasStatistics)
+                {
+                    query = $"select levels, time from StatisticsTbl where username='{username}';";
+                    cmd = new SqlCommand(query, connection);
+                    reader = cmd.ExecuteReader();
+
+                    reader.Read();
+                    levels += (int)reader["levels"];
+                    time = Math.Min(time, (int)reader["time"]);
+                    reader.Close();
+
+                    query = $"update StatisticsTbl set levels='{levels}', time='{time}' where username='{username}';";
+                    cmd = new SqlCommand(query, connection);
+                    return cmd.ExecuteNonQuery() != 0;
+                }
+                
+                query = $"insert into StatisticsTbl (username, levels, time) values('{username}', '{levels}', '{time}');";
+                cmd = new SqlCommand(query, connection);
+                return cmd.ExecuteNonQuery() != 0;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e}");
+                return false;
+            }
+            finally
+            {
+                if (connection.State == System.Data.ConnectionState.Open)
+                    connection.Close();
+            }
+        }
     }
 }
