@@ -90,6 +90,16 @@ namespace TheHiddenTreasures
 
             BuildMazeGrid(startPoint, ref grid, ref posStack);
             CreateMazeLayout(startPoint, ref grid);
+
+            // Remove random walls
+            for(int i = 0; i < width + height; i++)
+            {
+                Random rand = new Random();
+                int x = rand.Next(0, width);
+                int y = rand.Next(0, height * 2 - 1);
+
+                layout[x, y] = Tile.Path;
+            }
         }
 
         private void BuildMazeGrid(Point currPoint, ref GridCell[,] grid, ref Stack<Point> posStack, int count = 0)
