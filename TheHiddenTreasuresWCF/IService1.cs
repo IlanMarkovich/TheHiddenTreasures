@@ -21,6 +21,6 @@ namespace TheHiddenTreasuresWCF
         bool HasUsername(string username);
 
         [OperationContract]
-        bool UpdateStatistics(string username, int levels, int time);
+        bool UpdateStatistics(string username, bool didWin, int time);
     }
 }

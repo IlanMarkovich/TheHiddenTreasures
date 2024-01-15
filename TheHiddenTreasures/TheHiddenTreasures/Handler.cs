@@ -21,7 +21,7 @@ namespace TheHiddenTreasures
         public const double DEFAULT_VISIBILITY = 350, MAX_OPACITY = 0.85;
         public const int LEVEL_SIZE = 5, FINAL_LEVEL = 3;
 
-        public delegate void FinishGame(int levels);
+        public delegate void FinishGame(bool didWin);
         private FinishGame finishGame;
 
         public List<RenderObject> RenderObjectLst { get; set; }
@@ -58,7 +58,7 @@ namespace TheHiddenTreasures
 
         public void GameOver()
         {
-            finishGame(levelNumber);
+            finishGame(false);
         }
 
         public void StartLevel()
@@ -79,7 +79,7 @@ namespace TheHiddenTreasures
         public void RenderMaze(int width, int height)
         {
             // Render end point
-            RenderCell(currLevel.GetEndPoint(), Colors.Yellow);
+            //RenderCell(currLevel.GetEndPoint(), Colors.Yellow);
 
             // Add the top and left walls
             for (int i = 0; i < width; i++)
@@ -126,7 +126,7 @@ namespace TheHiddenTreasures
         {
             if(levelNumber == FINAL_LEVEL)
             {
-                finishGame(levelNumber);
+                finishGame(true);
                 return;
             }
 

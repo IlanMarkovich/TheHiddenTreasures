@@ -95,7 +95,7 @@ namespace TheHiddenTreasures
             for(int i = 0; i < width + height; i++)
             {
                 Random rand = new Random();
-                int x = rand.Next(0, width);
+                int x = rand.Next(0, width - 1);
                 int y = rand.Next(0, height * 2 - 1);
 
                 layout[x, y] = Tile.Path;
