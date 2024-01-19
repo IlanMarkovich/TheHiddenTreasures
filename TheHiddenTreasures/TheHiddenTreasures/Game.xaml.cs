@@ -123,8 +123,12 @@ namespace TheHiddenTreasures
             }
         }
 
-        private void FinishGame(bool didWin)
+        private async void FinishGame(bool didWin)
         {
+            string userMsg = didWin ? "You Won!" : "You Lose!";
+            var dialog = new MessageDialog(userMsg);
+            await dialog.ShowAsync();
+
             StoreStatistics(didWin);
 
             // Free this method from the handler of the KeyDown event
@@ -138,7 +142,7 @@ namespace TheHiddenTreasures
         {
             var proxy = new ServiceReference1.Service1Client();
 
-            if(!await proxy.UpdateStatisticsAsync(MainPage.username, didWin, time))
+            if(!await proxy.UpdateStatisticsAsync(MainPage.username, didWin, didWin ? time : 0))
             {
                 var dialog = new MessageDialog("Error while trying to store statistics");
                 await dialog.ShowAsync();

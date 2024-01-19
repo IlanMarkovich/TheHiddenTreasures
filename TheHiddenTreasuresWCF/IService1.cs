@@ -17,10 +17,12 @@ namespace TheHiddenTreasuresWCF
         [OperationContract]
         bool RegisterUser(User user);
 
-        [OperationContract]
         bool HasUsername(string username);
 
         [OperationContract]
         bool UpdateStatistics(string username, bool didWin, int time);
+
+        [OperationContract]
+        List<PlayerStatistics> GetPlayerStatistics();
     }
 }

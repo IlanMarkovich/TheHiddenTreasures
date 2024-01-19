@@ -60,6 +60,81 @@ namespace TheHiddenTreasures.ServiceReference1 {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PlayerStatistics", Namespace="http://schemas.datacontract.org/2004/07/TheHiddenTreasuresWCF")]
+    public partial class PlayerStatistics : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private int gamesPlayedField;
+        
+        private int gamesWonField;
+        
+        private int minTimeField;
+        
+        private string usernameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int gamesPlayed {
+            get {
+                return this.gamesPlayedField;
+            }
+            set {
+                if ((this.gamesPlayedField.Equals(value) != true)) {
+                    this.gamesPlayedField = value;
+                    this.RaisePropertyChanged("gamesPlayed");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int gamesWon {
+            get {
+                return this.gamesWonField;
+            }
+            set {
+                if ((this.gamesWonField.Equals(value) != true)) {
+                    this.gamesWonField = value;
+                    this.RaisePropertyChanged("gamesWon");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int minTime {
+            get {
+                return this.minTimeField;
+            }
+            set {
+                if ((this.minTimeField.Equals(value) != true)) {
+                    this.minTimeField = value;
+                    this.RaisePropertyChanged("minTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string username {
+            get {
+                return this.usernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.usernameField, value) != true)) {
+                    this.usernameField = value;
+                    this.RaisePropertyChanged("username");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IService1")]
     public interface IService1 {
@@ -70,11 +145,11 @@ namespace TheHiddenTreasures.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/RegisterUser", ReplyAction="http://tempuri.org/IService1/RegisterUserResponse")]
         System.Threading.Tasks.Task<bool> RegisterUserAsync(TheHiddenTreasures.ServiceReference1.User user);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/HasUsername", ReplyAction="http://tempuri.org/IService1/HasUsernameResponse")]
-        System.Threading.Tasks.Task<bool> HasUsernameAsync(string username);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UpdateStatistics", ReplyAction="http://tempuri.org/IService1/UpdateStatisticsResponse")]
         System.Threading.Tasks.Task<bool> UpdateStatisticsAsync(string username, bool didWin, int time);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetPlayerStatistics", ReplyAction="http://tempuri.org/IService1/GetPlayerStatisticsResponse")]
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TheHiddenTreasures.ServiceReference1.PlayerStatistics>> GetPlayerStatisticsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -128,12 +203,12 @@ namespace TheHiddenTreasures.ServiceReference1 {
             return base.Channel.RegisterUserAsync(user);
         }
         
-        public System.Threading.Tasks.Task<bool> HasUsernameAsync(string username) {
-            return base.Channel.HasUsernameAsync(username);
-        }
-        
         public System.Threading.Tasks.Task<bool> UpdateStatisticsAsync(string username, bool didWin, int time) {
             return base.Channel.UpdateStatisticsAsync(username, didWin, time);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TheHiddenTreasures.ServiceReference1.PlayerStatistics>> GetPlayerStatisticsAsync() {
+            return base.Channel.GetPlayerStatisticsAsync();
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync() {

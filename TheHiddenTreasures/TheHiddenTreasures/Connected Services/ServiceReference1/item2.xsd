@@ -29,20 +29,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="HasUsername">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="HasUsernameResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="HasUsernameResult" type="xs:boolean" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="UpdateStatistics">
     <xs:complexType>
       <xs:sequence>
@@ -56,6 +42,18 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="UpdateStatisticsResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPlayerStatistics">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPlayerStatisticsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/TheHiddenTreasuresWCF" minOccurs="0" name="GetPlayerStatisticsResult" nillable="true" type="q3:ArrayOfPlayerStatistics" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

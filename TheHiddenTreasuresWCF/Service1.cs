@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -114,7 +115,7 @@ namespace TheHiddenTreasuresWCF
                     reader.Read();
                     int gamesPlayed = (int)reader["gamesPlayed"];
                     int gamesWonVar = didWin ? (int)reader["gamesWon"] + 1 : (int)reader["gamesWon"];
-                    time = Math.Min(time, (int)reader["minTime"]);
+                    time = time == 0 ? (int)reader["minTime"] : Math.Min(time, (int)reader["minTime"]);
                     reader.Close();
 
                     query = $"update StatisticsTbl set gamesPlayed='{gamesPlayed + 1}', gamesWon='{gamesWonVar}', minTime='{time}' where username='{username}';";
@@ -131,6 +132,49 @@ namespace TheHiddenTreasuresWCF
             {
                 Console.WriteLine($"Error: {e}");
                 return false;
+            }
+            finally
+            {
+                if (connection.State == System.Data.ConnectionState.Open)
+                    connection.Close();
+            }
+        }
+
+        public List<PlayerStatistics> GetPlayerStatistics()
+        {
+            string query = "select * from StatisticsTbl where gamesWon <> 0 order by gamesWon / gamesPlayed;";
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                List<PlayerStatistics> players = new List<PlayerStatistics>();
+
+                while(reader.Read())
+                {
+                    players.Add(new PlayerStatistics((string)reader["username"], (int)reader["gamesPlayed"], (int)reader["gamesWon"], (int)reader["minTime"]));
+                }
+
+                reader.Close();
+
+                query = "select * from StatisticsTbl where gamesWon = 0 order by gamesPlayed desc;";
+                cmd = new SqlCommand(query, connection);
+                reader = cmd.ExecuteReader();
+
+                while(reader.Read())
+                {
+                    players.Add(new PlayerStatistics((string)reader["username"], (int)reader["gamesPlayed"], (int)reader["gamesWon"], (int)reader["minTime"]));
+                }
+
+                reader.Close();
+                return players;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return new List<PlayerStatistics>();
             }
             finally
             {

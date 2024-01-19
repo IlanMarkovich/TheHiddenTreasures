@@ -127,7 +127,7 @@ namespace TheHiddenTreasures
 
         private void StatisticsBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            Frame.Navigate(typeof(Statistics));
         }
 
         private void LogOutBtn_Click(object sender, RoutedEventArgs e)
