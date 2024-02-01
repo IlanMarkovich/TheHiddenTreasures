@@ -12,13 +12,15 @@ namespace TheHiddenTreasures
         public int gamesPlayed { get; set; }
         public int gamesWon { get; set; }
         public int minTime { get; set; }
+        public int coins { get; set; }
 
-        public PlayerStatistics(string username, int gamesPlayed, int gamesWon, int minTime)
+        public PlayerStatistics(string username, int gamesPlayed, int gamesWon, int minTime, int coins)
         {
             this.username = username;
             this.gamesPlayed = gamesPlayed;
             this.gamesWon = gamesWon;
             this.minTime = minTime;
+            this.coins = coins;
         }
     }
 }

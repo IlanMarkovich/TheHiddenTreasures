@@ -43,7 +43,7 @@ namespace TheHiddenTreasures
 
             foreach(var player in DBstatistics)
             {
-                statistics.Add(new PlayerStatistics(player.username, player.gamesPlayed, player.gamesWon, player.minTime));
+                statistics.Add(new PlayerStatistics(player.username, player.gamesPlayed, player.gamesWon, player.minTime, player.coins));
             }
 
             PlayersLst.DataContext = statistics;

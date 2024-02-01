@@ -124,26 +124,24 @@ namespace TheHiddenTreasures
             }
         }
 
-        private async void FinishGame(bool didWin)
+        private async void FinishGame(bool didWin, int coins)
         {
+            // Free this method from the handler of the KeyDown event
+            Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
+
             string userMsg = didWin ? "You Won!" : "You Lose!";
             var dialog = new MessageDialog(userMsg);
             await dialog.ShowAsync();
 
-            StoreStatistics(didWin);
-
-            // Free this method from the handler of the KeyDown event
-            Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
-
-            handler = new Handler(ref GameCanvas, ref GameCamera, ref X_tb, ref Y_tb, ref Level_tb, ref Coins_tb, FinishGame);
+            StoreStatistics(didWin, coins);
             Frame.Navigate(typeof(MainPage));
         }
 
-        private async void StoreStatistics(bool didWin)
+        private async void StoreStatistics(bool didWin, int coins)
         {
             var proxy = new ServiceReference1.Service1Client();
 
-            if(!await proxy.UpdateStatisticsAsync(MainPage.username, didWin, didWin ? time : 0))
+            if(!await proxy.UpdateStatisticsAsync(MainPage.username, didWin, didWin ? time : 0, coins))
             {
                 var dialog = new MessageDialog("Error while trying to store statistics");
                 await dialog.ShowAsync();

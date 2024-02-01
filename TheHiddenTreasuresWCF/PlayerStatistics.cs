@@ -22,12 +22,16 @@ namespace TheHiddenTreasuresWCF
         [DataMember]
         public int minTime { get; set; }
 
-        public PlayerStatistics(string username, int gamesPlayed, int gamesWon, int minTime)
+        [DataMember]
+        public int coins { get; set; }
+
+        public PlayerStatistics(string username, int gamesPlayed, int gamesWon, int minTime, int coins)
         {
             this.username = username;
             this.gamesPlayed = gamesPlayed;
             this.gamesWon = gamesWon;
             this.minTime = minTime;
+            this.coins = coins;
         }
     }
 }

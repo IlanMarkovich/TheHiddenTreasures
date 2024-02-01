@@ -65,6 +65,8 @@ namespace TheHiddenTreasures.ServiceReference1 {
     [System.Runtime.Serialization.DataContractAttribute(Name="PlayerStatistics", Namespace="http://schemas.datacontract.org/2004/07/TheHiddenTreasuresWCF")]
     public partial class PlayerStatistics : object, System.ComponentModel.INotifyPropertyChanged {
         
+        private int coinsField;
+        
         private int gamesPlayedField;
         
         private int gamesWonField;
@@ -72,6 +74,19 @@ namespace TheHiddenTreasures.ServiceReference1 {
         private int minTimeField;
         
         private string usernameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int coins {
+            get {
+                return this.coinsField;
+            }
+            set {
+                if ((this.coinsField.Equals(value) != true)) {
+                    this.coinsField = value;
+                    this.RaisePropertyChanged("coins");
+                }
+            }
+        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public int gamesPlayed {
@@ -146,7 +161,7 @@ namespace TheHiddenTreasures.ServiceReference1 {
         System.Threading.Tasks.Task<bool> RegisterUserAsync(TheHiddenTreasures.ServiceReference1.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UpdateStatistics", ReplyAction="http://tempuri.org/IService1/UpdateStatisticsResponse")]
-        System.Threading.Tasks.Task<bool> UpdateStatisticsAsync(string username, bool didWin, int time);
+        System.Threading.Tasks.Task<bool> UpdateStatisticsAsync(string username, bool didWin, int time, int coins);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetPlayerStatistics", ReplyAction="http://tempuri.org/IService1/GetPlayerStatisticsResponse")]
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TheHiddenTreasures.ServiceReference1.PlayerStatistics>> GetPlayerStatisticsAsync();
@@ -203,8 +218,8 @@ namespace TheHiddenTreasures.ServiceReference1 {
             return base.Channel.RegisterUserAsync(user);
         }
         
-        public System.Threading.Tasks.Task<bool> UpdateStatisticsAsync(string username, bool didWin, int time) {
-            return base.Channel.UpdateStatisticsAsync(username, didWin, time);
+        public System.Threading.Tasks.Task<bool> UpdateStatisticsAsync(string username, bool didWin, int time, int coins) {
+            return base.Channel.UpdateStatisticsAsync(username, didWin, time, coins);
         }
         
         public System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TheHiddenTreasures.ServiceReference1.PlayerStatistics>> GetPlayerStatisticsAsync() {

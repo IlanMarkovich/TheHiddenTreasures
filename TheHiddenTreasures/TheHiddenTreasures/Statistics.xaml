@@ -26,6 +26,7 @@
                         <ListViewHeaderItem Content="Games Played" FontSize="40" Width="300"/>
                         <ListViewHeaderItem Content="Games Won" FontSize="40" Width="300"/>
                         <ListViewHeaderItem Content="Fastest Time" FontSize="40" Width="300"/>
+                        <ListViewHeaderItem Content="Coins" FontSize="40" Width="150"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.HeaderTemplate>
@@ -36,6 +37,7 @@
                         <TextBlock Text="{Binding gamesPlayed}" Width="300"/>
                         <TextBlock Text="{Binding gamesWon}" Width="300"/>
                         <TextBlock Text="{Binding minTime}" Width="300"/>
+                        <TextBlock Text="{Binding coins}" Width="150"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

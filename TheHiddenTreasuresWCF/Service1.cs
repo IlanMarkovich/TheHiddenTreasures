@@ -91,7 +91,7 @@ namespace TheHiddenTreasuresWCF
             }
         }
 
-        public bool UpdateStatistics(string username, bool didWin, int time)
+        public bool UpdateStatistics(string username, bool didWin, int time, int coins)
         {
             string query = $"select count(username) as 'hasStatistics' from StatisticsTbl where username='{username}';";
             SqlConnection connection = new SqlConnection(ConnectionString);
@@ -108,7 +108,7 @@ namespace TheHiddenTreasuresWCF
 
                 if(hasStatistics)
                 {
-                    query = $"select gamesPlayed, gamesWon, minTime from StatisticsTbl where username='{username}';";
+                    query = $"select gamesPlayed, gamesWon, minTime, coins from StatisticsTbl where username='{username}';";
                     cmd = new SqlCommand(query, connection);
                     reader = cmd.ExecuteReader();
 
@@ -116,16 +116,18 @@ namespace TheHiddenTreasuresWCF
                     int gamesPlayed = (int)reader["gamesPlayed"];
                     int gamesWonVar = didWin ? (int)reader["gamesWon"] + 1 : (int)reader["gamesWon"];
                     time = time == 0 ? (int)reader["minTime"] : Math.Min(time, (int)reader["minTime"]);
+                    coins += (int)reader["coins"];
                     reader.Close();
 
-                    query = $"update StatisticsTbl set gamesPlayed='{gamesPlayed + 1}', gamesWon='{gamesWonVar}', minTime='{time}' where username='{username}';";
+                    query = $"update StatisticsTbl set gamesPlayed='{gamesPlayed + 1}', gamesWon='{gamesWonVar}', minTime='{time}', coins='{coins}' where username='{username}';";
                     cmd = new SqlCommand(query, connection);
                     return cmd.ExecuteNonQuery() != 0;
                 }
 
                 int gamesWon = didWin ? 1 : 0;
-                query = $"insert into StatisticsTbl (username, gamesPlayed, gamesWon, minTime) values('{username}', '1', '{gamesWon}', {time});";
+                query = $"insert into StatisticsTbl (username, gamesPlayed, gamesWon, minTime, coins) values('{username}', '1', '{gamesWon}', '{time}', '0');";
                 cmd = new SqlCommand(query, connection);
+
                 return cmd.ExecuteNonQuery() != 0;
             }
             catch (Exception e)
@@ -154,7 +156,7 @@ namespace TheHiddenTreasuresWCF
 
                 while(reader.Read())
                 {
-                    players.Add(new PlayerStatistics((string)reader["username"], (int)reader["gamesPlayed"], (int)reader["gamesWon"], (int)reader["minTime"]));
+                    players.Add(new PlayerStatistics((string)reader["username"], (int)reader["gamesPlayed"], (int)reader["gamesWon"], (int)reader["minTime"], (int)reader["coins"]));
                 }
 
                 reader.Close();
@@ -165,7 +167,7 @@ namespace TheHiddenTreasuresWCF
 
                 while(reader.Read())
                 {
-                    players.Add(new PlayerStatistics((string)reader["username"], (int)reader["gamesPlayed"], (int)reader["gamesWon"], (int)reader["minTime"]));
+                    players.Add(new PlayerStatistics((string)reader["username"], (int)reader["gamesPlayed"], (int)reader["gamesWon"], (int)reader["minTime"], (int)reader["coins"]));
                 }
 
                 reader.Close();

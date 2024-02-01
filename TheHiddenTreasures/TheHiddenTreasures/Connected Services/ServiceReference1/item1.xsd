@@ -15,6 +15,7 @@
   <xs:element name="ArrayOfPlayerStatistics" nillable="true" type="tns:ArrayOfPlayerStatistics" />
   <xs:complexType name="PlayerStatistics">
     <xs:sequence>
+      <xs:element minOccurs="0" name="coins" type="xs:int" />
       <xs:element minOccurs="0" name="gamesPlayed" type="xs:int" />
       <xs:element minOccurs="0" name="gamesWon" type="xs:int" />
       <xs:element minOccurs="0" name="minTime" type="xs:int" />

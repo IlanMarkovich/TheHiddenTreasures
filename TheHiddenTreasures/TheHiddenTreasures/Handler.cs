@@ -24,7 +24,7 @@ namespace TheHiddenTreasures
         public const double DEFAULT_VISIBILITY = 350, MAX_OPACITY = 0.85;
         public const int LEVEL_SIZE = 5, FINAL_LEVEL = 3;
 
-        public delegate void FinishGame(bool didWin);
+        public delegate void FinishGame(bool didWin, int coins);
         private readonly FinishGame finishGame;
 
         public List<RenderObject> RenderObjectList { get; set; }
@@ -68,7 +68,7 @@ namespace TheHiddenTreasures
             if (gameEnded)
                 return;
 
-            finishGame(false);
+            finishGame(false, coins);
             gameEnded = true;
         }
 
@@ -139,7 +139,7 @@ namespace TheHiddenTreasures
         {
             if(levelNumber == FINAL_LEVEL && !gameEnded)
             {
-                finishGame(true);
+                finishGame(true, coins);
                 gameEnded = true;
                 return;
             }
