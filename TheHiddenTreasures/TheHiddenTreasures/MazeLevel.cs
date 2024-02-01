@@ -36,7 +36,7 @@ namespace TheHiddenTreasures
         private int width, height;
 
         private bool didSetEndPoint;
-        private List<Point> startEndPath;
+        private Stack<Point> startEndPath;
 
         public MazeLevel(int width, int height)
         {
@@ -56,7 +56,7 @@ namespace TheHiddenTreasures
             startPoint.Y = rand.Next(rand.Next(0, height - 1));
 
             didSetEndPoint = false;
-            startEndPath = new List<Point>();
+            startEndPath = new Stack<Point>();
         }
 
         public Tile[,] GetLayout()
@@ -76,7 +76,7 @@ namespace TheHiddenTreasures
 
         public List<Point> GetStartEndPath()
         {
-            return startEndPath;
+            return startEndPath.ToList();
         }
 
         public void GenerateMaze()
@@ -92,7 +92,7 @@ namespace TheHiddenTreasures
             CreateMazeLayout(startPoint, ref grid);
 
             // Remove random walls
-            for(int i = 0; i < (width + height) * 2; i++)
+            for(int i = 0; i < width + height; i++)
             {
                 Random rand = new Random();
                 int x = rand.Next(0, width - 1);
@@ -137,7 +137,7 @@ namespace TheHiddenTreasures
                 if (!AreAllVisited(grid))
                 {
                     if (!didSetEndPoint)
-                        startEndPath.RemoveAt(startEndPath.Count - 1);
+                        startEndPath.Pop();
 
                     BuildMazeGrid(posStack.Pop(), ref grid, ref posStack, count);
                 }
@@ -167,7 +167,7 @@ namespace TheHiddenTreasures
             }
 
             if(!didSetEndPoint)
-                startEndPath.Add(newPoint);
+                startEndPath.Push(newPoint);
 
             // Set this point as a next point (for the layout algorithem to know where to put paths)
             grid[x, y].NextPoints.Enqueue(newPoint);
