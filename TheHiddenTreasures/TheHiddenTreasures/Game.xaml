@@ -20,6 +20,8 @@
             <TextBlock Text="X: 0" Name="X_tb" Foreground="White" FontSize="50" FontWeight="SemiBold"/>
             <TextBlock Text="Y: 0" Name="Y_tb" Foreground="White" FontSize="50" FontWeight="SemiBold"/>
             <TextBlock Text="Level: 1" Name="Level_tb" Foreground="White" FontSize="50" FontWeight="SemiBold"/>
+            <TextBlock Text="Time: 0" Name="Time_tb" Foreground="White" FontSize="50" FontWeight="SemiBold"/>
+            <TextBlock Text="Coins: 0" Name="Coins_tb" Foreground="White" FontSize="50" FontWeight="SemiBold"/>
         </StackPanel>
     </Grid>
 </Page>

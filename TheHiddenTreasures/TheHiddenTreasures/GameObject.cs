@@ -26,6 +26,14 @@ namespace TheHiddenTreasures
             Y = y;
 
             this.handler = handler;
+
+            Canvas.SetLeft(Rect, Handler.GAP_SIZE + X * (Handler.CELL_WIDTH + Handler.GAP_SIZE) +
+                ((Handler.CELL_WIDTH - width) / 2));
+
+            Canvas.SetTop(Rect, Handler.GAP_SIZE + Y * (Handler.CELL_HEIGHT + Handler.GAP_SIZE) +
+                ((Handler.CELL_HEIGHT - height) / 2));
+
+            gameCanvas.Children.Add(Rect);
         }
     }
 }

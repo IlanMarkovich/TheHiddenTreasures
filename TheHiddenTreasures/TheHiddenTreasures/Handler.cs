@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.VoiceCommands;
@@ -17,6 +19,7 @@ namespace TheHiddenTreasures
         public const int CELL_WIDTH = 100, CELL_HEIGHT = 100, GAP_SIZE = 20;
         public const int PLAYER_SIZE = 25;
         public const int TRAP_SIZE = 75;
+        public const int COIN_SIZE = 20;
         public const int ZOOM_LEVEL = 250;
         public const double DEFAULT_VISIBILITY = 350, MAX_OPACITY = 0.85;
         public const int LEVEL_SIZE = 5, FINAL_LEVEL = 3;
@@ -24,11 +27,11 @@ namespace TheHiddenTreasures
         public delegate void FinishGame(bool didWin);
         private readonly FinishGame finishGame;
 
-        public List<RenderObject> RenderObjectLst { get; set; }
+        public List<RenderObject> RenderObjectList { get; set; }
 
         private Canvas gameCanvas;
         private PlaneProjection gameCamera;
-        private TextBlock X_tb, Y_tb, Level_tb;
+        private TextBlock X_tb, Y_tb, Level_tb, Coins_tb;
 
         private MazeLevel currLevel;
         private Player player;
@@ -36,14 +39,16 @@ namespace TheHiddenTreasures
         private int visibilityRadius;
         private int levelNumber, currLevelSize;
         private bool gameEnded;
+        private int coins;
 
-        public Handler(ref Canvas gameCanvas, ref PlaneProjection gameCamera, ref TextBlock X_tb, ref TextBlock Y_tb, ref TextBlock Level_tb, FinishGame finishGame)
+        public Handler(ref Canvas gameCanvas, ref PlaneProjection gameCamera, ref TextBlock X_tb, ref TextBlock Y_tb, ref TextBlock Level_tb, ref TextBlock Coins_tb, FinishGame finishGame)
         {
             this.gameCanvas = gameCanvas;
             this.gameCamera = gameCamera;
             this.X_tb = X_tb;
             this.Y_tb = Y_tb;
             this.Level_tb = Level_tb;
+            this.Coins_tb = Coins_tb;
             this.finishGame = finishGame;
 
             levelNumber = 1;
@@ -74,10 +79,11 @@ namespace TheHiddenTreasures
             currLevel = new MazeLevel(currLevelSize, currLevelSize);
             currLevel.GenerateMaze();
 
-            RenderObjectLst = new List<RenderObject>();
+            RenderObjectList = new List<RenderObject>();
             player = new Player(currLevel.GetStartPoint(), PLAYER_SIZE, PLAYER_SIZE, ref gameCanvas, this);
 
             PlaceTraps();
+            PlaceCoins();
             RenderMaze(currLevelSize, currLevelSize);
             UpdateOnPlayerMove();
         }
@@ -103,6 +109,7 @@ namespace TheHiddenTreasures
                 }
             }
 
+            // Reading of the layout and building the walls
             Tile[,] layout = currLevel.GetLayout();
 
             for(int x = 0; x < layout.GetLength(0); x++)
@@ -139,7 +146,7 @@ namespace TheHiddenTreasures
 
             gameCanvas.Children.Remove(player.Rect);
 
-            foreach(var obj in RenderObjectLst)
+            foreach(var obj in RenderObjectList)
             {
                 gameCanvas.Children.Remove(obj.Rect);
             }
@@ -149,6 +156,15 @@ namespace TheHiddenTreasures
             levelNumber++;
             Level_tb.Text = $"Level: { levelNumber }";
             StartLevel();
+        }
+
+        public void AddCoin(Coin c)
+        {
+            coins++;
+            Coins_tb.Text = $"Coins: {coins}";
+
+            gameCanvas.Children.Remove(c.Rect);
+            RenderObjectList.Remove(c);
         }
         
         public void UpdateOnPlayerMove()
@@ -190,10 +206,10 @@ namespace TheHiddenTreasures
             if (!Game.isVisibilityOn)
                 return;
 
-            foreach(var obj in RenderObjectLst)
+            foreach(var obj in RenderObjectList)
             {
                 // Distance between the object and the player
-                double distance = Math.Sqrt(Math.Pow(Canvas.GetLeft(player.Rect) - Canvas.GetLeft(obj.Rect), 2) + Math.Pow(Canvas.GetTop(player.Rect) - Canvas.GetTop(obj.Rect), 2));
+                double distance = Math.Sqrt(Math.Pow((Canvas.GetLeft(player.Rect) + player.Rect.Width / 2) - (Canvas.GetLeft(obj.Rect) + obj.Rect.Width / 2), 2) + Math.Pow((Canvas.GetTop(player.Rect) + player.Rect.Height / 2) - (Canvas.GetTop(obj.Rect) + obj.Rect.Width / 2), 2));
 
                 // Formula for calculating the visibility (opacity) based on the distance
                 double visibility = obj is Trap ? (visibilityRadius / 150) / distance : (visibilityRadius / 25) / distance;
@@ -204,7 +220,7 @@ namespace TheHiddenTreasures
             }
         }
 
-        public void PlaceTraps()
+        private void PlaceTraps()
         {
             Random rand = new Random();
 
@@ -218,13 +234,24 @@ namespace TheHiddenTreasures
                     y = rand.Next(0, currLevelSize);
                 }
 
-                RenderObjectLst.Add(new Trap(new Point(x, y), TRAP_SIZE, TRAP_SIZE, ref gameCanvas, this));
+                RenderObjectList.Add(new Trap(new Point(x, y), TRAP_SIZE, TRAP_SIZE, ref gameCanvas, this));
+            }
+        }
+
+        private void PlaceCoins()
+        {
+            Random rand = new Random();
+
+            for (int i = 0; i < levelNumber * 2; i++)
+            {
+                Point p = new Point(rand.Next(0, currLevelSize), rand.Next(0, currLevelSize));
+                RenderObjectList.Add(new Coin(p, COIN_SIZE, COIN_SIZE, ref gameCanvas, this));
             }
         }
 
         private void AddWall(int x, int y, int width, int height)
         {
-            RenderObjectLst.Add(new Wall(GAP_SIZE + x, GAP_SIZE + y, width, height, ref gameCanvas));
+            RenderObjectList.Add(new Wall(GAP_SIZE + x, GAP_SIZE + y, width, height, ref gameCanvas));
         }
 
         // TODO remove temp method

@@ -18,17 +18,9 @@ namespace TheHiddenTreasures
     {
         private const int MOVEMENT_SPEED = 7;
 
-        public Player(System.Drawing.Point startPoint, int width, int height, ref Canvas gameCanvas, Handler handler) 
+        public Player(System.Drawing.Point startPoint, int width, int height, ref Canvas gameCanvas, Handler handler)
             : base(startPoint.X, startPoint.Y, width, height, new SolidColorBrush(Colors.Red), ref gameCanvas, handler)
-        {
-            Canvas.SetLeft(Rect, Handler.GAP_SIZE + X * (Handler.CELL_WIDTH + Handler.GAP_SIZE) +
-                ((Handler.CELL_WIDTH - width) / 2));
-
-            Canvas.SetTop(Rect, Handler.GAP_SIZE + Y * (Handler.CELL_HEIGHT + Handler.GAP_SIZE) +
-                ((Handler.CELL_HEIGHT - height) / 2));
-
-            gameCanvas.Children.Add(Rect);
-        }
+        { }
 
         public void Move(VirtualKey pressedKey, int movementSpeed = MOVEMENT_SPEED)
         {
@@ -71,9 +63,9 @@ namespace TheHiddenTreasures
 
         private bool WillCollide(double x, double y)
         {
-            foreach(var obj in handler.RenderObjectLst)
+            foreach(var obj in handler.RenderObjectList)
             {
-                if (!(obj is Wall) && !(obj is Trap))
+                if (!(obj is Wall) && !(obj is Trap) && !(obj is Coin))
                     continue;
 
                 var wallRect = new Rect(Canvas.GetLeft(obj.Rect), Canvas.GetTop(obj.Rect), obj.Rect.Width, obj.Rect.Height);
@@ -85,6 +77,9 @@ namespace TheHiddenTreasures
                 {
                     if (obj is Trap)
                         handler.GameOver();
+
+                    if (obj is Coin)
+                        handler.AddCoin(obj as Coin);
 
                     return true;
                 }

@@ -92,7 +92,7 @@ namespace TheHiddenTreasures
             CreateMazeLayout(startPoint, ref grid);
 
             // Remove random walls
-            for(int i = 0; i < width + height; i++)
+            for(int i = 0; i < (width + height) * 2; i++)
             {
                 Random rand = new Random();
                 int x = rand.Next(0, width - 1);

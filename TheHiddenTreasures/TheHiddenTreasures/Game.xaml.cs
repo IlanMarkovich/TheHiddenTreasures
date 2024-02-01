@@ -64,12 +64,13 @@ namespace TheHiddenTreasures
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            handler = new Handler(ref GameCanvas, ref GameCamera, ref X_tb, ref Y_tb, ref Level_tb, FinishGame);
+            handler = new Handler(ref GameCanvas, ref GameCamera, ref X_tb, ref Y_tb, ref Level_tb, ref Coins_tb, FinishGame);
         }
 
         private void TimeCounterTimer_Tick(object sender, object e)
         {
             time++;
+            Time_tb.Text = $"Time: {time}";
         }
 
         private void GameLoop(object sender, object e)
@@ -117,7 +118,7 @@ namespace TheHiddenTreasures
                     handler.UpdateOnPlayerMove();
                 else
                 {
-                    foreach (var obj in handler.RenderObjectLst)
+                    foreach (var obj in handler.RenderObjectList)
                         obj.Rect.Opacity = 1;
                 }
             }
@@ -134,7 +135,7 @@ namespace TheHiddenTreasures
             // Free this method from the handler of the KeyDown event
             Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
 
-            handler = new Handler(ref GameCanvas, ref GameCamera, ref X_tb, ref Y_tb, ref Level_tb, FinishGame);
+            handler = new Handler(ref GameCanvas, ref GameCamera, ref X_tb, ref Y_tb, ref Level_tb, ref Coins_tb, FinishGame);
             Frame.Navigate(typeof(MainPage));
         }
 
