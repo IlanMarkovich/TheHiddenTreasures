@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
@@ -14,7 +15,6 @@ namespace TheHiddenTreasures
         public Rectangle Rect { get; set; }
 
         protected Canvas gameCanvas;
-
         // C'tor for when not providing cooridnates and just creating the rectangle
         public RenderObject(int width, int height, Brush content, ref Canvas gameCanvas)
         {

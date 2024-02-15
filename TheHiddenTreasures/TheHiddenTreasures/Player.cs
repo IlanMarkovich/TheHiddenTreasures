@@ -9,6 +9,7 @@ using Windows.ApplicationModel.VoiceCommands;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
@@ -18,11 +19,21 @@ namespace TheHiddenTreasures
     public class Player : GameObject
     {
         private const int MOVEMENT_SPEED = 7;
-        public const int PLAYER_SIZE = 25;
+        public const int PLAYER_SIZE = 50;
 
         public Player(System.Drawing.Point startPoint, ref Canvas gameCanvas, Handler handler)
-            : base(startPoint.X, startPoint.Y, PLAYER_SIZE, PLAYER_SIZE, new SolidColorBrush(Colors.Red), ref gameCanvas, handler)
-        {}
+            : base(startPoint.X, startPoint.Y, PLAYER_SIZE, PLAYER_SIZE, GetIdleImage(), ref gameCanvas, handler)
+        { }
+
+        private static ImageBrush GetIdleImage()
+        {
+            var img = new BitmapImage();
+            img.UriSource = new Uri("ms-appx:/Assets/1/idle/tile000.png");
+
+            var brush = new ImageBrush();
+            brush.ImageSource = img;
+            return brush;
+        }
 
         public void Move(VirtualKey pressedKey, int movementSpeed = MOVEMENT_SPEED)
         {
