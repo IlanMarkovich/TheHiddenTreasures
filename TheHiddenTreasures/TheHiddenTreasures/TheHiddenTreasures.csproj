@@ -138,6 +138,9 @@
     <Compile Include="PlayerStatistics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderObject.cs" />
+    <Compile Include="Shop.xaml.cs">
+      <DependentUpon>Shop.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Statistics.xaml.cs">
       <DependentUpon>Statistics.xaml</DependentUpon>
     </Compile>
@@ -178,6 +181,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Shop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Statistics.xaml">
       <SubType>Designer</SubType>

@@ -24,5 +24,8 @@ namespace TheHiddenTreasuresWCF
 
         [OperationContract]
         List<PlayerStatistics> GetPlayerStatistics();
+
+        [OperationContract]
+        int GetPlayerCoins(string username);
     }
 }

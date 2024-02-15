@@ -184,5 +184,30 @@ namespace TheHiddenTreasuresWCF
                     connection.Close();
             }
         }
+
+        public int GetPlayerCoins(string username)
+        {
+            string query = $"select coins from StatisticsTbl where username='{username}';";
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                reader.Read();
+                return (int)reader["coins"];
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return 0;
+            }
+            finally
+            {
+                if (connection.State == System.Data.ConnectionState.Open)
+                    connection.Close();
+            }
+        }
     }
 }

@@ -11,16 +11,18 @@ using Windows.System;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace TheHiddenTreasures
 {
     public class Player : GameObject
     {
         private const int MOVEMENT_SPEED = 7;
+        public const int PLAYER_SIZE = 25;
 
-        public Player(System.Drawing.Point startPoint, int width, int height, ref Canvas gameCanvas, Handler handler)
-            : base(startPoint.X, startPoint.Y, width, height, new SolidColorBrush(Colors.Red), ref gameCanvas, handler)
-        { }
+        public Player(System.Drawing.Point startPoint, ref Canvas gameCanvas, Handler handler)
+            : base(startPoint.X, startPoint.Y, PLAYER_SIZE, PLAYER_SIZE, new SolidColorBrush(Colors.Red), ref gameCanvas, handler)
+        {}
 
         public void Move(VirtualKey pressedKey, int movementSpeed = MOVEMENT_SPEED)
         {

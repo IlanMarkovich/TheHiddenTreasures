@@ -122,7 +122,7 @@ namespace TheHiddenTreasures
 
         private void ShopBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            Frame.Navigate(typeof(Shop));
         }
 
         private void StatisticsBtn_Click(object sender, RoutedEventArgs e)

@@ -17,7 +17,6 @@ namespace TheHiddenTreasures
     public class Handler
     {
         public const int CELL_WIDTH = 100, CELL_HEIGHT = 100, GAP_SIZE = 20;
-        public const int PLAYER_SIZE = 25;
         public const int TRAP_SIZE = 75;
         public const int COIN_SIZE = 20;
         public const int ZOOM_LEVEL = 250;
@@ -80,7 +79,7 @@ namespace TheHiddenTreasures
             currLevel.GenerateMaze();
 
             RenderObjectList = new List<RenderObject>();
-            player = new Player(currLevel.GetStartPoint(), PLAYER_SIZE, PLAYER_SIZE, ref gameCanvas, this);
+            player = new Player(currLevel.GetStartPoint(), ref gameCanvas, this);
 
             PlaceTraps();
             PlaceCoins();
