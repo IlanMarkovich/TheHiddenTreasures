@@ -19,20 +19,31 @@ namespace TheHiddenTreasures
     public class Player : GameObject
     {
         private const int MOVEMENT_SPEED = 7;
-        public const int PLAYER_SIZE = 50;
+        public const int PLAYER_SIZE = 75;
+
+        private int tile;
 
         public Player(System.Drawing.Point startPoint, ref Canvas gameCanvas, Handler handler)
-            : base(startPoint.X, startPoint.Y, PLAYER_SIZE, PLAYER_SIZE, GetIdleImage(), ref gameCanvas, handler)
+            : base(startPoint.X, startPoint.Y, PLAYER_SIZE, PLAYER_SIZE, GetImage("idle/tile000.png"), ref gameCanvas, handler)
         { }
 
-        private static ImageBrush GetIdleImage()
+        public static ImageBrush GetImage(string imgPath)
         {
             var img = new BitmapImage();
-            img.UriSource = new Uri("ms-appx:/Assets/1/idle/tile000.png");
+            img.UriSource = new Uri($"ms-appx:/Assets/1/{imgPath}");
 
             var brush = new ImageBrush();
             brush.ImageSource = img;
             return brush;
+        }
+
+        public void ChangeIdleDirection(int tile)
+        {
+            if (this.tile == tile)
+                return;
+
+            this.tile = tile;
+            Rect.Fill = GetImage($"idle/tile{tile:D3}.png");
         }
 
         public void Move(VirtualKey pressedKey, int movementSpeed = MOVEMENT_SPEED)
@@ -82,7 +93,7 @@ namespace TheHiddenTreasures
                     continue;
 
                 var wallRect = new Rect(Canvas.GetLeft(obj.Rect), Canvas.GetTop(obj.Rect), obj.Rect.Width, obj.Rect.Height);
-                var playerRect = new Rect(x, y, Rect.Width, Rect.Height);
+                var playerRect = new Rect(x + Rect.Width / 3, y + Rect.Height / 4, Rect.Width * 0.375, Rect.Height / 2);
 
                 playerRect.Intersect(wallRect);
 

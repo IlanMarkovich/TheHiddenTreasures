@@ -38,6 +38,14 @@ namespace TheHiddenTreasures
 
         private readonly List<Windows.System.VirtualKey> MOVEMENT_KEYS;
 
+        private readonly Dictionary<VirtualKey, int> KEY_TO_TILE = new Dictionary<VirtualKey, int>()
+            {
+                { VirtualKey.S, 0 },
+                { VirtualKey.D, 2 },
+                { VirtualKey.W, 4 },
+                { VirtualKey.A, 6 }
+            };
+
         public Game()
         {
             this.InitializeComponent();
@@ -80,12 +88,39 @@ namespace TheHiddenTreasures
 
         private void HandleInput()
         {
+            List<VirtualKey> currentlyPressed = new List<VirtualKey>();
+
             // If any of the movement keys is pressed, move the player
             foreach(var key in MOVEMENT_KEYS)
             {
                 if (KeyIsPressed(key))
+                {
                     handler.GetPlayer().Move(key);
+                    currentlyPressed.Add(key);
+                }
             }
+
+            ChangePlayerImage(currentlyPressed);
+        }
+
+        private void ChangePlayerImage(List<VirtualKey> currentlyPressed)
+        {
+            if (currentlyPressed.Count == 0)
+                return;
+
+            if (currentlyPressed.Count == 1)
+            {
+                handler.GetPlayer().ChangeIdleDirection(KEY_TO_TILE[currentlyPressed[0]]);
+                return;
+            }
+
+            int t1 = KEY_TO_TILE[currentlyPressed[0]], t2 = KEY_TO_TILE[currentlyPressed[1]];
+
+            if (Math.Abs(t1 - t2) == 4)
+                return;
+
+            int tile = Math.Abs(t1 - t2) == 6 ? 7 : (t1 + t2) / 2;
+            handler.GetPlayer().ChangeIdleDirection(tile);
         }
 
         private bool KeyIsPressed(Windows.System.VirtualKey key)
