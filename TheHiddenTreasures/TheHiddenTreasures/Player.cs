@@ -20,7 +20,7 @@ namespace TheHiddenTreasures
     public class Player : GameObject
     {
         private const int MOVEMENT_SPEED = 7;
-        public const int PLAYER_SIZE = 75;
+        public const int PLAYER_SIZE = 100;
 
         private int idleTile, animationTile;
         private DispatcherTimer animationTimer;
@@ -29,14 +29,14 @@ namespace TheHiddenTreasures
             : base(startPoint.X, startPoint.Y, PLAYER_SIZE, PLAYER_SIZE, GetImage("idle/tile000.png"), ref gameCanvas, handler)
         {
             animationTimer = new DispatcherTimer();
-            animationTimer.Interval = TimeSpan.FromMilliseconds(250);
+            animationTimer.Interval = TimeSpan.FromMilliseconds(200);
             animationTimer.Tick += AnimationTimer_Tick;
         }
 
         public static ImageBrush GetImage(string imgPath)
         {
             var img = new BitmapImage();
-            img.UriSource = new Uri($"ms-appx:/Assets/1/{imgPath}");
+            img.UriSource = new Uri($"ms-appx:/Assets/5/{imgPath}");
 
             var brush = new ImageBrush();
             brush.ImageSource = img;
