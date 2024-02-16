@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.VoiceCommands;
@@ -21,11 +22,16 @@ namespace TheHiddenTreasures
         private const int MOVEMENT_SPEED = 7;
         public const int PLAYER_SIZE = 75;
 
-        private int tile;
+        private int idleTile, animationTile;
+        private DispatcherTimer animationTimer;
 
         public Player(System.Drawing.Point startPoint, ref Canvas gameCanvas, Handler handler)
             : base(startPoint.X, startPoint.Y, PLAYER_SIZE, PLAYER_SIZE, GetImage("idle/tile000.png"), ref gameCanvas, handler)
-        { }
+        {
+            animationTimer = new DispatcherTimer();
+            animationTimer.Interval = TimeSpan.FromMilliseconds(250);
+            animationTimer.Tick += AnimationTimer_Tick;
+        }
 
         public static ImageBrush GetImage(string imgPath)
         {
@@ -37,13 +43,42 @@ namespace TheHiddenTreasures
             return brush;
         }
 
+        public bool DidAnimationDirectionChange()
+        {
+            return animationTile / 4 != idleTile;
+        }
+
         public void ChangeIdleDirection(int tile)
         {
-            if (this.tile == tile)
+            if (idleTile == tile)
                 return;
 
-            this.tile = tile;
-            Rect.Fill = GetImage($"idle/tile{tile:D3}.png");
+            idleTile = tile;
+            animationTile = idleTile * 4;
+            Rect.Fill = GetImage($"idle/tile{idleTile:D3}.png");
+        }
+
+        public void StartAnimation()
+        {
+            if (animationTimer.IsEnabled)
+                return;
+
+            animationTimer.Start();
+        }
+
+        public void StopAnimation()
+        {
+            if (!animationTimer.IsEnabled)
+                return;
+
+            animationTimer.Stop();
+            Rect.Fill = GetImage($"idle/tile{idleTile:D3}.png");
+        }
+
+        private void AnimationTimer_Tick(object sender, object e)
+        {
+            animationTile = ((animationTile + 1) % 4) == 0 ? animationTile - 3 : animationTile + 1;
+            Rect.Fill = GetImage($"move/tile{animationTile:D3}.png");
         }
 
         public void Move(VirtualKey pressedKey, int movementSpeed = MOVEMENT_SPEED)

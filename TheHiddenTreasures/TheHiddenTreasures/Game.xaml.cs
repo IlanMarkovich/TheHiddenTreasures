@@ -100,10 +100,15 @@ namespace TheHiddenTreasures
                 }
             }
 
-            ChangePlayerImage(currentlyPressed);
+            ChangePlayerIdleImage(currentlyPressed);
+
+            if (currentlyPressed.Count == 0 || handler.GetPlayer().DidAnimationDirectionChange())
+                handler.GetPlayer().StopAnimation();
+            else
+                handler.GetPlayer().StartAnimation();
         }
 
-        private void ChangePlayerImage(List<VirtualKey> currentlyPressed)
+        private void ChangePlayerIdleImage(List<VirtualKey> currentlyPressed)
         {
             if (currentlyPressed.Count == 0)
                 return;
