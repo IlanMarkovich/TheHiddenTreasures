@@ -39,9 +39,11 @@ namespace TheHiddenTreasures
         private int levelNumber, currLevelSize;
         private bool gameEnded;
         private int coins;
+        private int playerSkin;
 
-        public Handler(ref Canvas gameCanvas, ref PlaneProjection gameCamera, ref TextBlock X_tb, ref TextBlock Y_tb, ref TextBlock Level_tb, ref TextBlock Coins_tb, FinishGame finishGame)
+        public Handler(int playerSkin, ref Canvas gameCanvas, ref PlaneProjection gameCamera, ref TextBlock X_tb, ref TextBlock Y_tb, ref TextBlock Level_tb, ref TextBlock Coins_tb, FinishGame finishGame)
         {
+            this.playerSkin = playerSkin;
             this.gameCanvas = gameCanvas;
             this.gameCamera = gameCamera;
             this.X_tb = X_tb;
@@ -79,7 +81,7 @@ namespace TheHiddenTreasures
             currLevel.GenerateMaze();
 
             RenderObjectList = new List<RenderObject>();
-            player = new Player(currLevel.GetStartPoint(), ref gameCanvas, this);
+            player = new Player(playerSkin, currLevel.GetStartPoint(), ref gameCanvas, this);
 
             PlaceTraps();
             PlaceCoins();

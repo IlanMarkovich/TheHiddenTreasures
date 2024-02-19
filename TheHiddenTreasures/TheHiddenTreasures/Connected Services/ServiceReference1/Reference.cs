@@ -168,6 +168,9 @@ namespace TheHiddenTreasures.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetPlayerCoins", ReplyAction="http://tempuri.org/IService1/GetPlayerCoinsResponse")]
         System.Threading.Tasks.Task<int> GetPlayerCoinsAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetPlayerCurrentSkin", ReplyAction="http://tempuri.org/IService1/GetPlayerCurrentSkinResponse")]
+        System.Threading.Tasks.Task<int> GetPlayerCurrentSkinAsync(string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -231,6 +234,10 @@ namespace TheHiddenTreasures.ServiceReference1 {
         
         public System.Threading.Tasks.Task<int> GetPlayerCoinsAsync(string username) {
             return base.Channel.GetPlayerCoinsAsync(username);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetPlayerCurrentSkinAsync(string username) {
+            return base.Channel.GetPlayerCurrentSkinAsync(username);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync() {

@@ -22,21 +22,23 @@ namespace TheHiddenTreasures
         private const int MOVEMENT_SPEED = 7;
         public const int PLAYER_SIZE = 100;
 
-        private int idleTile, animationTile;
+        private int idleTile, animationTile, skin;
         private DispatcherTimer animationTimer;
 
-        public Player(System.Drawing.Point startPoint, ref Canvas gameCanvas, Handler handler)
-            : base(startPoint.X, startPoint.Y, PLAYER_SIZE, PLAYER_SIZE, GetImage("idle/tile000.png"), ref gameCanvas, handler)
+        public Player(int skin, System.Drawing.Point startPoint, ref Canvas gameCanvas, Handler handler)
+            : base(startPoint.X, startPoint.Y, PLAYER_SIZE, PLAYER_SIZE, GetImage("idle/tile000.png", skin), ref gameCanvas, handler)
         {
+            this.skin = skin;
+
             animationTimer = new DispatcherTimer();
             animationTimer.Interval = TimeSpan.FromMilliseconds(200);
             animationTimer.Tick += AnimationTimer_Tick;
         }
 
-        public static ImageBrush GetImage(string imgPath)
+        public static ImageBrush GetImage(string imgPath, int skin)
         {
             var img = new BitmapImage();
-            img.UriSource = new Uri($"ms-appx:/Assets/5/{imgPath}");
+            img.UriSource = new Uri($"ms-appx:/Assets/{skin}/{imgPath}");
 
             var brush = new ImageBrush();
             brush.ImageSource = img;
@@ -55,7 +57,7 @@ namespace TheHiddenTreasures
 
             idleTile = tile;
             animationTile = idleTile * 4;
-            Rect.Fill = GetImage($"idle/tile{idleTile:D3}.png");
+            Rect.Fill = GetImage($"idle/tile{idleTile:D3}.png", skin);
         }
 
         public void StartAnimation()
@@ -72,13 +74,13 @@ namespace TheHiddenTreasures
                 return;
 
             animationTimer.Stop();
-            Rect.Fill = GetImage($"idle/tile{idleTile:D3}.png");
+            Rect.Fill = GetImage($"idle/tile{idleTile:D3}.png", skin);
         }
 
         private void AnimationTimer_Tick(object sender, object e)
         {
             animationTile = ((animationTile + 1) % 4) == 0 ? animationTile - 3 : animationTile + 1;
-            Rect.Fill = GetImage($"move/tile{animationTile:D3}.png");
+            Rect.Fill = GetImage($"move/tile{animationTile:D3}.png", skin);
         }
 
         public void Move(VirtualKey pressedKey, int movementSpeed = MOVEMENT_SPEED)

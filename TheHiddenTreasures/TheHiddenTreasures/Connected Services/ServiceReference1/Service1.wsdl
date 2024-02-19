@@ -37,6 +37,12 @@
   <wsdl:message name="IService1_GetPlayerCoins_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPlayerCoinsResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_GetPlayerCurrentSkin_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlayerCurrentSkin" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetPlayerCurrentSkin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlayerCurrentSkinResponse" />
+  </wsdl:message>
   <wsdl:portType name="IService1">
     <wsdl:operation name="ValidateUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/ValidateUser" message="tns:IService1_ValidateUser_InputMessage" />
@@ -57,6 +63,10 @@
     <wsdl:operation name="GetPlayerCoins">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetPlayerCoins" message="tns:IService1_GetPlayerCoins_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetPlayerCoinsResponse" message="tns:IService1_GetPlayerCoins_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerCurrentSkin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetPlayerCurrentSkin" message="tns:IService1_GetPlayerCurrentSkin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetPlayerCurrentSkinResponse" message="tns:IService1_GetPlayerCurrentSkin_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
@@ -99,6 +109,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetPlayerCoins">
       <soap:operation soapAction="http://tempuri.org/IService1/GetPlayerCoins" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerCurrentSkin">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetPlayerCurrentSkin" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

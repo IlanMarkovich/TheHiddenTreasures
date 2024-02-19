@@ -17,7 +17,62 @@
         </Grid.RowDefinitions>
 
         <TextBlock Text="Shop" FontSize="100" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBlock Name="CoinsTB" Text="Coins: " FontSize="75" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Spacing="25">
+            <Image Source="Assets/coin/tile000.png"/>
+            <TextBlock Name="CoinsTB" Text="Coins: " FontSize="75" FontWeight="SemiBold"/>
+        </StackPanel>
+
+        <ScrollViewer Name="ShopItems" Grid.Row="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Spacing="100">
+                <StackPanel Orientation="Vertical">
+                    <Image Source="Assets/1/idle/tile000.png" Width="400" Height="400"/>
+                    <Button FontSize="50" Width="400" Height="100" IsEnabled="False">
+                        <TextBlock Text="Equipped" FontSize="60"/>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical">
+                    <Image Source="Assets/2/idle/tile000.png" Width="400" Height="400"/>
+                    <Button FontSize="50" Width="400" Height="100">
+                        <StackPanel Orientation="Horizontal" Spacing="20">
+                            <TextBlock Text="20" FontSize="60"/>
+                            <Image Source="Assets/coin/tile000.png"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical">
+                    <Image Source="Assets/3/idle/tile000.png" Width="400" Height="400"/>
+                    <Button FontSize="50" Width="400" Height="100">
+                        <StackPanel Orientation="Horizontal" Spacing="20">
+                            <TextBlock Text="25" FontSize="60"/>
+                            <Image Source="Assets/coin/tile000.png"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical">
+                    <Image Source="Assets/4/idle/tile000.png" Width="400" Height="400"/>
+                    <Button FontSize="50" Width="400" Height="100">
+                        <StackPanel Orientation="Horizontal" Spacing="20">
+                            <TextBlock Text="50" FontSize="60"/>
+                            <Image Source="Assets/coin/tile000.png"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical">
+                    <Image Source="Assets/5/idle/tile000.png" Width="400" Height="400"/>
+                    <Button FontSize="50" Width="400" Height="100">
+                        <StackPanel Orientation="Horizontal" Spacing="20">
+                            <TextBlock Text="100" FontSize="60"/>
+                            <Image Source="Assets/coin/tile000.png"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
 
         <Button Name="BackBtn" Content="Back" Width="500" FontSize="75" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="BackBtn_Click"/>
     </Grid>

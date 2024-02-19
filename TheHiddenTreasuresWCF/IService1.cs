@@ -27,5 +27,8 @@ namespace TheHiddenTreasuresWCF
 
         [OperationContract]
         int GetPlayerCoins(string username);
+
+        [OperationContract]
+        int GetPlayerCurrentSkin(string username);
     }
 }

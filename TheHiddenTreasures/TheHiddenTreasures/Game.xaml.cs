@@ -70,9 +70,12 @@ namespace TheHiddenTreasures
             isVisibilityOn = true;
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            handler = new Handler(ref GameCanvas, ref GameCamera, ref X_tb, ref Y_tb, ref Level_tb, ref Coins_tb, FinishGame);
+            var proxy = new ServiceReference1.Service1Client();
+            int playerSkin = await proxy.GetPlayerCurrentSkinAsync(MainPage.username);
+
+            handler = new Handler(playerSkin, ref GameCanvas, ref GameCamera, ref X_tb, ref Y_tb, ref Level_tb, ref Coins_tb, FinishGame);
         }
 
         private void TimeCounterTimer_Tick(object sender, object e)

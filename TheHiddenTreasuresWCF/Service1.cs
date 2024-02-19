@@ -125,7 +125,7 @@ namespace TheHiddenTreasuresWCF
                 }
 
                 int gamesWon = didWin ? 1 : 0;
-                query = $"insert into StatisticsTbl (username, gamesPlayed, gamesWon, minTime, coins) values('{username}', '1', '{gamesWon}', '{time}', '0');";
+                query = $"insert into StatisticsTbl (username, gamesPlayed, gamesWon, minTime, coins, currentSkin) values('{username}', '1', '{gamesWon}', '{time}', '0', '1');";
                 cmd = new SqlCommand(query, connection);
 
                 return cmd.ExecuteNonQuery() != 0;
@@ -197,6 +197,31 @@ namespace TheHiddenTreasuresWCF
                 SqlDataReader reader = cmd.ExecuteReader();
                 reader.Read();
                 return (int)reader["coins"];
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return 0;
+            }
+            finally
+            {
+                if (connection.State == System.Data.ConnectionState.Open)
+                    connection.Close();
+            }
+        }
+
+        public int GetPlayerCurrentSkin(string username)
+        {
+            string query = $"select currentSkin from StatisticsTbl where username='{username}';";
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                reader.Read();
+                return (int)reader["currentSkin"];
             }
             catch (Exception e)
             {
