@@ -171,6 +171,12 @@ namespace TheHiddenTreasures.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetPlayerCurrentSkin", ReplyAction="http://tempuri.org/IService1/GetPlayerCurrentSkinResponse")]
         System.Threading.Tasks.Task<int> GetPlayerCurrentSkinAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddItem", ReplyAction="http://tempuri.org/IService1/AddItemResponse")]
+        System.Threading.Tasks.Task<bool> AddItemAsync(string username, int item);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUserItems", ReplyAction="http://tempuri.org/IService1/GetUserItemsResponse")]
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetUserItemsAsync(string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -238,6 +244,14 @@ namespace TheHiddenTreasures.ServiceReference1 {
         
         public System.Threading.Tasks.Task<int> GetPlayerCurrentSkinAsync(string username) {
             return base.Channel.GetPlayerCurrentSkinAsync(username);
+        }
+        
+        public System.Threading.Tasks.Task<bool> AddItemAsync(string username, int item) {
+            return base.Channel.AddItemAsync(username, item);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetUserItemsAsync(string username) {
+            return base.Channel.GetUserItemsAsync(username);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync() {

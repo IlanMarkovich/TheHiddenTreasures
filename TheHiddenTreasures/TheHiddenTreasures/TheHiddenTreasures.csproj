@@ -424,6 +424,9 @@
     <None Include="Connected Services\ServiceReference1\item2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\ServiceReference1\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ServiceReference1\Service1.wsdl" />
     <None Include="Connected Services\ServiceReference1\TheHiddenTreasures.ServiceReference1.PlayerStatistics.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>

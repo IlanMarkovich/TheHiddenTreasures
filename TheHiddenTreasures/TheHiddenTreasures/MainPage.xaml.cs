@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -30,6 +31,7 @@ namespace TheHiddenTreasures
 
         public static State state = State.NOT_LOGGED_IN;
         public static string username;
+        public static List<int> skins;
 
         public MainPage()
         {
@@ -87,6 +89,7 @@ namespace TheHiddenTreasures
             {
                 ChangeUserState();
                 username = user.username;
+                skins = (await proxy.GetUserItemsAsync(username)).ToList();
                 return;
             }
 

@@ -234,5 +234,59 @@ namespace TheHiddenTreasuresWCF
                     connection.Close();
             }
         }
+
+        public bool AddItem(string username, int item)
+        {
+            string query = $"insert into ItemsTbl (username, itemId) values ({username}, {item});";
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+                return cmd.ExecuteNonQuery() != 0;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+        }
+
+        public List<int> GetUserItems(string username)
+        {
+            string query = $"select itemId from ItemsTbl where username={username};";
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                List<int> items = new List<int>();
+
+                while(reader.Read())
+                {
+                    items.Add((int)reader["itemId"]);
+                }
+
+                return items;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+        }
     }
 }

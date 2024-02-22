@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="78895a7a-e820-47d7-9e92-b4fe8addbbc5" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="1b28666c-17a9-49e3-af8e-1c7557bd3f47" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -24,11 +24,12 @@
     <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="30ff23f7-866f-43a3-bf0d-d2a7cec081fe" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/?xsd=xsd1" />
-    <MetadataFile FileName="Service1.wsdl" MetadataType="Wsdl" ID="217a22dd-87c2-4c0e-ae0e-96ed8c2154d1" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/?wsdl" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="eb97f14e-2fe8-4f10-824e-5ec358740e73" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/?xsd=xsd2" />
-    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="cd0cd327-fd75-4490-ab42-ca5e87f0f499" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/?xsd=xsd0" />
-    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="a8b0c810-c5eb-4a2c-b3e1-d409d1944327" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/?disco" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="687e45a5-5275-40ec-8605-c7f512eadf5f" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/?xsd=xsd2" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="8a05674e-4a39-43bc-833c-817bddf9a1eb" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/?xsd=xsd3" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="37007be3-5953-45ee-934d-0ecb04771c67" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/?disco" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="71d2d694-02af-4033-81ae-6438c0c07c82" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/?xsd=xsd0" />
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="d40bd375-49d0-4ca5-9670-4211fdc90841" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/?xsd=xsd1" />
+    <MetadataFile FileName="Service1.wsdl" MetadataType="Wsdl" ID="619ffcc9-0fe4-49b5-b8ff-f89216899bf0" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

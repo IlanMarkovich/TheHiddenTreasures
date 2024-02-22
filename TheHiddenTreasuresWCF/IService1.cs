@@ -30,5 +30,11 @@ namespace TheHiddenTreasuresWCF
 
         [OperationContract]
         int GetPlayerCurrentSkin(string username);
+
+        [OperationContract]
+        bool AddItem(string username, int item);
+
+        [OperationContract]
+        List<int> GetUserItems(string username);
     }
 }
