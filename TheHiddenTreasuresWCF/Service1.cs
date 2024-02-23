@@ -220,7 +220,10 @@ namespace TheHiddenTreasuresWCF
             {
                 connection.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
-                reader.Read();
+
+                if (!reader.Read())
+                    return 1;
+
                 return (int)reader["currentSkin"];
             }
             catch (Exception e)

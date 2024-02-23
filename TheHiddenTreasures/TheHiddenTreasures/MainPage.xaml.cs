@@ -105,7 +105,7 @@ namespace TheHiddenTreasures
             user.username = UsernameTB.Text;
             user.password = PasswordPB.Password;
 
-            if (await proxy.RegisterUserAsync(user) && await proxy.AddItemAsync(username, 1))
+            if (await proxy.RegisterUserAsync(user) && await proxy.AddItemAsync(user.username, 1))
             {
                 ChangeUserState();
                 username = user.username;

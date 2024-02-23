@@ -82,7 +82,7 @@ namespace TheHiddenTreasures
                 
                 if(price > coins)
                 {
-                    var dialog = new MessageDialog("Not enough coins to but this!");
+                    var dialog = new MessageDialog("Not enough coins to buy this!");
                     await dialog.ShowAsync();
                     return;
                 }
