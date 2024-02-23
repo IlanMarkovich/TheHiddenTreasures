@@ -55,7 +55,6 @@ namespace TheHiddenTreasures
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(16.666);
             timer.Tick += GameLoop;
-            timer.Start();
 
             time = 0;
             timeCounterTimer = new DispatcherTimer();
@@ -76,6 +75,7 @@ namespace TheHiddenTreasures
             int playerSkin = await proxy.GetPlayerCurrentSkinAsync(MainPage.username);
 
             handler = new Handler(playerSkin, ref GameCanvas, ref GameCamera, ref X_tb, ref Y_tb, ref Level_tb, ref Coins_tb, FinishGame);
+            timer.Start();
         }
 
         private void TimeCounterTimer_Tick(object sender, object e)

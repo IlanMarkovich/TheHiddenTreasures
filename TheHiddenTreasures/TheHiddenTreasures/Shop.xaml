@@ -27,14 +27,14 @@
             <StackPanel Orientation="Horizontal" Spacing="100">
                 <StackPanel Orientation="Vertical">
                     <Image Source="Assets/1/idle/tile000.png" Width="400" Height="400"/>
-                    <Button FontSize="50" Width="400" Height="100" IsEnabled="False">
+                    <Button Name="Btn_1" FontSize="50" Width="400" Height="100" IsEnabled="False" Click="Btn_Click">
                         <TextBlock Text="Equipped" FontSize="60"/>
                     </Button>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical">
                     <Image Source="Assets/2/idle/tile000.png" Width="400" Height="400"/>
-                    <Button FontSize="50" Width="400" Height="100">
+                    <Button Name="Btn_2" Tag="20" FontSize="50" Width="400" Height="100" Click="Btn_Click">
                         <StackPanel Orientation="Horizontal" Spacing="20">
                             <TextBlock Text="20" FontSize="60"/>
                             <Image Source="Assets/coin/tile000.png"/>
@@ -44,7 +44,7 @@
 
                 <StackPanel Orientation="Vertical">
                     <Image Source="Assets/3/idle/tile000.png" Width="400" Height="400"/>
-                    <Button FontSize="50" Width="400" Height="100">
+                    <Button Name="Btn_3" Tag="25" FontSize="50" Width="400" Height="100" Click="Btn_Click">
                         <StackPanel Orientation="Horizontal" Spacing="20">
                             <TextBlock Text="25" FontSize="60"/>
                             <Image Source="Assets/coin/tile000.png"/>
@@ -54,7 +54,7 @@
 
                 <StackPanel Orientation="Vertical">
                     <Image Source="Assets/4/idle/tile000.png" Width="400" Height="400"/>
-                    <Button FontSize="50" Width="400" Height="100">
+                    <Button Name="Btn_4" Tag="50" FontSize="50" Width="400" Height="100" Click="Btn_Click">
                         <StackPanel Orientation="Horizontal" Spacing="20">
                             <TextBlock Text="50" FontSize="60"/>
                             <Image Source="Assets/coin/tile000.png"/>
@@ -64,7 +64,7 @@
 
                 <StackPanel Orientation="Vertical">
                     <Image Source="Assets/5/idle/tile000.png" Width="400" Height="400"/>
-                    <Button FontSize="50" Width="400" Height="100">
+                    <Button Name="Btn_5" Tag="100" FontSize="50" Width="400" Height="100" Click="Btn_Click">
                         <StackPanel Orientation="Horizontal" Spacing="20">
                             <TextBlock Text="100" FontSize="60"/>
                             <Image Source="Assets/coin/tile000.png"/>

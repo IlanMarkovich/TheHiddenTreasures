@@ -235,6 +235,58 @@ namespace TheHiddenTreasuresWCF
             }
         }
 
+        public bool UpdatePlayerCurrentSkin(string username, int skin)
+        {
+            string query = $"update StatisticsTbl set currentSkin={skin} where username={username};";
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+                return cmd.ExecuteNonQuery() != 0;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+        }
+
+        public bool BuyPlayerSkin(string username, int skin, int price)
+        {
+            int coins = GetPlayerCoins(username);
+
+            string query = $"update StatisticsTbl set coins={coins - price} where username={username};";
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+
+                if (cmd.ExecuteNonQuery() == 0)
+                    return false;
+
+                return AddItem(username, skin);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+        }
+
         public bool AddItem(string username, int item)
         {
             string query = $"insert into ItemsTbl (username, itemId) values ({username}, {item});";

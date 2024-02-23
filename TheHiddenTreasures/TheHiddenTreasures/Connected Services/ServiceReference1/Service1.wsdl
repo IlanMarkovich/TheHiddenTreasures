@@ -44,6 +44,18 @@
   <wsdl:message name="IService1_GetPlayerCurrentSkin_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPlayerCurrentSkinResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_UpdatePlayerCurrentSkin_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlayerCurrentSkin" />
+  </wsdl:message>
+  <wsdl:message name="IService1_UpdatePlayerCurrentSkin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlayerCurrentSkinResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_BuyPlayerSkin_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuyPlayerSkin" />
+  </wsdl:message>
+  <wsdl:message name="IService1_BuyPlayerSkin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuyPlayerSkinResponse" />
+  </wsdl:message>
   <wsdl:message name="IService1_AddItem_InputMessage">
     <wsdl:part name="parameters" element="tns:AddItem" />
   </wsdl:message>
@@ -80,6 +92,14 @@
     <wsdl:operation name="GetPlayerCurrentSkin">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetPlayerCurrentSkin" message="tns:IService1_GetPlayerCurrentSkin_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetPlayerCurrentSkinResponse" message="tns:IService1_GetPlayerCurrentSkin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlayerCurrentSkin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/UpdatePlayerCurrentSkin" message="tns:IService1_UpdatePlayerCurrentSkin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/UpdatePlayerCurrentSkinResponse" message="tns:IService1_UpdatePlayerCurrentSkin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuyPlayerSkin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/BuyPlayerSkin" message="tns:IService1_BuyPlayerSkin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/BuyPlayerSkinResponse" message="tns:IService1_BuyPlayerSkin_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AddItem">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddItem" message="tns:IService1_AddItem_InputMessage" />
@@ -139,6 +159,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetPlayerCurrentSkin">
       <soap:operation soapAction="http://tempuri.org/IService1/GetPlayerCurrentSkin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlayerCurrentSkin">
+      <soap:operation soapAction="http://tempuri.org/IService1/UpdatePlayerCurrentSkin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuyPlayerSkin">
+      <soap:operation soapAction="http://tempuri.org/IService1/BuyPlayerSkin" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

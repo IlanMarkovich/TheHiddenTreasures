@@ -32,6 +32,12 @@ namespace TheHiddenTreasuresWCF
         int GetPlayerCurrentSkin(string username);
 
         [OperationContract]
+        bool UpdatePlayerCurrentSkin(string username, int skin);
+
+        [OperationContract]
+        bool BuyPlayerSkin(string username, int skin, int price);
+
+        [OperationContract]
         bool AddItem(string username, int item);
 
         [OperationContract]

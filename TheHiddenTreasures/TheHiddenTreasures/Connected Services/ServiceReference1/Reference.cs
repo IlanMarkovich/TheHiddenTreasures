@@ -172,6 +172,12 @@ namespace TheHiddenTreasures.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetPlayerCurrentSkin", ReplyAction="http://tempuri.org/IService1/GetPlayerCurrentSkinResponse")]
         System.Threading.Tasks.Task<int> GetPlayerCurrentSkinAsync(string username);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UpdatePlayerCurrentSkin", ReplyAction="http://tempuri.org/IService1/UpdatePlayerCurrentSkinResponse")]
+        System.Threading.Tasks.Task<bool> UpdatePlayerCurrentSkinAsync(string username, int skin);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/BuyPlayerSkin", ReplyAction="http://tempuri.org/IService1/BuyPlayerSkinResponse")]
+        System.Threading.Tasks.Task<bool> BuyPlayerSkinAsync(string username, int skin, int price);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddItem", ReplyAction="http://tempuri.org/IService1/AddItemResponse")]
         System.Threading.Tasks.Task<bool> AddItemAsync(string username, int item);
         
@@ -244,6 +250,14 @@ namespace TheHiddenTreasures.ServiceReference1 {
         
         public System.Threading.Tasks.Task<int> GetPlayerCurrentSkinAsync(string username) {
             return base.Channel.GetPlayerCurrentSkinAsync(username);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UpdatePlayerCurrentSkinAsync(string username, int skin) {
+            return base.Channel.UpdatePlayerCurrentSkinAsync(username, skin);
+        }
+        
+        public System.Threading.Tasks.Task<bool> BuyPlayerSkinAsync(string username, int skin, int price) {
+            return base.Channel.BuyPlayerSkinAsync(username, skin, price);
         }
         
         public System.Threading.Tasks.Task<bool> AddItemAsync(string username, int item) {

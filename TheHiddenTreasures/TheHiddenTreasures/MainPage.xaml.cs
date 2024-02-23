@@ -31,7 +31,6 @@ namespace TheHiddenTreasures
 
         public static State state = State.NOT_LOGGED_IN;
         public static string username;
-        public static List<int> skins;
 
         public MainPage()
         {
@@ -89,7 +88,6 @@ namespace TheHiddenTreasures
             {
                 ChangeUserState();
                 username = user.username;
-                skins = (await proxy.GetUserItemsAsync(username)).ToList();
                 return;
             }
 
@@ -107,7 +105,7 @@ namespace TheHiddenTreasures
             user.username = UsernameTB.Text;
             user.password = PasswordPB.Password;
 
-            if (await proxy.RegisterUserAsync(user))
+            if (await proxy.RegisterUserAsync(user) && await proxy.AddItemAsync(username, 1))
             {
                 ChangeUserState();
                 username = user.username;
