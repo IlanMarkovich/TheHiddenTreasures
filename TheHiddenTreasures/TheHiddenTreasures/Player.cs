@@ -24,11 +24,13 @@ namespace TheHiddenTreasures
 
         private int idleTile, animationTile, skin;
         private DispatcherTimer animationTimer;
+        private bool move;
 
         public Player(int skin, System.Drawing.Point startPoint, ref Canvas gameCanvas, Handler handler)
             : base(startPoint.X, startPoint.Y, PLAYER_SIZE, PLAYER_SIZE, GetImage("idle/tile000.png", skin), ref gameCanvas, handler)
         {
             this.skin = skin;
+            move = true;
 
             animationTimer = new DispatcherTimer();
             animationTimer.Interval = TimeSpan.FromMilliseconds(200);
@@ -85,6 +87,9 @@ namespace TheHiddenTreasures
 
         public void Move(VirtualKey pressedKey, int movementSpeed = MOVEMENT_SPEED)
         {
+            if (!move)
+                return;
+
             double x = Canvas.GetLeft(Rect),
                 y = Canvas.GetTop(Rect);
 
@@ -126,7 +131,7 @@ namespace TheHiddenTreasures
         {
             foreach(var obj in handler.RenderObjectList)
             {
-                if (!(obj is Wall) && !(obj is Trap) && !(obj is Coin))
+                if (!(obj is Wall) && !(obj is Trap) && !(obj is Coin) && !(obj is Treasure))
                     continue;
 
                 var wallRect = new Rect(Canvas.GetLeft(obj.Rect), Canvas.GetTop(obj.Rect), obj.Rect.Width, obj.Rect.Height);
@@ -141,6 +146,12 @@ namespace TheHiddenTreasures
 
                     if (obj is Coin)
                         handler.AddCoin(obj as Coin);
+                    
+                    if(obj is Treasure)
+                    {
+                        move = false;
+                        handler.GetTreasure().Open();
+                    }
 
                     return true;
                 }

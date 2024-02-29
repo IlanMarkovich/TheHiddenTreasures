@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.UI;
@@ -34,6 +35,7 @@ namespace TheHiddenTreasures
 
         private MazeLevel currLevel;
         private Player player;
+        private Treasure treasure;
 
         private int visibilityRadius;
         private int levelNumber, currLevelSize;
@@ -64,6 +66,11 @@ namespace TheHiddenTreasures
             return player;
         }
 
+        public Treasure GetTreasure()
+        {
+            return treasure;
+        }
+
         public void GameOver()
         {
             if (gameEnded)
@@ -85,15 +92,16 @@ namespace TheHiddenTreasures
 
             PlaceTraps();
             PlaceCoins();
+
+            treasure = new Treasure(currLevel.GetEndPoint(), ref gameCanvas, this);
+            RenderObjectList.Add(treasure);
+
             RenderMaze(currLevelSize, currLevelSize);
             UpdateOnPlayerMove();
         }
 
         public void RenderMaze(int width, int height)
         {
-            // Render end point
-            RenderCell(currLevel.GetEndPoint(), Colors.Yellow);
-
             // Add the top and left walls
             for (int i = 0; i < width; i++)
             {
@@ -152,8 +160,6 @@ namespace TheHiddenTreasures
                 gameCanvas.Children.Remove(obj.Rect);
             }
 
-            RenderCell(currLevel.GetEndPoint(), Colors.Black);
-
             levelNumber++;
             Level_tb.Text = $"Level: { levelNumber }";
             StartLevel();
@@ -173,11 +179,6 @@ namespace TheHiddenTreasures
             FocusOnPlayer();
             UpdateCoordinates();
             UpdateVisibility();
-
-            if((new Point(player.X, player.Y)).Equals(currLevel.GetEndPoint()))
-            {
-                NextLevel();
-            }
         }
 
         private void FocusOnPlayer()
