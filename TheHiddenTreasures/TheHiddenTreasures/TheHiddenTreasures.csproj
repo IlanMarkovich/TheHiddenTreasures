@@ -354,6 +354,7 @@
     <Content Include="Assets\5\move\tile029.png" />
     <Content Include="Assets\5\move\tile030.png" />
     <Content Include="Assets\5\move\tile031.png" />
+    <Content Include="Assets\Background.png" />
     <Content Include="Assets\chest\tile000.png" />
     <Content Include="Assets\chest\tile001.png" />
     <Content Include="Assets\chest\tile002.png" />
@@ -382,6 +383,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Assets\wall\Gap.png" />
+    <Content Include="Assets\wall\Horizontal.png" />
+    <Content Include="Assets\wall\Vertical.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
