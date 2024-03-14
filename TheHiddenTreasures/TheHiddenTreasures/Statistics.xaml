@@ -16,7 +16,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <TextBlock Name="User_TB" Text="Current User: " FontSize="50" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <TextBlock Text="Statistics" FontSize="100" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Name="DeleteBtn" Content="Delete My User" FontSize="50" FontWeight="SemiBold" HorizontalAlignment="Right" VerticalAlignment="Center" Click="DeleteBtn_Click"/>
 
         <ListView Name="PlayersLst" Grid.Row="1" ItemsSource="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Top">
             <ListView.HeaderTemplate>

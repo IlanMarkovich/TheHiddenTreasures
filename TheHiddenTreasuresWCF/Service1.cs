@@ -152,7 +152,13 @@ namespace TheHiddenTreasuresWCF
             {
                 connection.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
-                List<PlayerStatistics> players = new List<PlayerStatistics>();
+                List<PlayerStatistics> players = new List<PlayerStatistics>
+                {
+                    GetAverageStatstics(),
+                    GetSumStatistics(),
+                    GetMaxStatistics(),
+                    GetMinStatistics()
+                };
 
                 while(reader.Read())
                 {
@@ -181,6 +187,110 @@ namespace TheHiddenTreasuresWCF
             finally
             {
                 if (connection.State == System.Data.ConnectionState.Open)
+                    connection.Close();
+            }
+        }
+
+        public PlayerStatistics GetAverageStatstics()
+        {
+            string query = $"select AVG(gamesPlayed) as gamesPlayed, AVG(gamesWon) as gamesWon, AVG(minTime) as minTime, AVG(coins) as coins from StatisticsTbl;";
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                reader.Read();
+
+                return new PlayerStatistics("Average", (int)reader["gamesPlayed"], (int)reader["gamesWon"], (int)reader["minTime"], (int)reader["coins"]);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+        }
+
+        public PlayerStatistics GetSumStatistics()
+        {
+            string query = $"select SUM(gamesPlayed) as gamesPlayed, SUM(gamesWon) as gamesWon, SUM(minTime) as minTime, SUM(coins) as coins from StatisticsTbl;";
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                reader.Read();
+
+                return new PlayerStatistics("Sum", (int)reader["gamesPlayed"], (int)reader["gamesWon"], (int)reader["minTime"], (int)reader["coins"]);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+        }
+
+        public PlayerStatistics GetMaxStatistics()
+        {
+            string query = $"select MAX(gamesPlayed) as gamesPlayed, MAX(gamesWon) as gamesWon, MAX(minTime) as minTime, MAX(coins) as coins from StatisticsTbl;";
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                reader.Read();
+
+                return new PlayerStatistics("Maximum", (int)reader["gamesPlayed"], (int)reader["gamesWon"], (int)reader["minTime"], (int)reader["coins"]);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+        }
+
+        public PlayerStatistics GetMinStatistics()
+        {
+            string query = $"select MIN(gamesPlayed) as gamesPlayed, MIN(gamesWon) as gamesWon, MIN(minTime) as minTime, MIN(coins) as coins from StatisticsTbl;";
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                reader.Read();
+
+                return new PlayerStatistics("Minimum", (int)reader["gamesPlayed"], (int)reader["gamesWon"], (int)reader["minTime"], (int)reader["coins"]);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
                     connection.Close();
             }
         }
@@ -336,6 +446,29 @@ namespace TheHiddenTreasuresWCF
             {
                 Console.WriteLine(e);
                 return null;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+        }
+
+        public bool DeleteUser(string username)
+        {
+            string query = $"delete from Users where username={username};";
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+                return cmd.ExecuteNonQuery() != 0;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
             }
             finally
             {

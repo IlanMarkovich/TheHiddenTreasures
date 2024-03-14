@@ -183,6 +183,9 @@ namespace TheHiddenTreasures.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUserItems", ReplyAction="http://tempuri.org/IService1/GetUserItemsResponse")]
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetUserItemsAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/DeleteUser", ReplyAction="http://tempuri.org/IService1/DeleteUserResponse")]
+        System.Threading.Tasks.Task<bool> DeleteUserAsync(string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -266,6 +269,10 @@ namespace TheHiddenTreasures.ServiceReference1 {
         
         public System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetUserItemsAsync(string username) {
             return base.Channel.GetUserItemsAsync(username);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteUserAsync(string username) {
+            return base.Channel.DeleteUserAsync(username);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync() {

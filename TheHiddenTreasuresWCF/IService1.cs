@@ -25,6 +25,11 @@ namespace TheHiddenTreasuresWCF
         [OperationContract]
         List<PlayerStatistics> GetPlayerStatistics();
 
+        PlayerStatistics GetAverageStatstics();
+        PlayerStatistics GetSumStatistics();
+        PlayerStatistics GetMaxStatistics();
+        PlayerStatistics GetMinStatistics();
+
         [OperationContract]
         int GetPlayerCoins(string username);
 
@@ -42,5 +47,8 @@ namespace TheHiddenTreasuresWCF
 
         [OperationContract]
         List<int> GetUserItems(string username);
+
+        [OperationContract]
+        bool DeleteUser(string username);
     }
 }
