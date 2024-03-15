@@ -19,7 +19,6 @@ namespace TheHiddenTreasures
     public class Handler
     {
         public const int CELL_WIDTH = 100, CELL_HEIGHT = 100, GAP_SIZE = 20;
-        public const int TRAP_SIZE = 75;
         public const int COIN_SIZE = 20;
         public const int ZOOM_LEVEL = 250;
         public const double DEFAULT_VISIBILITY = 350, MAX_OPACITY = 0.85;
@@ -237,7 +236,7 @@ namespace TheHiddenTreasures
                     y = rand.Next(0, currLevelSize);
                 }
 
-                RenderObjectList.Add(new Trap(new Point(x, y), TRAP_SIZE, TRAP_SIZE, ref gameCanvas, this));
+                RenderObjectList.Add(new Trap(new Point(x, y), ref gameCanvas, this));
             }
         }
 

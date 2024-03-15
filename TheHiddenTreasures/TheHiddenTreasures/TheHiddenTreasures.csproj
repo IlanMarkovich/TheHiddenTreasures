@@ -386,6 +386,10 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Assets\trap\tile000.png" />
+    <Content Include="Assets\trap\tile001.png" />
+    <Content Include="Assets\trap\tile002.png" />
+    <Content Include="Assets\trap\tile003.png" />
     <Content Include="Assets\wall\Gap.png" />
     <Content Include="Assets\wall\Horizontal.png" />
     <Content Include="Assets\wall\Vertical.png" />

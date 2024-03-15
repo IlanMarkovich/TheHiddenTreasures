@@ -142,7 +142,7 @@ namespace TheHiddenTreasures
                 if (!playerRect.IsEmpty)
                 {
                     if (obj is Trap)
-                        handler.GameOver();
+                        (obj as Trap).StartTrap();
 
                     if (obj is Coin)
                         handler.AddCoin(obj as Coin);
