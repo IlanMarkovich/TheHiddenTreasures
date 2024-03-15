@@ -354,7 +354,7 @@ namespace TheHiddenTreasuresWCF
 
         public bool UpdatePlayerCurrentSkin(string username, int skin)
         {
-            string query = $"update StatisticsTbl set currentSkin={skin} where username={username};";
+            string query = $"update StatisticsTbl set currentSkin={skin} where username='{username}';";
             SqlConnection connection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand(query, connection);
 
@@ -379,7 +379,7 @@ namespace TheHiddenTreasuresWCF
         {
             int coins = GetPlayerCoins(username);
 
-            string query = $"update StatisticsTbl set coins={coins - price} where username={username};";
+            string query = $"update StatisticsTbl set coins={coins - price} where username='{username}';";
             SqlConnection connection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand(query, connection);
 
@@ -406,7 +406,7 @@ namespace TheHiddenTreasuresWCF
 
         public bool AddItem(string username, int item)
         {
-            string query = $"insert into ItemsTbl (username, itemId) values ({username}, {item});";
+            string query = $"insert into ItemsTbl (username, itemId) values ('{username}', {item});";
             SqlConnection connection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand(query, connection);
 
@@ -429,7 +429,7 @@ namespace TheHiddenTreasuresWCF
 
         public List<int> GetUserItems(string username)
         {
-            string query = $"select itemId from ItemsTbl where username={username};";
+            string query = $"select itemId from ItemsTbl where username='{username}';";
             SqlConnection connection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand(query, connection);
 
@@ -460,7 +460,7 @@ namespace TheHiddenTreasuresWCF
 
         public bool DeleteUser(string username)
         {
-            string query = $"delete from ItemsTbl where username={username};";
+            string query = $"delete from ItemsTbl where username='{username}';";
             SqlConnection connection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand(query, connection);
 
@@ -469,11 +469,11 @@ namespace TheHiddenTreasuresWCF
                 connection.Open();
                 cmd.ExecuteNonQuery();
 
-                query = $"delete from StatisticsTbl where username={username};";
+                query = $"delete from StatisticsTbl where username='{username}';";
                 cmd = new SqlCommand(query, connection);
                 cmd.ExecuteNonQuery();
 
-                query = $"delete from Users where username={username};";
+                query = $"delete from Users where username='{username}';";
                 cmd = new SqlCommand(query, connection);
                 return cmd.ExecuteNonQuery() != 0;
             }
@@ -491,7 +491,7 @@ namespace TheHiddenTreasuresWCF
 
         public PlayerSkins GetPlayerSkins(string username)
         {
-            string query = $"select StatisticsTbl.currentSkin, ItemsTbl.itemId from StatisticsTbl inner join ItemsTbl on StatisticsTbl.username = ItemsTbl.username where StatisticsTbl.username = {username};";
+            string query = $"select StatisticsTbl.currentSkin, ItemsTbl.itemId from StatisticsTbl inner join ItemsTbl on StatisticsTbl.username = ItemsTbl.username where StatisticsTbl.username = '{username}';";
             SqlConnection connection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand(query, connection);
 
