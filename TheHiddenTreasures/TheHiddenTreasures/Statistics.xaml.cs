@@ -74,5 +74,19 @@ namespace TheHiddenTreasures
             MainPage.state = State.NOT_LOGGED_IN;
             Frame.Navigate(typeof(MainPage));
         }
+
+        private async void PlayersLst_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var statistics = e.ClickedItem as PlayerStatistics;
+            List<string> savedUsernames = new List<string>() { "Average", "Sum", "Maximum", "Minimum" };
+
+            if (savedUsernames.Contains(statistics.username))
+                return;
+
+            var proxy = new ServiceReference1.Service1Client();
+            ServiceReference1.PlayerSkins playerSkins = await proxy.GetPlayerSkinsAsync(statistics.username);
+            Frame.Navigate(typeof(PlayerSkinsPage), new PlayerSkins(statistics.username, playerSkins));
+            proxy.Close();
+        }
     }
 }

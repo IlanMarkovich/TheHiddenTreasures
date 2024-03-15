@@ -74,6 +74,12 @@
   <wsdl:message name="IService1_DeleteUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_GetPlayerSkins_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlayerSkins" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetPlayerSkins_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlayerSkinsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IService1">
     <wsdl:operation name="ValidateUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/ValidateUser" message="tns:IService1_ValidateUser_InputMessage" />
@@ -118,6 +124,10 @@
     <wsdl:operation name="DeleteUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/DeleteUser" message="tns:IService1_DeleteUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/DeleteUserResponse" message="tns:IService1_DeleteUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerSkins">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetPlayerSkins" message="tns:IService1_GetPlayerSkins_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetPlayerSkinsResponse" message="tns:IService1_GetPlayerSkins_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
@@ -214,6 +224,15 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteUser">
       <soap:operation soapAction="http://tempuri.org/IService1/DeleteUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerSkins">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetPlayerSkins" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

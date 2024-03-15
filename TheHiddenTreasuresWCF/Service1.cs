@@ -69,6 +69,10 @@ namespace TheHiddenTreasuresWCF
 
         public bool HasUsername(string username)
         {
+            List<string> savedUsernames = new List<string>() { "Average", "Sum", "Maximum", "Minimum" };
+            if (savedUsernames.Contains(username))
+                return false;
+
             string query = $"select * from Users where username='{username}'";
             SqlConnection connection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand(query, connection);
@@ -456,19 +460,60 @@ namespace TheHiddenTreasuresWCF
 
         public bool DeleteUser(string username)
         {
-            string query = $"delete from Users where username={username};";
+            string query = $"delete from ItemsTbl where username={username};";
             SqlConnection connection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand(query, connection);
 
             try
             {
                 connection.Open();
+                cmd.ExecuteNonQuery();
+
+                query = $"delete from StatisticsTbl where username={username};";
+                cmd = new SqlCommand(query, connection);
+                cmd.ExecuteNonQuery();
+
+                query = $"delete from Users where username={username};";
+                cmd = new SqlCommand(query, connection);
                 return cmd.ExecuteNonQuery() != 0;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 return false;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+        }
+
+        public PlayerSkins GetPlayerSkins(string username)
+        {
+            string query = $"select StatisticsTbl.currentSkin, ItemsTbl.itemId from StatisticsTbl inner join ItemsTbl on StatisticsTbl.username = ItemsTbl.username where StatisticsTbl.username = {username};";
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                int currentSkin = -1;
+                List<int> skins = new List<int>();
+
+                while(reader.Read())
+                {
+                    currentSkin = (int)reader["currentSkin"];
+                    skins.Add((int)reader["itemId"]);
+                }
+
+                return new PlayerSkins(currentSkin, skins);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
             }
             finally
             {

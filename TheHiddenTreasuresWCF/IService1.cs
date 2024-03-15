@@ -50,5 +50,8 @@ namespace TheHiddenTreasuresWCF
 
         [OperationContract]
         bool DeleteUser(string username);
+
+        [OperationContract]
+        PlayerSkins GetPlayerSkins(string username);
     }
 }

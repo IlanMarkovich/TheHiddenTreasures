@@ -135,6 +135,10 @@
     </Compile>
     <Compile Include="MazeLevel.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PlayerSkins.cs" />
+    <Compile Include="PlayerSkinsPage.xaml.cs">
+      <DependentUpon>PlayerSkinsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PlayerStatistics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderObject.cs" />
@@ -407,6 +411,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="PlayerSkinsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Shop.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -438,6 +446,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServiceReference1\Service1.wsdl" />
+    <None Include="Connected Services\ServiceReference1\TheHiddenTreasures.ServiceReference1.PlayerSkins.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\ServiceReference1\TheHiddenTreasures.ServiceReference1.PlayerStatistics.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

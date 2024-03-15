@@ -150,6 +150,51 @@ namespace TheHiddenTreasures.ServiceReference1 {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PlayerSkins", Namespace="http://schemas.datacontract.org/2004/07/TheHiddenTreasuresWCF")]
+    public partial class PlayerSkins : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private int currentSkinField;
+        
+        private System.Collections.ObjectModel.ObservableCollection<int> skinsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int currentSkin {
+            get {
+                return this.currentSkinField;
+            }
+            set {
+                if ((this.currentSkinField.Equals(value) != true)) {
+                    this.currentSkinField = value;
+                    this.RaisePropertyChanged("currentSkin");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<int> skins {
+            get {
+                return this.skinsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.skinsField, value) != true)) {
+                    this.skinsField = value;
+                    this.RaisePropertyChanged("skins");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IService1")]
     public interface IService1 {
@@ -186,6 +231,9 @@ namespace TheHiddenTreasures.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/DeleteUser", ReplyAction="http://tempuri.org/IService1/DeleteUserResponse")]
         System.Threading.Tasks.Task<bool> DeleteUserAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetPlayerSkins", ReplyAction="http://tempuri.org/IService1/GetPlayerSkinsResponse")]
+        System.Threading.Tasks.Task<TheHiddenTreasures.ServiceReference1.PlayerSkins> GetPlayerSkinsAsync(string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -273,6 +321,10 @@ namespace TheHiddenTreasures.ServiceReference1 {
         
         public System.Threading.Tasks.Task<bool> DeleteUserAsync(string username) {
             return base.Channel.DeleteUserAsync(username);
+        }
+        
+        public System.Threading.Tasks.Task<TheHiddenTreasures.ServiceReference1.PlayerSkins> GetPlayerSkinsAsync(string username) {
+            return base.Channel.GetPlayerSkinsAsync(username);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync() {
