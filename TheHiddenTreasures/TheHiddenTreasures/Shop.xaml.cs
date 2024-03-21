@@ -57,11 +57,15 @@ namespace TheHiddenTreasures
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
+            MainPage.PlayClickSound();
+
             Frame.Navigate(typeof(MainPage));
         }
 
         private async void Btn_Click(object sender, RoutedEventArgs e)
         {
+            MainPage.PlayClickSound();
+
             var proxy = new ServiceReference1.Service1Client();
             int skin = int.Parse((sender as Button).Name.Replace("Btn_", ""));
 

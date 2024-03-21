@@ -386,6 +386,11 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Assets\sound\footsteps.wav" />
+    <Content Include="Assets\sound\hitHurt.wav" />
+    <Content Include="Assets\sound\nextLevel.wav" />
+    <Content Include="Assets\sound\pickupCoin.wav" />
+    <Content Include="Assets\sound\select.wav" />
     <Content Include="Assets\trap\tile000.png" />
     <Content Include="Assets\trap\tile001.png" />
     <Content Include="Assets\trap\tile002.png" />

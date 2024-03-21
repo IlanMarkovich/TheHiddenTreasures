@@ -6,6 +6,9 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Media.Core;
+using Windows.Media.Playback;
+using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -31,6 +34,7 @@ namespace TheHiddenTreasures
 
         public static State state = State.NOT_LOGGED_IN;
         public static string username;
+        public static MediaPlayer mediaPlayer = new MediaPlayer();
 
         public MainPage()
         {
@@ -76,6 +80,8 @@ namespace TheHiddenTreasures
 
         private async void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
+            PlayClickSound();
+
             if (UsernameTB.Text == String.Empty || PasswordPB.Password == String.Empty)
                 return;
 
@@ -97,6 +103,8 @@ namespace TheHiddenTreasures
 
         private async void RegisterBtn_Click(object sender, RoutedEventArgs e)
         {
+            PlayClickSound();
+
             if (UsernameTB.Text == String.Empty || PasswordPB.Password == String.Empty)
                 return;
 
@@ -118,22 +126,36 @@ namespace TheHiddenTreasures
 
         private void PlayBtn_Click(object sender, RoutedEventArgs e)
         {
+            PlayClickSound();
+
             Frame.Navigate(typeof(Game));
         }
 
         private void ShopBtn_Click(object sender, RoutedEventArgs e)
         {
+            PlayClickSound();
+
             Frame.Navigate(typeof(Shop));
         }
 
         private void StatisticsBtn_Click(object sender, RoutedEventArgs e)
         {
+            PlayClickSound();
+
             Frame.Navigate(typeof(Statistics));
         }
 
         private void LogOutBtn_Click(object sender, RoutedEventArgs e)
         {
+            PlayClickSound();
+
             ChangeUserState();
+        }
+
+        public static void PlayClickSound()
+        {
+            mediaPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/sound/select.wav"));
+            mediaPlayer.Play();
         }
     }
 }

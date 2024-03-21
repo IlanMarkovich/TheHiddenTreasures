@@ -57,6 +57,8 @@ namespace TheHiddenTreasures
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
+            MainPage.PlayClickSound();
+
             Frame.Navigate(typeof(Statistics));
         }
     }

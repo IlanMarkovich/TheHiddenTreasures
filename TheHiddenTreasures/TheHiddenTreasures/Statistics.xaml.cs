@@ -33,6 +33,8 @@ namespace TheHiddenTreasures
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
+            PlayClickSound();
+
             Frame.Navigate(typeof(MainPage));
         }
 
@@ -56,6 +58,8 @@ namespace TheHiddenTreasures
 
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
+            PlayClickSound();
+
             ContentDialog confirmDialog = new ContentDialog
             {
                 Title = "User Delete",
@@ -77,6 +81,8 @@ namespace TheHiddenTreasures
 
         private async void PlayersLst_ItemClick(object sender, ItemClickEventArgs e)
         {
+            PlayClickSound();
+
             var statistics = e.ClickedItem as PlayerStatistics;
             List<string> savedUsernames = new List<string>() { "Average", "Sum", "Maximum", "Minimum" };
 

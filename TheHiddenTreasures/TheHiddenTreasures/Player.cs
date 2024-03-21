@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Foundation;
+using Windows.Media.Core;
+using Windows.Media.Playback;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Xaml;

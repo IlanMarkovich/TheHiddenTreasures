@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.VoiceCommands;
+using Windows.Media.Core;
+using Windows.Media.Playback;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -75,6 +77,9 @@ namespace TheHiddenTreasures
         {
             if (gameEnded)
                 return;
+
+            MainPage.mediaPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/sound/hitHurt.wav"));
+            MainPage.mediaPlayer.Play();
 
             finishGame(false, coins);
             gameEnded = true;
@@ -146,7 +151,7 @@ namespace TheHiddenTreasures
 
         public void NextLevel()
         {
-            if(levelNumber == FINAL_LEVEL && !gameEnded)
+            if (levelNumber == FINAL_LEVEL && !gameEnded)
             {
                 finishGame(true, coins);
                 gameEnded = true;
@@ -167,6 +172,9 @@ namespace TheHiddenTreasures
 
         public void AddCoin(Coin c)
         {
+            MainPage.mediaPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/sound/pickupCoin.wav"));
+            MainPage.mediaPlayer.Play();
+
             coins++;
             Coins_tb.Text = $"Coins: {coins}";
 
@@ -214,7 +222,7 @@ namespace TheHiddenTreasures
                 double distance = Math.Sqrt(Math.Pow((Canvas.GetLeft(player.Rect) + player.Rect.Width / 2) - (Canvas.GetLeft(obj.Rect) + obj.Rect.Width / 2), 2) + Math.Pow((Canvas.GetTop(player.Rect) + player.Rect.Height / 2) - (Canvas.GetTop(obj.Rect) + obj.Rect.Width / 2), 2));
 
                 // Formula for calculating the visibility (opacity) based on the distance
-                double visibility = obj is Trap ? (visibilityRadius / 150) / distance : (visibilityRadius / 25) / distance;
+                double visibility = obj is Trap ? (visibilityRadius / 100) / distance : (visibilityRadius / 25) / distance;
 
                 // If the distance is greater than the visibility radius, the opacity will be zero
                 // and if the visibility exceeds the maximum opacity, set it to the maximum opacity

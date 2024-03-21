@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml;
+using Windows.Media.Core;
 
 namespace TheHiddenTreasures
 {
@@ -30,6 +31,9 @@ namespace TheHiddenTreasures
 
         public void Open()
         {
+            MainPage.mediaPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/sound/nextLevel.wav"));
+            MainPage.mediaPlayer.Play();
+
             animationTimer.Start();
         }
 

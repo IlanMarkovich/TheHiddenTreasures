@@ -169,9 +169,6 @@ namespace TheHiddenTreasures
 
         private async void FinishGame(bool didWin, int coins)
         {
-            // Free this method from the handler of the KeyDown event
-            Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
-
             string userMsg = didWin ? "You Won!" : "You Lose!";
             var dialog = new MessageDialog(userMsg);
             await dialog.ShowAsync();
