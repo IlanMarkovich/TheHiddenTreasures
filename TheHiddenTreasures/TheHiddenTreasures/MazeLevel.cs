@@ -36,7 +36,7 @@ namespace TheHiddenTreasures
         private int width, height;
 
         private bool didSetEndPoint;
-        private Stack<Point> startEndPath;
+        private Point[] startEndPath;
 
         public MazeLevel(int width, int height)
         {
@@ -56,7 +56,6 @@ namespace TheHiddenTreasures
             startPoint.Y = rand.Next(rand.Next(0, height - 1));
 
             didSetEndPoint = false;
-            startEndPath = new Stack<Point>();
         }
 
         public Tile[,] GetLayout()
@@ -83,12 +82,18 @@ namespace TheHiddenTreasures
         {
             GridCell[,] grid = new GridCell[width, height];
             Stack<Point> posStack = new Stack<Point>();
+            startEndPath = new Point[width * height];
 
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
                     grid[i, j] = new GridCell();
 
-            BuildMazeGrid(startPoint, ref grid, ref posStack);
+            for (int i = 0; i < startEndPath.Length; i++)
+                startEndPath[i] = new Point(-1, 01);
+
+            while (endPoint == new Point(0, 0))
+                BuildMazeGrid(startPoint, ref grid, ref posStack);
+
             CreateMazeLayout(startPoint, ref grid);
 
             // Remove random walls
@@ -124,10 +129,13 @@ namespace TheHiddenTreasures
                 directions.Remove('d');
 
             // If didn't already set an end point, and the current point is far enough from the start point, set this point as the end point
-            if (!didSetEndPoint && (Distance(currPoint, startPoint) >= (grid.GetLength(0) + grid.GetLength(1)) / 2))
+            if (!didSetEndPoint && (Distance(currPoint, startPoint) >= GetMinStartEndDistance(grid, currPoint)))
             {
                 didSetEndPoint = true;
                 endPoint = currPoint;
+
+                posStack.CopyTo(startEndPath, 0);
+                startEndPath[startEndPath.Count(p => p.X != -1 && p.Y != -1)] = endPoint;
             }
 
             // If there are no cells to go to next
@@ -136,9 +144,6 @@ namespace TheHiddenTreasures
                 // If not all the cells been visited yet, go back and visit them
                 if (!AreAllVisited(grid))
                 {
-                    if (!didSetEndPoint)
-                        startEndPath.Pop();
-
                     BuildMazeGrid(posStack.Pop(), ref grid, ref posStack, count);
                 }
 
@@ -166,9 +171,6 @@ namespace TheHiddenTreasures
                     break;
             }
 
-            if(!didSetEndPoint)
-                startEndPath.Push(newPoint);
-
             // Set this point as a next point (for the layout algorithem to know where to put paths)
             grid[x, y].NextPoints.Enqueue(newPoint);
 
@@ -190,6 +192,20 @@ namespace TheHiddenTreasures
             }
 
             return true;
+        }
+
+        private double GetMinStartEndDistance(GridCell[,] grid, Point p)
+        {
+            double gridDiagonal = Math.Sqrt(Math.Pow(grid.GetLength(0), 2) + Math.Pow(grid.GetLength(1), 2));
+
+            // Parabola equation: (-2/n^2) * (x - n/2)^2 + 2
+            // So when x/y is approaching zero or the width/height (n) it will be 1.5,
+            // And when x/y is approaching half the width/height it will be 2.
+            double xDiv = (-2 / Math.Pow(grid.GetLength(0), 2)) * Math.Pow(p.X - grid.GetLength(0) / 2, 2) + 2;
+            double yDiv = (-2 / Math.Pow(grid.GetLength(1), 2)) * Math.Pow(p.Y - grid.GetLength(1) / 2, 2) + 2;
+
+            // The grid's diagonal divided by the average of the dividers
+            return gridDiagonal / ((xDiv + yDiv) / 2);
         }
 
         private double Distance(Point p1, Point p2)

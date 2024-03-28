@@ -50,8 +50,6 @@ namespace TheHiddenTreasures
         {
             this.InitializeComponent();
 
-            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
-
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(16.666);
             timer.Tick += GameLoop;
@@ -103,6 +101,30 @@ namespace TheHiddenTreasures
                 }
             }
 
+            // Toggle camera
+            if (KeyIsPressed(Windows.System.VirtualKey.C))
+            {
+                isCameraOn = !isCameraOn;
+
+                if (isCameraOn)
+                    handler.UpdateOnPlayerMove();
+                else
+                    GameCamera.GlobalOffsetZ = -25 * Handler.ZOOM_LEVEL;
+            }
+            // Toggle visibility
+            else if (KeyIsPressed(Windows.System.VirtualKey.X))
+            {
+                isVisibilityOn = !isVisibilityOn;
+
+                if (isVisibilityOn)
+                    handler.UpdateOnPlayerMove();
+                else
+                {
+                    foreach (var obj in handler.RenderObjectList)
+                        obj.Rect.Opacity = 1;
+                }
+            }
+
             ChangePlayerIdleImage(currentlyPressed);
 
             if (currentlyPressed.Count == 0 || handler.GetPlayer().DidAnimationDirectionChange())
@@ -135,36 +157,6 @@ namespace TheHiddenTreasures
         {
             CoreVirtualKeyStates state = CoreWindow.GetForCurrentThread().GetKeyState(key);
             return (state & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-        }
-
-        private void CoreWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
-        {
-            // If the key pressed is one of the movement keys, just ignore it in this function
-            if (MOVEMENT_KEYS.Count(x => x == args.VirtualKey) != 0)
-                return;
-
-            // Toggle camera
-            if(args.VirtualKey == Windows.System.VirtualKey.C)
-            {
-                isCameraOn = !isCameraOn;
-
-                if (isCameraOn)
-                    handler.UpdateOnPlayerMove();
-                else
-                    GameCamera.GlobalOffsetZ = -25 * Handler.ZOOM_LEVEL;
-            }
-            else if(args.VirtualKey == Windows.System.VirtualKey.X)
-            {
-                isVisibilityOn = !isVisibilityOn;
-
-                if (isVisibilityOn)
-                    handler.UpdateOnPlayerMove();
-                else
-                {
-                    foreach (var obj in handler.RenderObjectList)
-                        obj.Rect.Opacity = 1;
-                }
-            }
         }
 
         private async void FinishGame(bool didWin, int coins)

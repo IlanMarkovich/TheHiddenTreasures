@@ -279,6 +279,7 @@ namespace TheHiddenTreasures
 
             Canvas.SetLeft(rect, GAP_SIZE + x);
             Canvas.SetTop(rect, GAP_SIZE + y);
+            Canvas.SetZIndex(rect, -1);
 
             gameCanvas.Children.Add(rect);
         }
