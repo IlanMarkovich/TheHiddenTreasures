@@ -119,7 +119,7 @@ namespace TheHiddenTreasuresWCF
                     reader.Read();
                     int gamesPlayed = (int)reader["gamesPlayed"];
                     int gamesWonVar = didWin ? (int)reader["gamesWon"] + 1 : (int)reader["gamesWon"];
-                    time = time == 0 ? (int)reader["minTime"] : Math.Min(time, (int)reader["minTime"]);
+                    time = time == 0 ? (int)reader["minTime"] : (int)reader["minTime"] == 0 ? time : Math.Min(time, (int)reader["minTime"]);
                     coins += (int)reader["coins"];
                     reader.Close();
 
@@ -129,7 +129,7 @@ namespace TheHiddenTreasuresWCF
                 }
 
                 int gamesWon = didWin ? 1 : 0;
-                query = $"insert into StatisticsTbl (username, gamesPlayed, gamesWon, minTime, coins, currentSkin) values('{username}', '1', '{gamesWon}', '{time}', '0', '1');";
+                query = $"insert into StatisticsTbl (username, gamesPlayed, gamesWon, minTime, coins, currentSkin) values('{username}', '1', '{gamesWon}', '{time}', '{coins}', '1');";
                 cmd = new SqlCommand(query, connection);
 
                 return cmd.ExecuteNonQuery() != 0;

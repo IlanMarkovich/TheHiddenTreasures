@@ -36,7 +36,7 @@ namespace TheHiddenTreasures
         private int width, height;
 
         private bool didSetEndPoint;
-        private Point[] startEndPath;
+        private List<Point> startEndPath;
 
         public MazeLevel(int width, int height)
         {
@@ -49,11 +49,6 @@ namespace TheHiddenTreasures
             for(int i = 0; i < layout.GetLength(0); i++)
                 for(int j = 0; j < layout.GetLength(1); j++)
                     layout[i, j] = Tile.Wall;
-
-            // Set random a start point
-            Random rand = new Random();
-            startPoint.X = rand.Next(rand.Next(0, width - 1));
-            startPoint.Y = rand.Next(rand.Next(0, height - 1));
 
             didSetEndPoint = false;
         }
@@ -75,31 +70,37 @@ namespace TheHiddenTreasures
 
         public List<Point> GetStartEndPath()
         {
-            return startEndPath.ToList();
+            return startEndPath;
         }
 
         public void GenerateMaze()
         {
             GridCell[,] grid = new GridCell[width, height];
             Stack<Point> posStack = new Stack<Point>();
-            startEndPath = new Point[width * height];
+            startEndPath = new List<Point>();
+
+            // Set random a start point
+            Random rand = new Random();
+            startPoint.X = rand.Next(rand.Next(0, width - 1));
+            startPoint.Y = rand.Next(rand.Next(0, height - 1));
 
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
                     grid[i, j] = new GridCell();
 
-            for (int i = 0; i < startEndPath.Length; i++)
-                startEndPath[i] = new Point(-1, 01);
+            BuildMazeGrid(startPoint, ref grid, ref posStack);
 
-            while (endPoint == new Point(0, 0))
-                BuildMazeGrid(startPoint, ref grid, ref posStack);
+            if (!didSetEndPoint)
+            {
+                GenerateMaze();
+                return;
+            }
 
             CreateMazeLayout(startPoint, ref grid);
 
             // Remove random walls
             for(int i = 0; i < width + height; i++)
             {
-                Random rand = new Random();
                 int x = rand.Next(0, width - 1);
                 int y = rand.Next(0, height * 2 - 1);
 
@@ -128,19 +129,19 @@ namespace TheHiddenTreasures
             if (y == height - 1 || grid[x, y + 1].IsVisited)
                 directions.Remove('d');
 
-            // If didn't already set an end point, and the current point is far enough from the start point, set this point as the end point
-            if (!didSetEndPoint && (Distance(currPoint, startPoint) >= GetMinStartEndDistance(grid, currPoint)))
-            {
-                didSetEndPoint = true;
-                endPoint = currPoint;
-
-                posStack.CopyTo(startEndPath, 0);
-                startEndPath[startEndPath.Count(p => p.X != -1 && p.Y != -1)] = endPoint;
-            }
-
             // If there are no cells to go to next
             if (directions.Count == 0)
             {
+                // If didn't already set an end point, and the current point is far enough from the start point, set this point as the end point
+                if (!didSetEndPoint && (Distance(currPoint, startPoint) >= GetMinStartEndDistance(grid, currPoint)))
+                {
+                    didSetEndPoint = true;
+                    endPoint = currPoint;
+
+                    startEndPath = posStack.ToList();
+                    startEndPath.Add(endPoint);
+                }
+
                 // If not all the cells been visited yet, go back and visit them
                 if (!AreAllVisited(grid))
                 {
