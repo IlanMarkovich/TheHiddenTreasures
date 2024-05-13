@@ -11,7 +11,7 @@
     <AssemblyName>TheHiddenTreasures</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22621.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -119,10 +119,38 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Coin.cs" />
+    <Compile Include="Connected Services\ServiceReference1\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Game.xaml.cs">
+      <DependentUpon>Game.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GameObject.cs" />
+    <Compile Include="Handler.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MazeLevel.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="PlayerSkins.cs" />
+    <Compile Include="PlayerSkinsPage.xaml.cs">
+      <DependentUpon>PlayerSkinsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlayerStatistics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RenderObject.cs" />
+    <Compile Include="Shop.xaml.cs">
+      <DependentUpon>Shop.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Statistics.xaml.cs">
+      <DependentUpon>Statistics.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Trap.cs" />
+    <Compile Include="Treasure.cs" />
+    <Compile Include="Wall.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -130,6 +158,246 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\1\idle\tile000.png" />
+    <Content Include="Assets\1\idle\tile001.png" />
+    <Content Include="Assets\1\idle\tile002.png" />
+    <Content Include="Assets\1\idle\tile003.png" />
+    <Content Include="Assets\1\idle\tile004.png" />
+    <Content Include="Assets\1\idle\tile005.png" />
+    <Content Include="Assets\1\idle\tile006.png" />
+    <Content Include="Assets\1\idle\tile007.png" />
+    <Content Include="Assets\1\move\tile000.png" />
+    <Content Include="Assets\1\move\tile001.png" />
+    <Content Include="Assets\1\move\tile002.png" />
+    <Content Include="Assets\1\move\tile003.png" />
+    <Content Include="Assets\1\move\tile004.png" />
+    <Content Include="Assets\1\move\tile005.png" />
+    <Content Include="Assets\1\move\tile006.png" />
+    <Content Include="Assets\1\move\tile007.png" />
+    <Content Include="Assets\1\move\tile008.png" />
+    <Content Include="Assets\1\move\tile009.png" />
+    <Content Include="Assets\1\move\tile010.png" />
+    <Content Include="Assets\1\move\tile011.png" />
+    <Content Include="Assets\1\move\tile012.png" />
+    <Content Include="Assets\1\move\tile013.png" />
+    <Content Include="Assets\1\move\tile014.png" />
+    <Content Include="Assets\1\move\tile015.png" />
+    <Content Include="Assets\1\move\tile016.png" />
+    <Content Include="Assets\1\move\tile017.png" />
+    <Content Include="Assets\1\move\tile018.png" />
+    <Content Include="Assets\1\move\tile019.png" />
+    <Content Include="Assets\1\move\tile020.png" />
+    <Content Include="Assets\1\move\tile021.png" />
+    <Content Include="Assets\1\move\tile022.png" />
+    <Content Include="Assets\1\move\tile023.png" />
+    <Content Include="Assets\1\move\tile024.png" />
+    <Content Include="Assets\1\move\tile025.png" />
+    <Content Include="Assets\1\move\tile026.png" />
+    <Content Include="Assets\1\move\tile027.png" />
+    <Content Include="Assets\1\move\tile028.png" />
+    <Content Include="Assets\1\move\tile029.png" />
+    <Content Include="Assets\1\move\tile030.png" />
+    <Content Include="Assets\1\move\tile031.png" />
+    <Content Include="Assets\2\idle\tile000.png" />
+    <Content Include="Assets\2\idle\tile001.png" />
+    <Content Include="Assets\2\idle\tile002.png" />
+    <Content Include="Assets\2\idle\tile003.png" />
+    <Content Include="Assets\2\idle\tile004.png" />
+    <Content Include="Assets\2\idle\tile005.png" />
+    <Content Include="Assets\2\idle\tile006.png" />
+    <Content Include="Assets\2\idle\tile007.png" />
+    <Content Include="Assets\2\move\tile000.png" />
+    <Content Include="Assets\2\move\tile001.png" />
+    <Content Include="Assets\2\move\tile002.png" />
+    <Content Include="Assets\2\move\tile003.png" />
+    <Content Include="Assets\2\move\tile004.png" />
+    <Content Include="Assets\2\move\tile005.png" />
+    <Content Include="Assets\2\move\tile006.png" />
+    <Content Include="Assets\2\move\tile007.png" />
+    <Content Include="Assets\2\move\tile008.png" />
+    <Content Include="Assets\2\move\tile009.png" />
+    <Content Include="Assets\2\move\tile010.png" />
+    <Content Include="Assets\2\move\tile011.png" />
+    <Content Include="Assets\2\move\tile012.png" />
+    <Content Include="Assets\2\move\tile013.png" />
+    <Content Include="Assets\2\move\tile014.png" />
+    <Content Include="Assets\2\move\tile015.png" />
+    <Content Include="Assets\2\move\tile016.png" />
+    <Content Include="Assets\2\move\tile017.png" />
+    <Content Include="Assets\2\move\tile018.png" />
+    <Content Include="Assets\2\move\tile019.png" />
+    <Content Include="Assets\2\move\tile020.png" />
+    <Content Include="Assets\2\move\tile021.png" />
+    <Content Include="Assets\2\move\tile022.png" />
+    <Content Include="Assets\2\move\tile023.png" />
+    <Content Include="Assets\2\move\tile024.png" />
+    <Content Include="Assets\2\move\tile025.png" />
+    <Content Include="Assets\2\move\tile026.png" />
+    <Content Include="Assets\2\move\tile027.png" />
+    <Content Include="Assets\2\move\tile028.png" />
+    <Content Include="Assets\2\move\tile029.png" />
+    <Content Include="Assets\2\move\tile030.png" />
+    <Content Include="Assets\2\move\tile031.png" />
+    <Content Include="Assets\3\idle\tile000.png" />
+    <Content Include="Assets\3\idle\tile001.png" />
+    <Content Include="Assets\3\idle\tile002.png" />
+    <Content Include="Assets\3\idle\tile003.png" />
+    <Content Include="Assets\3\idle\tile004.png" />
+    <Content Include="Assets\3\idle\tile005.png" />
+    <Content Include="Assets\3\idle\tile006.png" />
+    <Content Include="Assets\3\idle\tile007.png" />
+    <Content Include="Assets\3\move\tile000.png" />
+    <Content Include="Assets\3\move\tile001.png" />
+    <Content Include="Assets\3\move\tile002.png" />
+    <Content Include="Assets\3\move\tile003.png" />
+    <Content Include="Assets\3\move\tile004.png" />
+    <Content Include="Assets\3\move\tile005.png" />
+    <Content Include="Assets\3\move\tile006.png" />
+    <Content Include="Assets\3\move\tile007.png" />
+    <Content Include="Assets\3\move\tile008.png" />
+    <Content Include="Assets\3\move\tile009.png" />
+    <Content Include="Assets\3\move\tile010.png" />
+    <Content Include="Assets\3\move\tile011.png" />
+    <Content Include="Assets\3\move\tile012.png" />
+    <Content Include="Assets\3\move\tile013.png" />
+    <Content Include="Assets\3\move\tile014.png" />
+    <Content Include="Assets\3\move\tile015.png" />
+    <Content Include="Assets\3\move\tile016.png" />
+    <Content Include="Assets\3\move\tile017.png" />
+    <Content Include="Assets\3\move\tile018.png" />
+    <Content Include="Assets\3\move\tile019.png" />
+    <Content Include="Assets\3\move\tile020.png" />
+    <Content Include="Assets\3\move\tile021.png" />
+    <Content Include="Assets\3\move\tile022.png" />
+    <Content Include="Assets\3\move\tile023.png" />
+    <Content Include="Assets\3\move\tile024.png" />
+    <Content Include="Assets\3\move\tile025.png" />
+    <Content Include="Assets\3\move\tile026.png" />
+    <Content Include="Assets\3\move\tile027.png" />
+    <Content Include="Assets\3\move\tile028.png" />
+    <Content Include="Assets\3\move\tile029.png" />
+    <Content Include="Assets\3\move\tile030.png" />
+    <Content Include="Assets\3\move\tile031.png" />
+    <Content Include="Assets\4\idle\tile000.png" />
+    <Content Include="Assets\4\idle\tile001.png" />
+    <Content Include="Assets\4\idle\tile002.png" />
+    <Content Include="Assets\4\idle\tile003.png" />
+    <Content Include="Assets\4\idle\tile004.png" />
+    <Content Include="Assets\4\idle\tile005.png" />
+    <Content Include="Assets\4\idle\tile006.png" />
+    <Content Include="Assets\4\idle\tile007.png" />
+    <Content Include="Assets\4\move\tile000.png" />
+    <Content Include="Assets\4\move\tile001.png" />
+    <Content Include="Assets\4\move\tile002.png" />
+    <Content Include="Assets\4\move\tile003.png" />
+    <Content Include="Assets\4\move\tile004.png" />
+    <Content Include="Assets\4\move\tile005.png" />
+    <Content Include="Assets\4\move\tile006.png" />
+    <Content Include="Assets\4\move\tile007.png" />
+    <Content Include="Assets\4\move\tile008.png" />
+    <Content Include="Assets\4\move\tile009.png" />
+    <Content Include="Assets\4\move\tile010.png" />
+    <Content Include="Assets\4\move\tile011.png" />
+    <Content Include="Assets\4\move\tile012.png" />
+    <Content Include="Assets\4\move\tile013.png" />
+    <Content Include="Assets\4\move\tile014.png" />
+    <Content Include="Assets\4\move\tile015.png" />
+    <Content Include="Assets\4\move\tile016.png" />
+    <Content Include="Assets\4\move\tile017.png" />
+    <Content Include="Assets\4\move\tile018.png" />
+    <Content Include="Assets\4\move\tile019.png" />
+    <Content Include="Assets\4\move\tile020.png" />
+    <Content Include="Assets\4\move\tile021.png" />
+    <Content Include="Assets\4\move\tile022.png" />
+    <Content Include="Assets\4\move\tile023.png" />
+    <Content Include="Assets\4\move\tile024.png" />
+    <Content Include="Assets\4\move\tile025.png" />
+    <Content Include="Assets\4\move\tile026.png" />
+    <Content Include="Assets\4\move\tile027.png" />
+    <Content Include="Assets\4\move\tile028.png" />
+    <Content Include="Assets\4\move\tile029.png" />
+    <Content Include="Assets\4\move\tile030.png" />
+    <Content Include="Assets\4\move\tile031.png" />
+    <Content Include="Assets\5\idle\tile000.png" />
+    <Content Include="Assets\5\idle\tile001.png" />
+    <Content Include="Assets\5\idle\tile002.png" />
+    <Content Include="Assets\5\idle\tile003.png" />
+    <Content Include="Assets\5\idle\tile004.png" />
+    <Content Include="Assets\5\idle\tile005.png" />
+    <Content Include="Assets\5\idle\tile006.png" />
+    <Content Include="Assets\5\idle\tile007.png" />
+    <Content Include="Assets\5\move\tile000.png" />
+    <Content Include="Assets\5\move\tile001.png" />
+    <Content Include="Assets\5\move\tile002.png" />
+    <Content Include="Assets\5\move\tile003.png" />
+    <Content Include="Assets\5\move\tile004.png" />
+    <Content Include="Assets\5\move\tile005.png" />
+    <Content Include="Assets\5\move\tile006.png" />
+    <Content Include="Assets\5\move\tile007.png" />
+    <Content Include="Assets\5\move\tile008.png" />
+    <Content Include="Assets\5\move\tile009.png" />
+    <Content Include="Assets\5\move\tile010.png" />
+    <Content Include="Assets\5\move\tile011.png" />
+    <Content Include="Assets\5\move\tile012.png" />
+    <Content Include="Assets\5\move\tile013.png" />
+    <Content Include="Assets\5\move\tile014.png" />
+    <Content Include="Assets\5\move\tile015.png" />
+    <Content Include="Assets\5\move\tile016.png" />
+    <Content Include="Assets\5\move\tile017.png" />
+    <Content Include="Assets\5\move\tile018.png" />
+    <Content Include="Assets\5\move\tile019.png" />
+    <Content Include="Assets\5\move\tile020.png" />
+    <Content Include="Assets\5\move\tile021.png" />
+    <Content Include="Assets\5\move\tile022.png" />
+    <Content Include="Assets\5\move\tile023.png" />
+    <Content Include="Assets\5\move\tile024.png" />
+    <Content Include="Assets\5\move\tile025.png" />
+    <Content Include="Assets\5\move\tile026.png" />
+    <Content Include="Assets\5\move\tile027.png" />
+    <Content Include="Assets\5\move\tile028.png" />
+    <Content Include="Assets\5\move\tile029.png" />
+    <Content Include="Assets\5\move\tile030.png" />
+    <Content Include="Assets\5\move\tile031.png" />
+    <Content Include="Assets\chest\tile000.png" />
+    <Content Include="Assets\chest\tile001.png" />
+    <Content Include="Assets\chest\tile002.png" />
+    <Content Include="Assets\chest\tile003.png" />
+    <Content Include="Assets\chest\tile004.png" />
+    <Content Include="Assets\chest\tile005.png" />
+    <Content Include="Assets\coin\tile000.png" />
+    <Content Include="Assets\coin\tile001.png" />
+    <Content Include="Assets\coin\tile002.png" />
+    <Content Include="Assets\coin\tile003.png" />
+    <Content Include="Assets\coin\tile004.png" />
+    <Content Include="Assets\coin\tile005.png" />
+    <Content Include="Assets\coin\tile006.png" />
+    <Content Include="Assets\coin\tile007.png" />
+    <Content Include="Assets\coin\tile008.png" />
+    <Content Include="Assets\coin\tile009.png" />
+    <Content Include="Assets\coin\tile010.png" />
+    <Content Include="Assets\coin\tile011.png" />
+    <Content Include="Assets\coin\tile012.png" />
+    <Content Include="Assets\coin\tile013.png" />
+    <Content Include="Assets\coin\tile014.png" />
+    <None Include="Connected Services\ServiceReference1\item.disco" />
+    <None Include="Connected Services\ServiceReference1\configuration91.svcinfo" />
+    <None Include="Connected Services\ServiceReference1\configuration.svcinfo" />
+    <None Include="Connected Services\ServiceReference1\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Assets\sound\footsteps.wav" />
+    <Content Include="Assets\sound\hitHurt.wav" />
+    <Content Include="Assets\sound\nextLevel.wav" />
+    <Content Include="Assets\sound\pickupCoin.wav" />
+    <Content Include="Assets\sound\select.wav" />
+    <Content Include="Assets\trap\tile000.png" />
+    <Content Include="Assets\trap\tile001.png" />
+    <Content Include="Assets\trap\tile002.png" />
+    <Content Include="Assets\trap\tile003.png" />
+    <Content Include="Assets\wall\Gap.png" />
+    <Content Include="Assets\wall\Horizontal.png" />
+    <Content Include="Assets\wall\Vertical.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -144,15 +412,59 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Game.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PlayerSkinsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Shop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Statistics.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServiceReference1\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReference1\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReference1\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReference1\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReference1\Service1.wsdl" />
+    <None Include="Connected Services\ServiceReference1\TheHiddenTreasures.ServiceReference1.PlayerSkins.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ServiceReference1\TheHiddenTreasures.ServiceReference1.PlayerStatistics.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Properties\ServiceReferences.Designer.ClientConfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ServiceReference1\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

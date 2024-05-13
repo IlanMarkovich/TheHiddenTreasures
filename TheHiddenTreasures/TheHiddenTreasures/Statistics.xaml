@@ -1,0 +1,50 @@
+﻿<Page
+    x:Class="TheHiddenTreasures.Statistics"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TheHiddenTreasures"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Name="User_TB" Text="Current User: " FontSize="50" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="100 0 0 0"/>
+        <TextBlock Text="Statistics" FontSize="100" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Name="DeleteBtn" Content="Delete My User" FontSize="50" FontWeight="SemiBold" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 100 0" Click="DeleteBtn_Click"/>
+
+        <ListView Name="PlayersLst" Grid.Row="1" ItemsSource="{Binding}" ItemClick="PlayersLst_ItemClick" IsItemClickEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <ListViewHeaderItem Content="Username" FontSize="40" Width="300"/>
+                        <ListViewHeaderItem Content="Games Played" FontSize="40" Width="300"/>
+                        <ListViewHeaderItem Content="Games Won" FontSize="40" Width="300"/>
+                        <ListViewHeaderItem Content="Fastest Time" FontSize="40" Width="300"/>
+                        <ListViewHeaderItem Content="Coins" FontSize="40" Width="150"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:PlayerStatistics">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding username}" Width="300"/>
+                        <TextBlock Text="{Binding gamesPlayed}" Width="300"/>
+                        <TextBlock Text="{Binding gamesWon}" Width="300"/>
+                        <TextBlock Text="{Binding minTime}" Width="300"/>
+                        <TextBlock Text="{Binding coins}" Width="150"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Name="BackBtn" Content="Back" Width="450" FontSize="60" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="BackBtn_Click"/>
+    </Grid>
+</Page>

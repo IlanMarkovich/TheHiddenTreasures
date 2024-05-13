@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="TheHiddenTreasures.PlayerSkinsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TheHiddenTreasures"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Name="PlayerName" Text="Player: " FontSize="85" FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
+
+        <Image Name="CurrentSkinImg" Width="1000" Height="1000" Grid.Row="1" Source="Assets/1/idle/tile000.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+        <ListView Name="PlayerOwnedSkinsList" ItemsSource="{Binding}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <ListViewHeaderItem Content="Owned Skins" FontSize="60" FontWeight="SemiBold"/>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding}" Width="200" Height="200"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Name="BackBtn" Content="Back" FontSize="60" Width="450" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" Click="BackBtn_Click"/>
+    </Grid>
+</Page>

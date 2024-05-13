@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="Service1" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/TheHiddenTreasuresWCF" />
+      <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IService1_ValidateUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateUser" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ValidateUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RegisterUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUser" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RegisterUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_UpdateStatistics_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateStatistics" />
+  </wsdl:message>
+  <wsdl:message name="IService1_UpdateStatistics_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateStatisticsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetPlayerStatistics_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlayerStatistics" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetPlayerStatistics_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlayerStatisticsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetPlayerCoins_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlayerCoins" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetPlayerCoins_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlayerCoinsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetPlayerCurrentSkin_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlayerCurrentSkin" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetPlayerCurrentSkin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlayerCurrentSkinResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_UpdatePlayerCurrentSkin_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlayerCurrentSkin" />
+  </wsdl:message>
+  <wsdl:message name="IService1_UpdatePlayerCurrentSkin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlayerCurrentSkinResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_BuyPlayerSkin_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuyPlayerSkin" />
+  </wsdl:message>
+  <wsdl:message name="IService1_BuyPlayerSkin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuyPlayerSkinResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddItem_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddItem" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddItem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetUserItems_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserItems" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetUserItems_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_DeleteUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUser" />
+  </wsdl:message>
+  <wsdl:message name="IService1_DeleteUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetPlayerSkins_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlayerSkins" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetPlayerSkins_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlayerSkinsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IService1">
+    <wsdl:operation name="ValidateUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ValidateUser" message="tns:IService1_ValidateUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ValidateUserResponse" message="tns:IService1_ValidateUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/RegisterUser" message="tns:IService1_RegisterUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/RegisterUserResponse" message="tns:IService1_RegisterUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateStatistics">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/UpdateStatistics" message="tns:IService1_UpdateStatistics_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/UpdateStatisticsResponse" message="tns:IService1_UpdateStatistics_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerStatistics">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetPlayerStatistics" message="tns:IService1_GetPlayerStatistics_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetPlayerStatisticsResponse" message="tns:IService1_GetPlayerStatistics_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerCoins">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetPlayerCoins" message="tns:IService1_GetPlayerCoins_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetPlayerCoinsResponse" message="tns:IService1_GetPlayerCoins_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerCurrentSkin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetPlayerCurrentSkin" message="tns:IService1_GetPlayerCurrentSkin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetPlayerCurrentSkinResponse" message="tns:IService1_GetPlayerCurrentSkin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlayerCurrentSkin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/UpdatePlayerCurrentSkin" message="tns:IService1_UpdatePlayerCurrentSkin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/UpdatePlayerCurrentSkinResponse" message="tns:IService1_UpdatePlayerCurrentSkin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuyPlayerSkin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/BuyPlayerSkin" message="tns:IService1_BuyPlayerSkin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/BuyPlayerSkinResponse" message="tns:IService1_BuyPlayerSkin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddItem">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddItem" message="tns:IService1_AddItem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddItemResponse" message="tns:IService1_AddItem_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserItems">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetUserItems" message="tns:IService1_GetUserItems_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetUserItemsResponse" message="tns:IService1_GetUserItems_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/DeleteUser" message="tns:IService1_DeleteUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/DeleteUserResponse" message="tns:IService1_DeleteUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerSkins">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetPlayerSkins" message="tns:IService1_GetPlayerSkins_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetPlayerSkinsResponse" message="tns:IService1_GetPlayerSkins_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ValidateUser">
+      <soap:operation soapAction="http://tempuri.org/IService1/ValidateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <soap:operation soapAction="http://tempuri.org/IService1/RegisterUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateStatistics">
+      <soap:operation soapAction="http://tempuri.org/IService1/UpdateStatistics" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerStatistics">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetPlayerStatistics" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerCoins">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetPlayerCoins" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerCurrentSkin">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetPlayerCurrentSkin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlayerCurrentSkin">
+      <soap:operation soapAction="http://tempuri.org/IService1/UpdatePlayerCurrentSkin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuyPlayerSkin">
+      <soap:operation soapAction="http://tempuri.org/IService1/BuyPlayerSkin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddItem">
+      <soap:operation soapAction="http://tempuri.org/IService1/AddItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserItems">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetUserItems" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUser">
+      <soap:operation soapAction="http://tempuri.org/IService1/DeleteUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerSkins">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetPlayerSkins" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service1">
+    <wsdl:port name="BasicHttpBinding_IService1" binding="tns:BasicHttpBinding_IService1">
+      <soap:address location="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

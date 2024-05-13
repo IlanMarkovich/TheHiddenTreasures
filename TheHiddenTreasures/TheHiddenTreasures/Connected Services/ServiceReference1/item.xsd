@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/TheHiddenTreasuresWCF" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/TheHiddenTreasuresWCF" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8733/Design_Time_Addresses/TheHiddenTreasuresWCF/Service1/?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="User">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="ArrayOfPlayerStatistics">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PlayerStatistics" nillable="true" type="tns:PlayerStatistics" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPlayerStatistics" nillable="true" type="tns:ArrayOfPlayerStatistics" />
+  <xs:complexType name="PlayerStatistics">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="coins" type="xs:int" />
+      <xs:element minOccurs="0" name="gamesPlayed" type="xs:int" />
+      <xs:element minOccurs="0" name="gamesWon" type="xs:int" />
+      <xs:element minOccurs="0" name="minTime" type="xs:int" />
+      <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlayerStatistics" nillable="true" type="tns:PlayerStatistics" />
+  <xs:complexType name="PlayerSkins">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="currentSkin" type="xs:int" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="skins" nillable="true" type="q1:ArrayOfint" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlayerSkins" nillable="true" type="tns:PlayerSkins" />
+</xs:schema>
